@@ -1,0 +1,31 @@
+<div class="login-container">
+    <h2>Welcome <span class="sub-title">sign in</span></h2>
+
+    <form #loginForm="ngForm">
+        <div>
+            <label for="emailInput">Email</label>
+            <input #emailInput="ngModel" type="email" placeholder="Enter Email" name="email"
+                [(ngModel)]="userLoginDetails.email" id="emailInput" required /><br>
+
+            <span *ngIf="emailInput.touched && emailInput.errors?.required">Email is required<br></span>
+        </div>
+
+        <div>
+            <label for="passwordInput">Password</label>
+            <input #passwordInput="ngModel" type="password" placeholder="Enter Password" name="password"
+                [(ngModel)]="userLoginDetails.password" id="passwordInput" required /><br>
+
+            <span *ngIf="passwordInput.touched && passwordInput.errors?.required">Password is required<br></span>
+        </div><br>
+
+        <div>
+            <a>Forgot Password?</a>
+            <input type="button" [disabled]="loginForm.form.invalid" class="btn" 
+                value="Login" (click)="login()" />
+        </div>
+    </form><br><br>
+
+    <div class="text-center">
+        <a routerLink="/home/register">Don't Have an Account? <span>sign up</span></a>
+    </div>
+</div>

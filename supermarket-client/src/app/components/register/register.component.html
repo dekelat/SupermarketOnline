@@ -1,0 +1,47 @@
+<div class="register-container">
+    <h2>Welcome <span class="sub-title">sign up</span></h2>
+
+    <form #registerForm="ngForm">
+        <div>
+            <label for="userIdInput">ID</label>
+            <input #userIdInput="ngModel" type="text" placeholder="Enter ID" name="userId" [(ngModel)]="userDetails.id"
+                id="userIdInput" required /><br>
+
+            <span *ngIf="userIdInput.touched && userIdInput.errors?.required">ID is required<br></span>
+        </div>
+
+        <div>
+            <label for="emailInput">Email</label>
+            <input #emailInput="ngModel" type="email" placeholder="Enter Email" name="email"
+                [(ngModel)]="userDetails.email" id="emailInput" required pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" /><br>
+
+            <span *ngIf="emailInput.touched && emailInput.errors?.required">Email is required<br></span>
+            <span *ngIf="emailInput.errors?.pattern">Email should have this pattern usr@ab.cd<br></span>
+        </div>
+
+        <div>
+            <label for="passwordInput">Password</label>
+            <input #passwordInput="ngModel" type="password" placeholder="Enter Password" name="password"
+                [(ngModel)]="userDetails.password" id="passwordInput" required pattern="" /><br>
+
+            <span *ngIf="passwordInput.touched && passwordInput.errors?.required">Password is required<br></span>
+            <span *ngIf="passwordInput.errors?.pattern">Your password must be 8-20 characters long, contain letters and
+                numbers, and must not contain spaces, special characters, or emoji.<br></span>
+        </div>
+
+        <div>
+            <label for="validatePasswordInput">Confirm Password</label>
+            <input #validatePasswordInput="ngModel" type="password" placeholder="Confirm Password" name="password"
+                [(ngModel)]="confirmPassword" id="validatePasswordInput" required /><br>
+
+                <span *ngIf="validatePasswordInput.touched && confirmPassword != '' && confirmPassword != userDetails.password">Passwords don't match<br></span>
+        </div><br>
+
+        <input type="button" [disabled]="registerForm.form.invalid" class="btn" value="Register" (click)="register()" />
+
+    </form><br><br>
+
+    <div class="text-center">
+        <a routerLink="/home/login">Already Have an Account? <span>sign in</span></a>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+.header {
+    padding: 1.5rem 1.5rem .5rem 1.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    border: solid black 1px;
+}
+
+.right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding-right: 1.5rem;
+    padding-bottom: .5rem;
+    border: solid 1px red;
+}
+
+
+.left {
+    border: solid 1px purple;
+}

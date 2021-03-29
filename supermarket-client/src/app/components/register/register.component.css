@@ -1,0 +1,107 @@
+.register-container {
+    padding: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.788);
+    border: solid black 1px;
+}
+
+h2 {
+    color: #3d7742;
+    font-family: 'Kavivanar';
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    font-size: 3rem;
+    padding-bottom: 1rem;
+}
+
+.sub-title {
+    color: #f38a2e;
+    font-size: 1.5rem;
+    font-family: 'Belleza';
+}
+
+label {
+    padding: 0 0 0 .3rem;
+    margin: 0;
+    font-size: .8rem;
+    font-weight: bolder;
+    color: #3d7742;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    display: block;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #3d77426c;
+    width: 100%;
+    padding: 0 .3rem .3rem;
+    font-size: 1.2rem;
+    color: #3d7742;
+}
+
+
+input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #3d77426c;
+    opacity: 1; /* Firefox */
+}
+input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #3d77426c;
+}
+input::-ms-input-placeholder { /* Microsoft Edge */
+    color: #3d77426c;
+}
+
+/* input focus */
+input:focus {
+    border: none;
+    border-bottom: 2px solid #3d7742;
+}
+input:focus::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #3d7742;
+    opacity: 1; 
+}
+input:focus:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #3d7742;
+}
+input:focus::-ms-input-placeholder { /* Microsoft Edge */
+    color: #3d7742;
+}
+
+/* remove background from autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0) inset;
+  box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0) inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+  
+.btn {
+    background-color: rgb(55, 100, 28);
+    color: whitesmoke;
+    float: right;
+    width: 30%;
+    font-family: 'Belleza';
+    font-weight: bolder;
+    box-shadow: 3px 3px 3px rgba(41, 75, 21, 0.534);
+}
+
+a {
+    font-family: 'Belleza';
+    color:rgb(10, 19, 6)
+}
+
+a>span {
+    font-weight: bolder;
+}
+
+/* #emailInput {
+    background-image: url('searchicon.png');
+    background-position: 99% 50%; 
+    background-repeat: no-repeat;
+} */
