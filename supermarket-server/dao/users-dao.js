@@ -50,10 +50,30 @@ async function isUserExistByEmail(email) {
     return true;
 }
 
+async function isUserExistById(id) {
+    let sql = "SELECT * FROM users WHERE id =?";
+    let parameters = [id];
+    let response;
+
+    try {
+        response = await connection.executeWithParameters(sql, parameters);
+    } catch (error) {
+        // TECHNICAL ERROR HAD OCCURED
+        throw new ServerError(ErrorType.GENERAL_ERROR, id, error);
+    }
+
+    if (response == null || response.length == 0) {
+        return false;
+    }
+
+    return true;
+}
+
 async function addUser(user) {
     let sql = `INSERT INTO users (id, email, password, user_type, first_name, last_name, city, street)
                 VALUES(?,?,?,?,?,?,?,?)`;
-    let parameters = [user.email, 
+    let parameters = [user.id,
+            user.email, 
             user.password, 
             user.userType, 
             user.firstName, 
@@ -72,5 +92,6 @@ async function addUser(user) {
 module.exports = {
     login,
     isUserExistByEmail,
+    isUserExistById,
     addUser
 };

@@ -19,7 +19,6 @@ export class AboutComponent implements OnInit {
     let observable = this.productsService.getNumberOfAvailableProducts();
 
     observable.subscribe(result => {
-      console.log("products: " + result);
       this.numberOfProducts = result.count;
     }, serverErrorResponse => {
       alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
@@ -28,7 +27,6 @@ export class AboutComponent implements OnInit {
     observable = this.ordersServices.getNumberOfAllOrders();
 
     observable.subscribe(result => {
-      console.log("orders: " + result);
       this.numberOfOrders = result.count;
     }, serverErrorResponse => {
       alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);

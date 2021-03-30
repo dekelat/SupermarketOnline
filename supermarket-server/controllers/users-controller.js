@@ -23,8 +23,8 @@ router.post("/", async (request, response, next) => {
     let user = request.body;
 
     try {
-        await usersLogic.addUser(user);
-        response.json();
+        let successfulRegistrationData = await usersLogic.addUser(user);
+        response.json(successfulRegistrationData);
     }
     catch (error) {
         return next(error);

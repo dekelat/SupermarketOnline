@@ -10,11 +10,15 @@ import { FormsModule } from '@angular/forms';
 import { AuthenticationInterceptor } from '../interceptors/AuthenticationInterceptor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WelcomePageModule } from './welcome-page.module';
+import { CustomerComponent } from '../components/customer/customer.component';
+import { ProductsComponent } from '../components/products/products.component';
 
 @NgModule({
   declarations: [
     LayoutComponent,
-    HeaderComponent
+    HeaderComponent,
+    CustomerComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,
