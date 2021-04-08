@@ -18,8 +18,8 @@ router.get("/count", async (request, response, next) => {
 
 // Get all products
 // GET http://localhost:3001/products
-router.get("/", async (request, response, next) => {
-console.log("in controller 1")
+router.get("/", async (request, response, next) => { 
+    
     try {
         let products = await productsLogic.getAllProducts();
         response.json(products);

@@ -12,13 +12,17 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { WelcomePageModule } from './welcome-page.module';
 import { CustomerComponent } from '../components/customer/customer.component';
 import { ProductsComponent } from '../components/products/products.component';
+import { ProductComponent } from '../components/product/product.component';
+import { CartComponent } from '../components/cart/cart.component';
 
 @NgModule({
   declarations: [
     LayoutComponent,
     HeaderComponent,
     CustomerComponent,
-    ProductsComponent
+    ProductsComponent,
+    ProductComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

@@ -29,7 +29,7 @@ async function getProductsByCategory(categoryId) {
                     name,
                     category_id AS categoryId,
                     unit_price AS unitPrice,
-                    image_url AS imageURL
+                    image_url AS imageUrl
                 FROM
                     products
                 WHERE

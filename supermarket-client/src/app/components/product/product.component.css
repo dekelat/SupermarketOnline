@@ -1,0 +1,15 @@
+.product-card {
+    border: solid 1px rgb(221, 220, 220);
+    display: inline-block;
+    background-color: white;
+    width: 14rem;
+    height: 20rem;
+    margin: 1rem;
+    padding: 1rem;
+    text-align: center;
+}
+.product-card-img {
+    width: 10rem;
+    height: 10rem;
+    margin: .2rem;
+}
