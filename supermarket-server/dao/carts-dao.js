@@ -16,7 +16,7 @@ async function getOpenCart(userId) {
         throw new ServerError(ErrorType.GENERAL_ERROR, JSON.stringify(order), error);
     }
 
-    return cart;
+    return cart[0];
 }
 
 async function createNewCart(userId) {

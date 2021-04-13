@@ -6,12 +6,14 @@ import { LoginComponent } from '../components/login/login.component';
 import { RegisterComponent } from '../components/register/register.component';
 import { FormsModule } from '@angular/forms';
 import { AboutComponent } from '../components/about/about.component';
+import { ShopTransitionComponent } from '../components/shop-transition/shop-transition.component';
 
 const routes: Routes = [
   {
     path: "home", component: WelcomePageComponent, children: [
       { path: "login", component: LoginComponent },
       { path: "register", component: RegisterComponent },
+      { path: "shop", component: ShopTransitionComponent },
       { path: "", redirectTo: "login", pathMatch: "full" }
     ]
   }
@@ -22,6 +24,7 @@ const routes: Routes = [
     WelcomePageComponent,
     LoginComponent,
     RegisterComponent,
+    ShopTransitionComponent,
     AboutComponent
   ],
   imports: [

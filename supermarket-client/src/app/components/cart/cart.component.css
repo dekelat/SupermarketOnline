@@ -3,3 +3,8 @@
     background-color: white;
     height: 100vh;
 }
+
+.cart-product-img {
+    width: 3vw;
+    /* height: 3vh; */
+}

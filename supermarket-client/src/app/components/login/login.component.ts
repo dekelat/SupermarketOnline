@@ -28,7 +28,8 @@ export class LoginComponent implements OnInit {
       sessionStorage.setItem("userType", userDetails.userType);
 
       if(userDetails.userType == "CUSTOMER") {
-        this.router.navigate(["/customer"]);
+        // this.router.navigate(["/customer"]);
+        this.router.navigate(["/home/shop"]);
       }
 
       if(userDetails.userType == "ADMIN") {

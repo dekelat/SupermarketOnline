@@ -5,7 +5,7 @@ const express = require("express");
 const router = express.Router();
 
 // Get open cart
-// GET http://localhost:3001/carts
+// GET http://localhost:3001/carts/
 router.get("/", async (request, response, next) => {
     let userId = cache.extractUserDataFromCache(request).id;
 
@@ -19,7 +19,7 @@ router.get("/", async (request, response, next) => {
 });
 
 // Create new cart
-// POST http://localhost:3001/carts
+// POST http://localhost:3001/carts/
 router.post("/", async (request, response, next) => {
     let userId = cache.extractUserDataFromCache(request).id;
 
@@ -33,8 +33,8 @@ router.post("/", async (request, response, next) => {
 });
 
 // Get open cart's items
-// GET http://localhost:3001/carts/products/:id
-router.get("/products/:id", async (request, response, next) => {
+// GET http://localhost:3001/carts/:id
+router.get("/:id", async (request, response, next) => {
     let cartId = request.params.id;
 
     try {

@@ -1,3 +1,13 @@
 <div class="cart-container">
-    <p>cart works!</p>
+    <table>
+        <tbody>
+            <tr *ngFor="let currentProduct of cartService.cart.products">
+                <td><img src="{{currentProduct.imageUrl}}" class="cart-product-img"/></td>
+                <td>{{currentProduct.name}}</td>
+                <td>{{currentProduct.quantity}}</td>
+                <td>{{currentProduct.price}}₪</td>
+                <td><button (click)="onDeleteItemFromCart(currentProduct.id)">X</button></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
