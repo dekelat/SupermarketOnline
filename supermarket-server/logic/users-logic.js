@@ -1,14 +1,14 @@
-const RIGHT_SALT = "ksdjfhbAWEDCAS29!@$addlkmn";
-const LEFT_SALT = "32577098ASFKJkjsdhfk#$dc";
+const ServerError = require("../errors/server-error");
+const ErrorType = require("../errors/error-type");
+const usersDao = require("../dao/users-dao");
+const cache = require("../controllers/cache-controller");
 
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const config = require('../config.json');
-const ErrorType = require("../errors/error-type");
-const ServerError = require("../errors/server-error");
-let usersDao = require("../dao/users-dao");
-let cache = require("../controllers/cache-controller");
 
+const RIGHT_SALT = "ksdjfhbAWEDCAS29!@$addlkmn";
+const LEFT_SALT = "32577098ASFKJkjsdhfk#$dc";
 
 async function login(loginDetails) {
 
@@ -22,16 +22,14 @@ async function login(loginDetails) {
     let userData = await usersDao.login(loginDetails);
 
     // Create user's token
-    // let saltedEmail = LEFT_SALT + userData.email + RIGHT_SALT;
-    // const token = jwt.sign({ sub: saltedEmail }, config.secret);
+    let saltedEmail = LEFT_SALT + userData.email + RIGHT_SALT;
+    const token = jwt.sign({ sub: saltedEmail }, config.secret);
+    cache.put(token, userData);
 
-    // cache.put(token, userData);
-
-    // let response = { token: "Bearer " + token, userType: userData.userType, email: userData.email, 
-    //     firstName: userData.firstName, lastName: userData.lastName, city: userData.city, 
-    //     street: userData.street };
+    let response = { token: "Bearer " + token, userType: userData.userType,
+        userName: userData.firstName + " " + userData.lastName };
     
-    return createUserSession(userData);
+    return response;
 }
 
 async function addUser(user) {
@@ -43,7 +41,7 @@ async function addUser(user) {
 
     // Validate user id doesn't exist already
     if (await usersDao.isUserExistById(user.id)) {
-        throw new ServerError(ErrorType.USER_ALREADY_EXIST);
+        throw new ServerError(ErrorType.ID_ALREADY_EXIST);
     }
 
     if (!isEmailValid(user.email)) {
@@ -59,10 +57,6 @@ async function addUser(user) {
         LEFT_SALT + user.password + RIGHT_SALT).digest("hex");
 
     await usersDao.addUser(user);
-
-    // Reaching here means the user was added successfully 
-    // Create a new session for him
-    return createUserSession(user);
 }
 
 function isEmailValid(email) {

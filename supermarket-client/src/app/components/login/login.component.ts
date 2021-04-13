@@ -22,17 +22,18 @@ export class LoginComponent implements OnInit {
   public login(): void {
     let observable = this.usersService.login(this.userLoginDetails);
 
-    observable.subscribe(userDetails => {
+    observable.subscribe(successfulLoginServerResponse => {
       
-      sessionStorage.setItem("token", userDetails.token);
-      sessionStorage.setItem("userType", userDetails.userType);
+      sessionStorage.setItem("token", successfulLoginServerResponse.token);
+      sessionStorage.setItem("userType", successfulLoginServerResponse.userType);
+      sessionStorage.setItem("userName", successfulLoginServerResponse.userName );
 
-      if(userDetails.userType == "CUSTOMER") {
+      if(successfulLoginServerResponse.userType == "CUSTOMER") {
         // this.router.navigate(["/customer"]);
         this.router.navigate(["/home/shop"]);
       }
 
-      if(userDetails.userType == "ADMIN") {
+      if(successfulLoginServerResponse.userType == "ADMIN") {
         this.router.navigate(["/admin"]);
       }
 

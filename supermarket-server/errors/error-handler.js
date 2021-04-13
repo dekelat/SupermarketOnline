@@ -1,12 +1,13 @@
 let errorHandler = (e, request, response, next) => {
+
+    // jwt authentication error
     if (e.name === 'UnauthorizedError') {
-        // jwt authentication error
         return response.status(401).json({ error: 'Invalid Token' });
     }
-    // e - my server error
-    if (e.errorType != undefined){
 
-        if (e.errorType.isShowStackTrace){
+    // e - my server error
+    if (e.errorType != undefined) {
+        if (e.errorType.isShowStackTrace) {
             console.error(e);
         }
         

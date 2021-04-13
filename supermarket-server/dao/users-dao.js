@@ -1,16 +1,20 @@
-const ErrorType = require("../errors/error-type");
 const ServerError = require("../errors/server-error");
-let connection = require("./connection-wrapper");
+const ErrorType = require("../errors/error-type");
+const connection = require("./connection-wrapper");
 
 async function login(loginDetails) {
-    let sql = `SELECT id,
+    let sql = `SELECT 
+                    id,
                     email,
-                    first_name as firstName,
-                    last_name as lastName,
+                    first_name AS firstName,
+                    last_name AS lastName,
                     user_type AS userType,
                     city,
                     street
-                FROM users WHERE email =? and password = ?`;
+                FROM 
+                    users 
+                WHERE 
+                    email =? AND password = ?`;
     let parameters = [loginDetails.email, loginDetails.password];
     let usersLoginResult;
 
@@ -18,11 +22,10 @@ async function login(loginDetails) {
         usersLoginResult = await connection.executeWithParameters(sql, parameters);
     }
     catch (error) {
-        // TECHNICAL ERROR HAD OCCURED
         throw new ServerError(ErrorType.GENERAL_ERROR, JSON.stringify(user), error);
     }
 
-    // A functional (!) issue which means - the userName + password do not match
+    // A functional (!) issue which means - the userName and password do not match
     if (usersLoginResult == null || usersLoginResult.length == 0) {
         throw new ServerError(ErrorType.UNAUTHORIZED_LOGIN);
     }
@@ -39,7 +42,6 @@ async function isUserExistByEmail(email) {
         response = await connection.executeWithParameters(sql, parameters);
 
     } catch (error) {
-        // TECHNICAL ERROR HAD OCCURED
         throw new ServerError(ErrorType.GENERAL_ERROR, email, error);
     }
 
@@ -57,8 +59,8 @@ async function isUserExistById(id) {
 
     try {
         response = await connection.executeWithParameters(sql, parameters);
+
     } catch (error) {
-        // TECHNICAL ERROR HAD OCCURED
         throw new ServerError(ErrorType.GENERAL_ERROR, id, error);
     }
 
@@ -70,16 +72,12 @@ async function isUserExistById(id) {
 }
 
 async function addUser(user) {
-    let sql = `INSERT INTO users (id, email, password, user_type, first_name, last_name, city, street)
-                VALUES(?,?,?,?,?,?,?,?)`;
-    let parameters = [user.id,
-            user.email, 
-            user.password, 
-            user.userType, 
-            user.firstName, 
-            user.lastName, 
-            user.city, 
-            user.street];
+    let sql = `INSERT INTO users 
+                    (id, email, password, user_type, first_name, last_name, city, street)
+                VALUES
+                    (?,?,?,?,?,?,?,?)`;
+    let parameters = [user.id, user.email, user.password, user.userType, user.firstName, 
+        user.lastName, user.city, user.street];
 
     try {
         await connection.executeWithParameters(sql, parameters);

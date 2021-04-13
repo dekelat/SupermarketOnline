@@ -38,22 +38,13 @@ export class RegisterComponent implements OnInit {
     this.userDetails.userType = "CUSTOMER";
     let observable = this.usersService.register(this.userDetails);
 
-    observable.subscribe(userDetails => {
-      console.log(userDetails);
-      sessionStorage.setItem("token", userDetails.token);
-      sessionStorage.setItem("userType", userDetails.userType);
-
-      if(userDetails.userType == "CUSTOMER") {
-        // this.router.navigate(["/customer"]);
-        this.router.navigate(["/home/shop"]);
-      }
-
-      if(userDetails.userType == "ADMIN") {
-        this.router.navigate(["/admin"]);
-      }
+    observable.subscribe(response => {
+      alert("Account created successfully! you can log in");
+      this.router.navigate(["/home/login"]);
 
     }, serverErrorResponse => {
       alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
+      // Add handel error function that will take user to the stage where the error accured
     });
   }
 

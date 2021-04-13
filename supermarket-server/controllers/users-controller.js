@@ -1,9 +1,8 @@
-let usersLogic = require("../logic/users-logic");
+const usersLogic = require("../logic/users-logic");
 const express = require("express");
-
 const router = express.Router();
 
-// LOGIN
+// Login
 // POST http://localhost:3001/users/login
 router.post("/login", async (request, response, next) => {
     let loginDetails = request.body;
@@ -17,14 +16,14 @@ router.post("/login", async (request, response, next) => {
     }
 });
 
-// ADD USER (REGISTER)
+// Sign up (add user)
 // POST http://localhost:3001/users/
 router.post("/", async (request, response, next) => {
-    let user = request.body;
+    let userDetails = request.body;
 
     try {
-        let successfulRegistrationData = await usersLogic.addUser(user);
-        response.json(successfulRegistrationData);
+        await usersLogic.addUser(userDetails);
+        response.json();
     }
     catch (error) {
         return next(error);
