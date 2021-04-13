@@ -1,13 +1,26 @@
 <div class="cart-container">
-    <table>
-        <tbody>
-            <tr *ngFor="let currentProduct of cartService.cart.products">
-                <td><img src="{{currentProduct.imageUrl}}" class="cart-product-img"/></td>
-                <td>{{currentProduct.name}}</td>
-                <td>{{currentProduct.quantity}}</td>
-                <td>{{currentProduct.price}}₪</td>
-                <td><button (click)="onDeleteItemFromCart(currentProduct.id)">X</button></td>
-            </tr>
-        </tbody>
-    </table>
+    <div>
+        <button>X</button>
+        <h2>My Cart</h2>
+        <button (click)="onDeleteAllItems()">Delete all items</button>
+    </div>
+
+    <div>
+       <table>
+            <tbody>
+                <tr *ngFor="let currentProduct of cartService.cart.products">
+                    <td><img src="{{currentProduct.imageUrl}}" class="cart-product-img"/></td>
+                    <td>{{currentProduct.name}}</td>
+                    <td>{{currentProduct.quantity}} x </td>
+                    <td>₪{{currentProduct.price}}</td>
+                    <td><button (click)="onDeleteItemFromCart(currentProduct)">X</button></td>
+                </tr>
+            </tbody>
+        </table> 
+    </div>
+    
+    <div>
+        <h3>Total: ₪{{cartService.total}}</h3>
+        <button class="btn btn-primary" (click)="onCheckout()">Checkout</button>
+    </div>
 </div>

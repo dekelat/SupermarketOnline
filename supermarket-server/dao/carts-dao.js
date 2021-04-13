@@ -37,7 +37,7 @@ async function createNewCart(userId) {
 
 async function getCartItems(cart) {
     let sql = `SELECT 
-                    product_id AS productId,
+                    product_id AS id,
                     name,
                     image_url AS imageUrl,
                     quantity,
@@ -61,8 +61,36 @@ async function getCartItems(cart) {
     return cartItems;
 }
 
+async function addItemToCart(cartId, product) {
+    let sql = `INSERT INTO cart_items (cart_id, product_id, quantity, price) 
+                VALUES (?, ?, ?, ?)`;
+    let parameters = [cartId, product.id, product.quantity, product.price];
+
+    try {
+        await connection.executeWithParameters(sql, parameters);
+    }
+    catch (error) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, parameters, error);
+    }
+}
+
+async function deleteItemFromCart(cartId, productId) {
+    let sql = `DELETE FROM cart_items
+                WHERE cart_id=? AND product_id=?`;
+    let parameters = [cartId, productId];
+
+    try {
+        await connection.executeWithParameters(sql, parameters);
+    }
+    catch (error) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, parameters, error);
+    }
+}
+
 module.exports = {
     getOpenCart,
     createNewCart,
-    getCartItems
+    getCartItems,
+    addItemToCart,
+    deleteItemFromCart
 };

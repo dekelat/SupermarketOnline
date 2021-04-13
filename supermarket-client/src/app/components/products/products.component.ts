@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/Category';
 import { Product } from 'src/app/models/Product';
+import { CartService } from 'src/app/services/cart.service';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { ProductsService } from 'src/app/services/products.service';
 
@@ -16,7 +17,8 @@ export class ProductsComponent implements OnInit {
   public selectedProduct: Product;
 
   constructor(private categoriesService: CategoriesService, 
-    private productsService: ProductsService) {
+    private productsService: ProductsService,
+    private cartService: CartService) {
       this.categories = [];
       this.products = [];
       this.selectedProduct = new Product();
@@ -48,8 +50,21 @@ export class ProductsComponent implements OnInit {
 
   public showProduct(product) {
     this.selectedProduct = product;
+    this.selectedProduct.quantity = 1;
   }
 
-  public addToCart(){}
+  public addToCart(){
+    this.selectedProduct.price = +(this.selectedProduct.unitPrice * this.selectedProduct.quantity).toFixed(2);
+    let observable = this.cartService.addItemToCart(this.selectedProduct);
+
+    observable.subscribe(response => {
+      this.cartService.cart.products.push(this.selectedProduct);
+      this.cartService.total += this.selectedProduct.price;
+      // Close modal ???
+
+    }, serverErrorResponse => {
+      alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
+    });
+  }
 
 }

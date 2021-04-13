@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cart } from '../models/Cart';
+import { Product } from '../models/Product';
 
 @Injectable({
   providedIn: 'root'
@@ -9,20 +10,30 @@ import { Cart } from '../models/Cart';
 export class CartService {
 
   public cart: Cart;
+  public total: number;
 
   constructor(private http: HttpClient) { 
     this.cart = new Cart();
+    this.total = 0;
   }
 
   public getOpenCart(): Observable<Cart> {
     return this.http.get<Cart>("http://localhost:3001/carts/");
   }
 
-  public createNewCart(): Observable<any> {
-    return this.http.post<any>("http://localhost:3001/carts/", null);
+  public createNewCart(): Observable<number> {
+    return this.http.post<number>("http://localhost:3001/carts/", null);
   }
 
-  public getCartItems(cartId): Observable<any>{
-    return this.http.get<any>("http://localhost:3001/carts/" + cartId);
+  public getCartItems(): Observable<Product[]>{
+    return this.http.get<Product[]>("http://localhost:3001/carts/" + this.cart.id);
+  }
+
+  public addItemToCart(product: Product): Observable<void> {
+    return this.http.post<void>("http://localhost:3001/carts/product",{cartId: this.cart.id, product});
+  }
+
+  public deleteItemFromCart(productId: number): Observable<void> {
+    return this.http.delete<void>("http://localhost:3001/carts/product/" + this.cart.id + "/" + productId);
   }
 }

@@ -46,4 +46,38 @@ router.get("/:id", async (request, response, next) => {
     }
 });
 
+// Add item to cart
+// POST http://localhost:3001/carts/product
+router.post("/product", async (request, response, next) => {
+    let userType = cache.extractUserDataFromCache(request).userType;
+    let cartId = request.body.cartId;
+    let product = request.body.product;
+
+    try {
+        await cartsLogic.addItemToCart(userType, cartId, product);
+        response.json();
+    }
+    catch (error) {
+        return next(error); 
+    }
+});
+
+// Delete item from cart
+// DELETE http://localhost:3001/carts/product/:cartId/:productId
+router.delete("/product/:cartId/:productId", async (request, response, next) => {
+    let userType = cache.extractUserDataFromCache(request).userType;
+    let cartId = request.params.cartId;
+    let productId = request.params.productId;
+    console.log(request.params);
+    console.log("cartId: " + cartId);
+    console.log("productId: " + productId);
+    try {
+        await cartsLogic.deleteItemFromCart(userType, cartId, productId);
+        response.json();
+    }
+    catch (error) {
+        return next(error); 
+    }
+});
+
 module.exports = router;
