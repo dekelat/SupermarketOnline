@@ -35,10 +35,30 @@ async function deleteItemFromCart(userType, cartId, productId) {
     await cartsDao.deleteItemFromCart(cartId, productId);
 }
 
+async function emptyCart(userType, cartId) {
+
+    if(userType == "ADMIN") {
+        throw new ServerError(ErrorType.UNAUTHORIZED_ACTION);
+    }
+
+    await cartsDao.emptyCart(cartId);
+}
+
+async function updateCartItem(userType, product, cartId) {
+
+    if(userType == "ADMIN") {
+        throw new ServerError(ErrorType.UNAUTHORIZED_ACTION);
+    }
+
+    await cartsDao.updateCartItem(product, cartId);
+}
+
 module.exports = {
     getOpenCart,
     createNewCart,
     getCartItems,
     addItemToCart,
-    deleteItemFromCart
+    deleteItemFromCart,
+    emptyCart,
+    updateCartItem
 };

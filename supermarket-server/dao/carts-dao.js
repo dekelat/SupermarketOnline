@@ -87,10 +87,42 @@ async function deleteItemFromCart(cartId, productId) {
     }
 }
 
+async function emptyCart(cartId) {
+    let sql = `DELETE FROM cart_items
+                WHERE cart_id=?`;
+    let parameters = [cartId];
+
+    try {
+        await connection.executeWithParameters(sql, parameters);
+    }
+    catch (error) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, parameters, error);
+    }
+}
+
+async function updateCartItem(product, cartId) {
+    let sql = `UPDATE cart_items
+                SET
+                    quantity = ?,
+                    price = ?
+                WHERE 
+                    cart_id = ? AND product_id = ?`;
+    let parameters = [product.quantity, product.price, cartId, product.id];
+
+    try {
+        await connection.executeWithParameters(sql, parameters);
+    }
+    catch (error) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, parameters, error);
+    }
+}
+
 module.exports = {
     getOpenCart,
     createNewCart,
     getCartItems,
     addItemToCart,
-    deleteItemFromCart
+    deleteItemFromCart,
+    emptyCart,
+    updateCartItem
 };

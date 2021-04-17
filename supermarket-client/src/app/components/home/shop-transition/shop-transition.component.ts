@@ -68,7 +68,7 @@ export class ShopTransitionComponent implements OnInit {
       let observable = this.cartService.createNewCart();
 
       observable.subscribe(cartId => {
-        this.cartService.cart = new Cart(cartId, new Date(), []);
+        this.cartService.cart = new Cart(cartId, new Date(), new Map());
         sessionStorage.setItem("cartId", this.cartService.cart.id.toString());
 
       }, serverErrorResponse => {

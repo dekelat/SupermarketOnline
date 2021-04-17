@@ -36,4 +36,12 @@ export class CartService {
   public deleteItemFromCart(productId: number): Observable<void> {
     return this.http.delete<void>("http://localhost:3001/carts/product/" + this.cart.id + "/" + productId);
   }
+
+  public emptyCart(): Observable<void> {
+    return this.http.delete<void>("http://localhost:3001/carts/" + this.cart.id);
+  }
+
+  public updateCartItem(product: Product): Observable<void> {
+    return this.http.put<void>("http://localhost:3001/carts/", {product, cartId: this.cart.id});
+  }
 }

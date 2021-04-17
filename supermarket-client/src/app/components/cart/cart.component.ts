@@ -20,10 +20,15 @@ export class CartComponent implements OnInit {
     let observable = this.cartService.getCartItems();
 
     observable.subscribe(cartItems => {
-      this.cartService.cart.products = cartItems;
-      this.cartService.cart.products.map( product => 
-        this.cartService.total += (+product.price));
-        this.cartService.total = +this.cartService.total.toFixed(2); 
+      this.cartService.cart.products = new Map();
+
+      cartItems.map(product => {
+        this.cartService.cart.products.set(product.id, product);
+        this.cartService.total += (+product.price);
+      });
+      
+      this.cartService.total = +this.cartService.total.toFixed(2); 
+
     }, serverErrorResponse => {
         alert("Error! Status: " + serverErrorResponse.status + ", Message: " + 
           serverErrorResponse.error.error);
@@ -34,9 +39,7 @@ export class CartComponent implements OnInit {
     let observable = this.cartService.deleteItemFromCart(product.id);
 
     observable.subscribe(response => {
-      this.cartService.cart.products = 
-        this.cartService.cart.products.filter(currentProduct => 
-          currentProduct.id !== product.id);
+      this.cartService.cart.products.delete(product.id);
       this.cartService.total = +(this.cartService.total - product.price).toFixed(2);
 
     }, serverErrorResponse => {
@@ -45,7 +48,19 @@ export class CartComponent implements OnInit {
     });
   }
 
-  public onDeleteAllItems(){}
+  public onDeleteAllItems() {
+    let observable = this.cartService.emptyCart();
+
+    observable.subscribe(response => {
+      this.cartService.cart.products = new Map();
+      this.cartService.total = 0;
+      
+    }, serverErrorResponse => {
+      alert("Error! Status: " + serverErrorResponse.status + ", Message: " + 
+        serverErrorResponse.error.error);
+    });
+  }
+
   public onCheckout(){}
 
 }

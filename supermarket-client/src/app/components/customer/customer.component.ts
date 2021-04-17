@@ -11,19 +11,29 @@ export class CustomerComponent implements OnInit {
 
   public selectedProduct: Product;
   public displayModal: string;
+  public isInCart: boolean;
 
   constructor(private cartService: CartService) {
     this.selectedProduct = new Product();
     this.displayModal = "none";
+    this.isInCart = false;
   }
 
   ngOnInit(): void {
   }
 
   onProductClick(product: Product) {
-    console.log(product);
     this.selectedProduct = product;
-    this.selectedProduct.quantity = 1;
+
+    if(this.cartService.cart.products.has(product.id)) {
+      this.isInCart = true;
+      this.selectedProduct.quantity = this.cartService.cart.products.get(product.id).quantity;
+    }
+    else {
+      this.isInCart = false;
+      this.selectedProduct.quantity = 1;
+    }
+   
     this.displayModal = "block";
   }
 
@@ -32,7 +42,22 @@ export class CustomerComponent implements OnInit {
     let observable = this.cartService.addItemToCart(this.selectedProduct);
 
     observable.subscribe(response => {
-      this.cartService.cart.products.push(this.selectedProduct);
+      this.cartService.cart.products.set(this.selectedProduct.id, this.selectedProduct);
+      this.cartService.total += this.selectedProduct.price;
+      this.displayModal = "none";
+
+    }, serverErrorResponse => {
+      alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
+    });
+  }
+
+  public updateCart() {
+    this.selectedProduct.price = +(this.selectedProduct.unitPrice * this.selectedProduct.quantity).toFixed(2);
+    let observable = this.cartService.updateCartItem(this.selectedProduct);
+
+    observable.subscribe(response => {
+      this.cartService.total -= this.cartService.cart.products.get(this.selectedProduct.id).price;
+      this.cartService.cart.products.set(this.selectedProduct.id, this.selectedProduct);
       this.cartService.total += this.selectedProduct.price;
       this.displayModal = "none";
 

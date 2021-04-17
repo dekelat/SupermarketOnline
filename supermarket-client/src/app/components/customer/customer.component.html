@@ -21,7 +21,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <input type="button" value="Add to Cart" class="btn btn-primary" (click)="addToCart()" />
+                    <input *ngIf="!isInCart" type="button" value="Add to Cart" class="btn btn-primary" (click)="addToCart()" />
+                    <input *ngIf="isInCart" type="button" value="Update Cart" class="btn btn-primary" (click)="updateCart()" />
                 </div>
             </div>
         </div>

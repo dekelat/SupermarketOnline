@@ -8,12 +8,12 @@
     <div>
        <table>
             <tbody>
-                <tr *ngFor="let currentProduct of cartService.cart.products">
-                    <td><img src="{{currentProduct.imageUrl}}" class="cart-product-img"/></td>
-                    <td>{{currentProduct.name}}</td>
-                    <td>{{currentProduct.quantity}} x </td>
-                    <td>₪{{currentProduct.price}}</td>
-                    <td><button (click)="onDeleteItemFromCart(currentProduct)">X</button></td>
+                <tr *ngFor="let product of cartService.cart.products | keyvalue">
+                    <td><img src="{{product.value.imageUrl}}" class="cart-product-img"/></td>
+                    <td>{{product.value.name}}</td>
+                    <td>{{product.value.quantity}} x </td>
+                    <td>₪{{product.value.price}}</td>
+                    <td><button (click)="onDeleteItemFromCart(product.value)">X</button></td>
                 </tr>
             </tbody>
         </table> 

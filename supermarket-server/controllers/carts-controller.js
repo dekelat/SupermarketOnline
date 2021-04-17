@@ -68,11 +68,40 @@ router.delete("/product/:cartId/:productId", async (request, response, next) => 
     let userType = cache.extractUserDataFromCache(request).userType;
     let cartId = request.params.cartId;
     let productId = request.params.productId;
-    console.log(request.params);
-    console.log("cartId: " + cartId);
-    console.log("productId: " + productId);
+
     try {
         await cartsLogic.deleteItemFromCart(userType, cartId, productId);
+        response.json();
+    }
+    catch (error) {
+        return next(error); 
+    }
+});
+
+// Empty cart
+// DELETE http://localhost:3001/carts/:id
+router.delete("/:id", async (request, response, next) => {
+    let userType = cache.extractUserDataFromCache(request).userType;
+    let cartId = request.params.id;
+    
+    try {
+        await cartsLogic.emptyCart(userType, cartId);
+        response.json();
+    }
+    catch (error) {
+        return next(error); 
+    }
+});
+
+// Update cart item
+// PUT http://localhost:3001/carts/
+router.put("/", async (request, response, next) => {
+    let userType = cache.extractUserDataFromCache(request).userType;
+    let product = request.body.product;
+    let cartId = request.body.cartId;
+    
+    try {
+        await cartsLogic.updateCartItem(userType, product, cartId);
         response.json();
     }
     catch (error) {
