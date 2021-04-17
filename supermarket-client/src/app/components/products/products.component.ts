@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Category } from 'src/app/models/Category';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/services/cart.service';
@@ -14,14 +14,14 @@ export class ProductsComponent implements OnInit {
 
   public categories: Category[];
   public products: Product[];
-  public selectedProduct: Product;
+
+  @Output() productClickEvent= new EventEmitter<Product>();
 
   constructor(private categoriesService: CategoriesService, 
     private productsService: ProductsService,
     private cartService: CartService) {
       this.categories = [];
       this.products = [];
-      this.selectedProduct = new Product();
     }
 
   ngOnInit(): void {
@@ -48,23 +48,8 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  public showProduct(product) {
-    this.selectedProduct = product;
-    this.selectedProduct.quantity = 1;
-  }
-
-  public addToCart(){
-    this.selectedProduct.price = +(this.selectedProduct.unitPrice * this.selectedProduct.quantity).toFixed(2);
-    let observable = this.cartService.addItemToCart(this.selectedProduct);
-
-    observable.subscribe(response => {
-      this.cartService.cart.products.push(this.selectedProduct);
-      this.cartService.total += this.selectedProduct.price;
-      // Close modal ???
-
-    }, serverErrorResponse => {
-      alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
-    });
+  public showProduct(product: Product) {
+    this.productClickEvent.emit(product);
   }
 
 }

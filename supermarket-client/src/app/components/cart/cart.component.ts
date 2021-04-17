@@ -23,7 +23,7 @@ export class CartComponent implements OnInit {
       this.cartService.cart.products = cartItems;
       this.cartService.cart.products.map( product => 
         this.cartService.total += (+product.price));
-
+        this.cartService.total = +this.cartService.total.toFixed(2); 
     }, serverErrorResponse => {
         alert("Error! Status: " + serverErrorResponse.status + ", Message: " + 
           serverErrorResponse.error.error);

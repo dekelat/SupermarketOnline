@@ -3,3 +3,8 @@
     flex-direction: row;
     height: 100vh;
 }
+
+.product-modal-img {
+    width: 10rem;
+    height: 10rem;
+}

@@ -1,8 +1,29 @@
 <div class="customer-container">
     <div style="flex: 2;">
-        <app-products></app-products>
+        <app-products (productClickEvent)="onProductClick($event)"></app-products>
     </div>
     <div style="flex: 1;">
         <app-cart></app-cart>
+    </div>
+</div>
+
+<div class="container">
+    <div class="modal" id="myModal" tabindex="-1" role="dialog" [ngStyle]="{'display': displayModal}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" (click)="onCloseModal()">&times;</button><br />
+                    <img src="{{selectedProduct.imageUrl}}" class="product-modal-img" />
+                    <h4 class="modal-title">{{selectedProduct.name}}</h4>
+                    <h5>{{selectedProduct.unitPrice}}</h5>
+                    <!-- <input *ngIf="selectedProduct.categoryId == 1" type="number" value="0.5" step="0.5"/> -->
+                    <input type="number" [(ngModel)]="selectedProduct.quantity" min="1"/>
+                </div>
+
+                <div class="modal-footer">
+                    <input type="button" value="Add to Cart" class="btn btn-primary" (click)="addToCart()" />
+                </div>
+            </div>
+        </div>
     </div>
 </div>

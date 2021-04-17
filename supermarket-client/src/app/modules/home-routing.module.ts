@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { WelcomePageComponent } from '../components/welcome-page/welcome-page.component';
-import { LoginComponent } from '../components/login/login.component';
-import { RegisterComponent } from '../components/register/register.component';
+import { LoginComponent } from '../components/home/login/login.component';
+import { RegisterComponent } from '../components/home/register/register.component';
 import { FormsModule } from '@angular/forms';
-import { AboutComponent } from '../components/about/about.component';
-import { ShopTransitionComponent } from '../components/shop-transition/shop-transition.component';
+import { AboutComponent } from '../components/home/about/about.component';
+import { ShopTransitionComponent } from '../components/home/shop-transition/shop-transition.component';
+import { HomeComponent } from '../components/home/home.component';
 
 const routes: Routes = [
   {
-    path: "home", component: WelcomePageComponent, children: [
+    path: "home", component: HomeComponent, children: [
       { path: "login", component: LoginComponent },
       { path: "register", component: RegisterComponent },
       { path: "shop", component: ShopTransitionComponent },
@@ -21,7 +21,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    WelcomePageComponent,
+    HomeComponent,
     LoginComponent,
     RegisterComponent,
     ShopTransitionComponent,
@@ -33,4 +33,4 @@ const routes: Routes = [
     RouterModule.forChild(routes) // Importing the above routes
   ]
 })
-export class WelcomePageModule { }
+export class HomeRoutingModule { }

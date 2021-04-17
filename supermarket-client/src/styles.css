@@ -1,14 +1,41 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
-/* You can add global styles to this file, and also import other style files */
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Belleza';
-    background-color: rgb(244, 250, 247);
+@import url('https://fonts.googleapis.com/css?family=Belleza');
+@import url('https://fonts.googleapis.com/css?family=Kavivanar');
+
+/* Variables Declarations */
+:root {
+    --font-primary: "Belleza";
+    --font-secondary: "Kavivanar";
+
+    --font-xlarge: 3rem;
+    --font-large: 2rem;
+    --font-medium: 1.2rem;
+    --font-small: .9rem;
+    --font-xsmall: .8rem;
+
+    /* Color Scheme */
+    --light-green: #e4ebba;
+    --medium-green: #BDC881;
+    --dark-green: #487242;
+    --grey: #919191;
+    --light-orange: #fcd3a7;
+    --medium-orange: #fea555;
+    --dark-orange: #f1691b;
+
+    /* Screen Breakpoints */
+    --bp-xsmall: 280px;
 }
 
-*, *:before, *:after {
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
     box-sizing: inherit;
+}
+
+html, body {
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    font-family: var(--font-primary);
 }

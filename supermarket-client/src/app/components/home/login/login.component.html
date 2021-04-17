@@ -4,18 +4,14 @@
     <form #loginForm="ngForm">
         <div>
             <label for="emailInput">Email</label>
-            <input #emailInput="ngModel" type="email" placeholder="Enter Email" name="email"
+            <input type="email" placeholder="Enter Email" name="email"
                 [(ngModel)]="userLoginDetails.email" id="emailInput" required /><br>
-
-            <span *ngIf="emailInput.touched && emailInput.errors?.required">Email is required<br></span>
         </div>
 
         <div>
             <label for="passwordInput">Password</label>
-            <input #passwordInput="ngModel" type="password" placeholder="Enter Password" name="password"
+            <input type="password" placeholder="Enter Password" name="password"
                 [(ngModel)]="userLoginDetails.password" id="passwordInput" required /><br>
-
-            <span *ngIf="passwordInput.touched && passwordInput.errors?.required">Password is required<br></span>
         </div><br>
 
         <div>

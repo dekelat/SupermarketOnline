@@ -1,23 +1,20 @@
-<div class="header">
-    <div class="left">
-        <h1>Supermarket</h1>
-        <span>Contact Us
-            <i class="fas fa-phone"> +972-972-972-972</i> |
-            <i class="fas fa-envelope"> super@market.com</i>
+<div class="header-content clearfix">
+    <img class="logo-img" src="../../../assets/Online Supermarket.png" />
+    <p>
+        <i class="fal fa-user"></i> Hello, Stranger <i class="fas fa-chevron-down"></i><br />
+        
+        <input type="text" placeholder="Search Item..." />
+
+        <button class="btn cart-btn">
+            <i class="fal fa-shopping-cart">
+                <span class="cart-badge">{{cartService.cart.products.length}}</span>
+            </i>
+        </button><br />
+
+        <span>
+            Contact us
+            <i class="fal fa-phone-alt"></i> (+972) 972-972-972 |
+            <i class="fal fa-envelope"></i> super@market.com
         </span>
-    </div>
-
-    <div class="right">
-        <div>
-            <i class="fas fa-user"> Hello, New Guest  <i class="fas fa-chevron-down"></i></i>
-        </div>
-
-        <div>
-            <input type="text" placeholder="Search Item..." />
-            <button class="btn">
-                <i class="far fa-shopping-cart"></i>
-            </button>
-        </div>
-    </div>
-
+    </p>
 </div>
