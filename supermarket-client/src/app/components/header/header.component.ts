@@ -13,4 +13,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public onCartToggle() {
+    this.cartService.isCartOpen = !this.cartService.isCartOpen;
+  }
 }

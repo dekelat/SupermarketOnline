@@ -1,15 +1,20 @@
 <div class="customer-container">
-    <div *ngIf="!cartService.isInCheckoutMode" style="flex: 2;">
+    <div 
+        [ngClass]="{ 'products-container': true, full: !cartService.isCartOpen, hide: cartService.isInCheckoutMode}">
         <app-products (productClickEvent)="onProductClick($event)"></app-products>
     </div>
-    <div style="flex: 1;">
+
+    <div [ngClass]="{ 'cart-container': true, closed: !this.cartService.isCartOpen }">
         <app-cart></app-cart>
     </div>
-    <div *ngIf="cartService.isInCheckoutMode" style="flex: 2;">
+    
+    <div *ngIf="cartService.isInCheckoutMode" class="checkout-container">
         <app-checkout></app-checkout>
     </div>
 </div>
 
+
+<!-- Add product to cart - Modal -->
 <div class="container">
     <div class="modal" id="myModal" tabindex="-1" role="dialog" [ngStyle]="{'display': displayModal}">
         <div class="modal-dialog" role="document">

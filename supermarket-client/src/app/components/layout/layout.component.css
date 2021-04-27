@@ -18,6 +18,7 @@ main {
     grid-row: span 11;
     grid-column: span 12;
     padding: 2vh 10vw;
+    /* display: flex; */
 }
 
 /* footer {

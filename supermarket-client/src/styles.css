@@ -40,6 +40,12 @@ html, body {
     font-family: var(--font-primary);
 }
 
+button {
+    outline: none;
+    border: none;
+    background: none;
+}
+
 a {
     color:rgb(10, 19, 6)
     }

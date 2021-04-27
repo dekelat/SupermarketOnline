@@ -1,4 +1,28 @@
-.products-container {
+.products {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    /* height: 100%;
+    overflow-y: auto; */
+    border: solid black 1px;
+}
+
+.category-menu {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: var(--dark-green);
+}
+
+.category-menu button {
+    padding: .5rem;
+    color: white;
+    width: 10rem;
+}
+.category-menu button:hover {
+    background: var(--medium-green);
+    color: white;
 }

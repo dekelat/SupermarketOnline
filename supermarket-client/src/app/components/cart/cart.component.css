@@ -1,10 +1,83 @@
-.cart-container {
-    border: solid black 1px;
-    background-color: white;
-    height: 100vh;
+/********* Cart Header *********/
+.cart-header {
+    height: 15%;
+    position: relative;
+    overflow-x: hidden;
+    text-align: center;
+    padding: .5rem 1.5rem;
+    background-color: var(--light-green);
+}
+.cart-header h2 {
+    font-weight: 600;
+    padding-bottom: .5rem;
+    margin-bottom: 2px;
+    border-bottom: 2px solid var(--medium-green);
 }
 
-.cart-product-img {
-    width: 3vw;
-    /* height: 3vh; */
+.close-cart-btn {
+    font-weight: 900;
+    text-transform: uppercase;
+    position: absolute;
+    top: .5rem;
+    left: .5rem;
+}
+
+.empty-cart-btn {
+    width: 100%;
+    color: var(--dark-green);
+    background-color: var(--medium-green);
+}
+
+/********* Cart Content *********/
+.cart-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 65%;
+    padding: .5rem;
+    background-color: white;
+    border-top: 1px solid var(--medium-green);
+    border-bottom: 1px solid var(--medium-green);
+}
+.cart-content img {
+    width: 5rem;
+}
+.cart-content td {
+    padding: .5rem;
+    border-bottom: 1px solid rgba(196, 196, 196, 0.5);
+}
+.cart-content td.align-top {
+    vertical-align: top;
+}
+.cart-content td button {
+    color: var(--dark-green);
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0px 2px;
+}
+
+/********** Cart Footer *********/
+.cart-footer {
+    width: 100%;
+    height: 20%;
+    padding: .5rem;
+    position: absolute;
+    bottom: 0;
+    background-color: var(--light-green);
+}
+.cart-footer button {
+    width: 100%;
+    padding: .2rem;
+    color: white;
+    text-transform: uppercase;
+    background-color: var(--dark-green);
+}
+.cart-footer h3 {
+    position: relative;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+}
+.cart-footer h3 span {
+    position: absolute;
+    right: 0;
+    font-size: var(--font-medium);
 }

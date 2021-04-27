@@ -69,4 +69,8 @@ export class CartComponent implements OnInit {
     this.cartService.isInCheckoutMode = false;
   }
 
+  public onCloseCart() {
+    this.cartService.isCartOpen = false;
+  }
+
 }

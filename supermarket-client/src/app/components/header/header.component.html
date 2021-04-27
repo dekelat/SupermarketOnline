@@ -5,7 +5,7 @@
         
         <input type="text" placeholder="Search Item..." />
 
-        <button class="btn cart-btn">
+        <button class="cart-btn" (click)="onCartToggle()">
             <i class="fal fa-shopping-cart">
                 <span class="cart-badge">{{cartService.cart.products.size}}</span>
             </i>

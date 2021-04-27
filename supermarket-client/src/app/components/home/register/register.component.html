@@ -1,12 +1,12 @@
 <h2>Welcome <span class="sub-title">sign up</span></h2>
 
-<div class="stepper">
+<!-- <div class="stepper">
     <div class="step-indicator">{{registrationStage}} of 2</div>
     <div>
         <p *ngIf="registrationStage == 1">Login Details <span><br/> Next: Personal Details</span></p>
         <p *ngIf="registrationStage == 2">Personal Details</p>
     </div>
-</div>
+</div> -->
 
 <form #registerForm="ngForm">
     <div *ngIf="registrationStage == 1">
