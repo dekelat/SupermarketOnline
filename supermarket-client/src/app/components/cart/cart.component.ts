@@ -61,6 +61,12 @@ export class CartComponent implements OnInit {
     });
   }
 
-  public onCheckout(){}
+  public onCheckout() {
+    this.cartService.isInCheckoutMode = true;
+  }
+
+  public onBackToShop() {
+    this.cartService.isInCheckoutMode = false;
+  }
 
 }

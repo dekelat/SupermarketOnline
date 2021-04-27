@@ -13,7 +13,7 @@ export class CustomerComponent implements OnInit {
   public displayModal: string;
   public isInCart: boolean;
 
-  constructor(private cartService: CartService) {
+  constructor(public cartService: CartService) {
     this.selectedProduct = new Product();
     this.displayModal = "none";
     this.isInCart = false;
@@ -22,7 +22,7 @@ export class CustomerComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onProductClick(product: Product) {
+  public onProductClick(product: Product) {
     this.selectedProduct = product;
 
     if(this.cartService.cart.products.has(product.id)) {
@@ -66,7 +66,7 @@ export class CustomerComponent implements OnInit {
     });
   }
 
-  onCloseModal() {
+  public onCloseModal() {
     this.displayModal = "none";
   }
 

@@ -44,4 +44,17 @@ router.get("/", async (request, response, next) => {
     }
 });
 
+// Get unavailable delivery dates
+// GET http://localhost:3001/orders/dates
+router.get("/dates", async (request, response, next) => {
+
+    try {
+        let dates = await ordersLogic.getUnavailableDeliveryDates();
+        response.json(dates);
+    }
+    catch (error) {
+        return next(error); 
+    }
+});
+
 module.exports = router;

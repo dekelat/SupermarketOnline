@@ -1,5 +1,5 @@
-<div class="login-container">
-    <h2>Welcome <span class="sub-title">sign in</span></h2>
+<!-- <div class="login-container"> -->
+    <h2 class="header">Welcome <span>sign in</span></h2>
 
     <form #loginForm="ngForm">
         <div>
@@ -15,7 +15,7 @@
         </div><br>
 
         <div>
-            <a>Forgot Password?</a>
+            <!-- <a>Forgot Password?</a> -->
             <input type="button" [disabled]="loginForm.form.invalid" class="btn" 
                 value="Login" (click)="login()" />
         </div>
@@ -24,4 +24,4 @@
     <div class="text-center">
         <a routerLink="/home/register">Don't Have an Account? <span>sign up</span></a>
     </div>
-</div>
+<!-- </div> -->

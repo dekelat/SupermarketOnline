@@ -68,8 +68,28 @@ async function getLatestOrder(userId) {
     return order[0];
 }
 
+async function getUnavailableDeliveryDates() {
+    let sql = `SELECT 
+                    delivery_date AS 'deliveryDate'
+                FROM
+                    orders
+                GROUP BY delivery_date
+                HAVING COUNT(*) = 3`;
+    let dates;
+
+    try {
+        dates = await connection.execute(sql);
+    }
+    catch(error) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, sql, error);
+    }
+
+    return dates;
+}
+
 module.exports = {
     getTotalNumberOfOrders,
     createNewOrder,
-    getLatestOrder
+    getLatestOrder,
+    getUnavailableDeliveryDates
 };

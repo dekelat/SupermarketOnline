@@ -31,7 +31,7 @@ p span {
 }
 
 .cart-badge {
-    font-size: var(--font-small);
+    font-size: var(--font-xsmall);
     background-color: var(--light-green);
     border-radius: 50%;
     padding: 3px 6px;

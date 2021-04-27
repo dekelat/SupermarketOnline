@@ -8,7 +8,7 @@ import { Order } from '../models/Order';
   providedIn: 'root'
 })
 export class OrdersService {
-
+  
   constructor(private http: HttpClient) { }
 
   public getNumberOfAllOrders(): Observable<Count> {
@@ -17,5 +17,9 @@ export class OrdersService {
 
   public getLastOrder(): Observable<Order> {
     return this.http.get<Order>("http://localhost:3001/orders/");
+  }
+
+  public getUnavailableDeliveryDates(): Observable<Date[]> {
+    return this.http.get<Date[]>("http://localhost:3001/orders/dates");
   }
 }

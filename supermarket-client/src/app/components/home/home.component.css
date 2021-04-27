@@ -22,7 +22,7 @@
 
 .left-container{
     width: 35vw;
-    vertical-align: top;
+    padding: 1.5rem;
     display: inline-block;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;

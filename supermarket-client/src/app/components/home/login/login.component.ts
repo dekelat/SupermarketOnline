@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
       sessionStorage.setItem("userName", successfulLoginServerResponse.userName );
 
       if(successfulLoginServerResponse.userType == "CUSTOMER") {
-        // this.router.navigate(["/customer"]);
         this.router.navigate(["/home/shop"]);
       }
 

@@ -21,5 +21,13 @@ export class UsersService {
     return this.http.post<UserDetails>
       ("http://localhost:3001/users/", userDeatils);
   }
+
+  public getStreet(): Observable<string> {
+    return this.http.get<string>("http://localhost:3001/users/street");
+  }
+  
+  public getCity(): Observable<string> {
+    return this.http.get<string>("http://localhost:3001/users/city");
+  }
 }
 

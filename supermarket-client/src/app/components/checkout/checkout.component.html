@@ -1,0 +1,105 @@
+<div class="checkout-container">
+    <div>
+        <h2>Checkout</h2>
+    </div>
+
+    <div>
+        <form #checkoutForm="ngForm">
+            <h3>Shipping Details</h3>
+            <div>
+                <label for="citySelect">City</label><br>
+                <select #citySelect="ngModel" name="city" id="citySelect" required  
+                    [(ngModel)]="orderDetails.city" (dblclick)="onDblCity()" placement="right" 
+                    ngbTooltip="Double click for auto fill">
+                    <option *ngFor="let city of cities" key="city">{{city}}</option>
+                </select><br>
+
+                <span *ngIf="citySelect.touched && citySelect.errors?.required">City is required<br></span>
+            </div>
+
+            <div>
+                <label for="streetInput">Street</label>
+                <input #streetInput="ngModel" type="text" placeholder="Enter Street" name="street"
+                    id="streetInput" required [(ngModel)]="orderDetails.street" (dblclick)="onDblStreet()" 
+                    placement="right" ngbTooltip="Double click for auto fill"/><br>
+
+                <span *ngIf="streetInput.touched && streetInput.errors?.required">Street is required<br></span>
+            </div>
+
+            <div>
+                <label for="shippingDateInput">Shipping Date</label>
+                <input #shippingDateInput="ngModel" type="date" name="shippingDate" 
+                    [(ngModel)]="orderDetails.deliveryDate" id="shippingDateInput" required /><br>
+                
+                <span *ngIf="shippingDateInput.touched && shippingDateInput.errors?.required">Shipping date is required<br></span>
+            </div>
+
+            <h3>Payment</h3>
+            <div>
+                <label>Credit Card</label>
+                <input #creaditCardInput="ngModel" type="text" name="creditCard"
+                    [(ngModel)]="creditCard" id="creditCardInput" required /><br>
+
+                <span *ngIf="creaditCardInput.touched && creaditCardInput.errors?.required">Shipping date is required<br></span>    
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                  <input 
+                    ngbDatepicker
+                    #d="ngbDatepicker"
+                    class="form-control" 
+                    placeholder="yyyy-mm-dd"
+                    name="dp" 
+                    [(ngModel)]="model" 
+                    [minDate]="minDate"
+                    [maxDate]="maxDate"
+                    [dayTemplate]="customDay"  
+                    navigation="arrows">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"></button>
+                  </div>
+                </div>
+              </div>
+
+            <input type="button" [disabled]="checkoutForm.form.invalid" 
+                value="Purchase" (click)="onPurchase()" data-toggle="modal" data-target="#purchaseModal"/>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap Datepicker custom template -->
+<ng-template #customDay let-date let-selected="selected" let-disabled="disabled" let-focused="focused">
+    <span class="custom-day" [class.focused]="focused"
+        [class.bg-primary]="selected" [class.text-muted]="disabled">
+        {{ date.day }}
+    </span>
+</ng-template>
+
+<div class="container">
+    <div class="modal fade" id="purchaseModal" role="dialog">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" 
+                        (click)="onCloseModal()">&times;</button>
+                    <h4 class="modal-title">Order Completed!</h4>
+                </div>
+
+                <div class="modal-body">
+                    <h5>Download invoice 
+                        <a download="invoice - {{this.orderDetails.id}}.txt" 
+                            [href]="invoiceUrl">HERE</a>
+                    </h5>
+                </div>
+
+                <div class="modal-footer">
+                    <input type="button" value="OK" class="btn btn-primary" data-dismiss="modal" 
+                        (click)="onCloseModal()"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

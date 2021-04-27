@@ -11,10 +11,12 @@ export class CartService {
 
   public cart: Cart;
   public total: number;
+  public isInCheckoutMode: boolean;
 
   constructor(private http: HttpClient) { 
     this.cart = new Cart();
     this.total = 0;
+    this.isInCheckoutMode = false;
   }
 
   public getOpenCart(): Observable<Cart> {

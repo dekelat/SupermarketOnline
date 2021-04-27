@@ -87,9 +87,41 @@ async function addUser(user) {
     }
 }
 
+async function getUsersStreet(id) {
+    let sql = "SELECT street FROM users WHERE id =?";
+    let parameters = [id];
+    let response;
+
+    try {
+        response = await connection.executeWithParameters(sql, parameters);
+
+    } catch (error) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, id, error);
+    }
+
+    return response[0].street;
+}
+
+async function getUsersCity(id) {
+    let sql = "SELECT city FROM users WHERE id =?";
+    let parameters = [id];
+    let response;
+
+    try {
+        response = await connection.executeWithParameters(sql, parameters);
+
+    } catch (error) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, id, error);
+    }
+
+    return response[0].city;
+}
+
 module.exports = {
     login,
     isUserExistByEmail,
     isUserExistById,
-    addUser
+    addUser,
+    getUsersStreet,
+    getUsersCity
 };

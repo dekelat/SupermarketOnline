@@ -1,21 +1,21 @@
-.login-container {
+/* .login-container {
     padding: 1.5rem;
-}
+} */
 
-h2 {
-    color: #3d7742;
-    font-family: 'Kavivanar';
+
+.header {
     font-weight: 900;
+    padding-bottom: 0;
     letter-spacing: -1.5px;
-    font-size: 3rem;
-    padding-bottom: 1rem;
-}
-
-.sub-title {
-    color: #f38a2e;
-    font-size: 1.5rem;
-    font-family: 'Belleza';
-}
+    color: var(--dark-green);
+    font-size: var(--font-xlarge);
+    font-family: var(--font-primary);
+    }
+    .header span{
+        color: var(--medium-orange);
+        font-size: var(--font-medium);
+        font-family: 'Belleza';
+    }
 
 label {
     padding: 0 0 0 .3rem;
@@ -89,17 +89,3 @@ select:-webkit-autofill:focus {
     box-shadow: 3px 3px 3px rgba(41, 75, 21, 0.534);
 }
 
-a {
-    font-family: 'Belleza';
-    color:rgb(10, 19, 6)
-}
-
-a>span {
-    font-weight: bolder;
-}
-
-/* #emailInput {
-    background-image: url('searchicon.png');
-    background-position: 99% 50%; 
-    background-repeat: no-repeat;
-} */

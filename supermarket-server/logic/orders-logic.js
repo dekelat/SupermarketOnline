@@ -16,8 +16,14 @@ async function getLatestOrder(userId) {
     return latestOrder;
 }
 
+async function getUnavailableDeliveryDates() {
+    let dates = await ordersDao.getBusyDays();
+    return dates;
+}
+
 module.exports = {
     getTotalNumberOfOrders,
     createNewOrder,
-    getLatestOrder
+    getLatestOrder,
+    getUnavailableDeliveryDates
 };

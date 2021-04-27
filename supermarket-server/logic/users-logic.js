@@ -76,7 +76,19 @@ function createUserSession(userData){
     return response;
 }
 
+async function getUsersStreet(id) {
+    let street = await usersDao.getUsersStreet(id);
+    return street;
+}
+
+async function getUsersCity(id) {
+    let city = await usersDao.getUsersCity(id);
+    return city;
+}
+
 module.exports = {
     login,
-    addUser
+    addUser,
+    getUsersCity,
+    getUsersStreet
 };
