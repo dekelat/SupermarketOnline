@@ -1,16 +1,20 @@
 <div class="customer-container">
+    <div *ngIf="cartService.isInCheckoutMode" class="checkout-section">
+        <app-checkout></app-checkout>
+    </div>
+
     <div 
-        [ngClass]="{ 'products-container': true, full: !cartService.isCartOpen, hide: cartService.isInCheckoutMode}">
+        [ngClass]="{ 'products-section': true, full: !cartService.isCartOpen, hide: cartService.isInCheckoutMode}">
         <app-products (productClickEvent)="onProductClick($event)"></app-products>
     </div>
 
-    <div [ngClass]="{ 'cart-container': true, closed: !this.cartService.isCartOpen }">
+    <div [ngClass]="{ 'cart-section': true, closed: !this.cartService.isCartOpen }">
         <app-cart></app-cart>
     </div>
     
-    <div *ngIf="cartService.isInCheckoutMode" class="checkout-container">
+    <!-- <div *ngIf="cartService.isInCheckoutMode" class="checkout-section">
         <app-checkout></app-checkout>
-    </div>
+    </div> -->
 </div>
 
 

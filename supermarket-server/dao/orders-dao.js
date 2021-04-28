@@ -17,6 +17,7 @@ async function getTotalNumberOfOrders() {
 }
 
 async function createNewOrder(order) {
+    console.log("in dao");
     let sql = `INSERT INTO orders 
                     (cart_id, 
                     total_price, 
@@ -27,14 +28,17 @@ async function createNewOrder(order) {
                     payment_method) 
                 VALUES (?, ?, ?, ?, CURRENT_DATE(), DATE(?), ?)`;
     let parameters = [order.cartId, order.totalPrice, order.city,
-        order.street, order.deliveryDate, order.paymentMethod];
+        order.street, order.deliveryDate.split('T')[0], order.paymentMethod];
+    let orderId;
 
     try {
-        await connection.executeWithParameters(sql, parameters);
+        orderId = await connection.executeWithParameters(sql, parameters);
     }
     catch (error) {
         throw new ServerError(ErrorType.GENERAL_ERROR, JSON.stringify(order), error);
     }
+
+    return orderId.insertId;
 }
 
 async function getLatestOrder(userId) {
@@ -73,8 +77,12 @@ async function getUnavailableDeliveryDates() {
                     delivery_date AS 'deliveryDate'
                 FROM
                     orders
-                GROUP BY delivery_date
-                HAVING COUNT(*) = 3`;
+                WHERE 
+                    delivery_date >= NOW() 
+                GROUP BY 
+                    delivery_date
+                HAVING 
+                    COUNT(*) = 3`;
     let dates;
 
     try {

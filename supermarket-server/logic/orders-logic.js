@@ -8,7 +8,8 @@ async function getTotalNumberOfOrders() {
 }
 
 async function createNewOrder(order) {
-    await ordersDao.createNewOrder(order);
+    let orderId = await ordersDao.createNewOrder(order);
+    return orderId;
 }
 
 async function getLatestOrder(userId) {
@@ -17,7 +18,7 @@ async function getLatestOrder(userId) {
 }
 
 async function getUnavailableDeliveryDates() {
-    let dates = await ordersDao.getBusyDays();
+    let dates = await ordersDao.getUnavailableDeliveryDates();
     return dates;
 }
 

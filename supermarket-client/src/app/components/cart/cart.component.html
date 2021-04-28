@@ -33,5 +33,6 @@
 
 <div class="cart-footer">
     <h3>Total: <span>₪{{cartService.total}}</span></h3>
-    <button *ngIf="!cartService.isInCheckoutMode" (click)="onCheckout()">Checkout</button>
+    <button *ngIf="!cartService.isInCheckoutMode" class="btn-full-main"
+        (click)="onCheckout()">Checkout</button>
 </div>

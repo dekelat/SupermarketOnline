@@ -20,17 +20,17 @@ router.get("/count", async (request, response, next) => {
 // POST http://localhost:3001/orders/
 router.post("/", async (request, response, next) => {
     let order = request.body;
-
+    
     try {
-        await ordersLogic.createNewOrder(order);
-        response.json();
+        let orderId = await ordersLogic.createNewOrder(order);
+        response.json(orderId);
     }
     catch (error) {
         return next(error); 
     }
 });
 
-// Get customer's latest order
+// Get customer's last order
 // GET http://localhost:3001/orders/
 router.get("/", async (request, response, next) => {
     let userId = cache.extractUserDataFromCache(request).id;

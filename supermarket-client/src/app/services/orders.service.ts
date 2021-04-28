@@ -22,4 +22,8 @@ export class OrdersService {
   public getUnavailableDeliveryDates(): Observable<Date[]> {
     return this.http.get<Date[]>("http://localhost:3001/orders/dates");
   }
+
+  public saveOrder(order: Order): Observable<number> {
+    return this.http.post<number>("http://localhost:3001/orders/", order);
+  }
 }

@@ -5,6 +5,7 @@ import { NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap'
 import { City } from 'src/app/models/City';
 import { Order } from 'src/app/models/Order';
 import { CartService } from 'src/app/services/cart.service';
+import { OrdersService } from 'src/app/services/orders.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -20,22 +21,32 @@ export class CheckoutComponent implements OnInit {
   public orderDetails: Order;
   public minDate: NgbDate;
   public maxDate: NgbDate;
-  public model: NgbDateStruct;
-  public unavailableDeliveryDates: Date[];
+  public model: NgbDate;
+  public unavailableDeliveryDates: NgbDate[];
 
   constructor(private router: Router, private sanitizer: DomSanitizer,
     private calendar: NgbCalendar, private usersService: UsersService, 
-    private cartService: CartService) {
-    this.creditCard = "";
-    this.invoiceUrl = null;
-    this.orderDetails = new Order();
-    this.cities = Object.values(City);
-    this.unavailableDeliveryDates = [new Date("2021-04-24"), new Date("2021-04-27")];
-    this.minDate = this.calendar.getToday();
-    this.maxDate = this.calendar.getNext(this.minDate, 'm', 2);
+    private cartService: CartService, private ordersService: OrdersService) {
+      this.creditCard = "";
+      this.invoiceUrl = null;
+      this.orderDetails = new Order();
+      this.cities = Object.values(City);
+      this.unavailableDeliveryDates = [];
+      this.minDate = this.calendar.getToday();
+      this.maxDate = this.calendar.getNext(this.minDate, 'm', 2);
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    let observable = this.ordersService.getUnavailableDeliveryDates();
+    observable.subscribe(dates => {
+        dates.forEach(date => 
+          this.unavailableDeliveryDates.push(
+            new NgbDate(date.getUTCDay(), date.getUTCMonth() + 1, date.getUTCFullYear()))
+        );
+    }, serverErrorResponse => {
+      alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
+    })
+  }
 
   public onDblStreet(): void {
     let observable = this.usersService.getStreet();
@@ -62,11 +73,19 @@ export class CheckoutComponent implements OnInit {
   }
 
   public onPurchase(): void {
+    this.orderDetails.deliveryDate = new Date(this.model.year, this.model.month - 1, this.model.day);
     this.orderDetails.orderDate = new Date();
     this.orderDetails.cartId = this.cartService.cart.id;
     this.orderDetails.totalPrice = this.cartService.total;
     this.orderDetails.paymentMethod = this.creditCard.substr(-4);
-    this.createInvoice();
+    
+    let observable = this.ordersService.saveOrder(this.orderDetails);
+    observable.subscribe( orderId => {
+      this.orderDetails.id = orderId;
+      this.createInvoice();
+    }, serverErrorResponse => {
+      alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
+    });
   }
 
   public createInvoice(): void {
@@ -85,7 +104,7 @@ export class CheckoutComponent implements OnInit {
       "Total: ₪" + this.cartService.total + "\n\n\nShipping Address🚚\n" +
       "-------------------------------------------------------------------\n " +
       this.orderDetails.street + ", " + this.orderDetails.city + "\n " +
-      "Delivery on: " + this.orderDetails.deliveryDate + "\n\n" +
+      "Delivery on: " + this.orderDetails.deliveryDate.toISOString().split('T')[0] + "\n\n" +
       "Payment Info \n" +
       "-------------------------------------------------------------------\n " +
       "💳 **** **** **** " + this.orderDetails.paymentMethod;
@@ -99,4 +118,12 @@ export class CheckoutComponent implements OnInit {
     this.cartService.isInCheckoutMode = false;
     this.router.navigate(["/home/shop"]);
   }
+
+  public isDisabled = (date: NgbDate) => {
+    if (this.calendar.getWeekday(date) == 6 ) {
+      return true;
+    } 
+     return this.unavailableDeliveryDates.find(x => x.equals(date));
+  }
+  
 }

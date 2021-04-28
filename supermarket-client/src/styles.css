@@ -52,3 +52,22 @@ a {
     a>span {
         font-weight: bolder; 
     }
+
+.btn-full-main {
+    width: 100%;
+    padding: .2rem;
+    color: white;
+    text-transform: uppercase;
+    background-color: var(--dark-green);
+}
+
+/********* Scrollbar *******/
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.4);
+}

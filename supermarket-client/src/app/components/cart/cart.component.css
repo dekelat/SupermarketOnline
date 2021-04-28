@@ -13,7 +13,6 @@
     margin-bottom: 2px;
     border-bottom: 2px solid var(--medium-green);
 }
-
 .close-cart-btn {
     font-weight: 900;
     text-transform: uppercase;
@@ -21,7 +20,6 @@
     top: .5rem;
     left: .5rem;
 }
-
 .empty-cart-btn {
     width: 100%;
     color: var(--dark-green);
@@ -64,13 +62,13 @@
     bottom: 0;
     background-color: var(--light-green);
 }
-.cart-footer button {
+/* .cart-footer button {
     width: 100%;
     padding: .2rem;
     color: white;
     text-transform: uppercase;
     background-color: var(--dark-green);
-}
+} */
 .cart-footer h3 {
     position: relative;
     padding-top: .5rem;

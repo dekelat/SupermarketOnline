@@ -1,81 +1,131 @@
-<div class="checkout-container">
-    <div>
+<div class="checkout">
+    <div class="checkout-header">
         <h2>Checkout</h2>
     </div>
 
-    <div>
-        <form #checkoutForm="ngForm">
-            <h3>Shipping Details</h3>
-            <div>
-                <label for="citySelect">City</label><br>
-                <select #citySelect="ngModel" name="city" id="citySelect" required  
-                    [(ngModel)]="orderDetails.city" (dblclick)="onDblCity()" placement="right" 
-                    ngbTooltip="Double click for auto fill">
+    <div class="checkout-content">
+        <form #checkoutForm="ngForm" (submit)="onPurchase()">
+            <h5>Shipping</h5>
+
+            <div class="form-group">
+                <label for="city">City</label>
+                <select #citySelect="ngModel" required
+                    id="city" name="city" class="form-control" 
+                    (dblclick)="onDblCity()"  
+                    [(ngModel)]="orderDetails.city" 
+                    ngbTooltip="Double click for auto fill" placement="right"
+                    [ngClass] = "{ 'is-invalid': citySelect.touched && citySelect.invalid }"
+                >
+                    <option [ngValue]="undefined" disabled>Select a City</option>
                     <option *ngFor="let city of cities" key="city">{{city}}</option>
-                </select><br>
+                </select>
 
-                <span *ngIf="citySelect.touched && citySelect.errors?.required">City is required<br></span>
-            </div>
-
-            <div>
-                <label for="streetInput">Street</label>
-                <input #streetInput="ngModel" type="text" placeholder="Enter Street" name="street"
-                    id="streetInput" required [(ngModel)]="orderDetails.street" (dblclick)="onDblStreet()" 
-                    placement="right" ngbTooltip="Double click for auto fill"/><br>
-
-                <span *ngIf="streetInput.touched && streetInput.errors?.required">Street is required<br></span>
-            </div>
-
-            <div>
-                <label for="shippingDateInput">Shipping Date</label>
-                <input #shippingDateInput="ngModel" type="date" name="shippingDate" 
-                    [(ngModel)]="orderDetails.deliveryDate" id="shippingDateInput" required /><br>
-                
-                <span *ngIf="shippingDateInput.touched && shippingDateInput.errors?.required">Shipping date is required<br></span>
-            </div>
-
-            <h3>Payment</h3>
-            <div>
-                <label>Credit Card</label>
-                <input #creaditCardInput="ngModel" type="text" name="creditCard"
-                    [(ngModel)]="creditCard" id="creditCardInput" required /><br>
-
-                <span *ngIf="creaditCardInput.touched && creaditCardInput.errors?.required">Shipping date is required<br></span>    
+                <div class="invalid-feedback" 
+                    *ngIf="citySelect.touched && citySelect.invalid"
+                >
+                    <p *ngIf="citySelect.errors.required">City is required</p>
+                </div>
             </div>
 
             <div class="form-group">
-                <div class="input-group">
-                  <input 
-                    ngbDatepicker
-                    #d="ngbDatepicker"
-                    class="form-control" 
-                    placeholder="yyyy-mm-dd"
-                    name="dp" 
-                    [(ngModel)]="model" 
-                    [minDate]="minDate"
-                    [maxDate]="maxDate"
-                    [dayTemplate]="customDay"  
-                    navigation="arrows">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"></button>
-                  </div>
+                <label for="street">Street</label>
+                <input #streetInput="ngModel" type="text" required
+                    id="street" name="street" class="form-control"   
+                    placeholder="Enter Street"
+                    (dblclick)="onDblStreet()"  
+                    [(ngModel)]="orderDetails.street" 
+                    ngbTooltip="Double click for auto fill" placement="right" 
+                    [ngClass] = "{ 'is-invalid': streetInput.touched && streetInput.invalid }"
+                />
+                <div class="invalid-feedback" 
+                    *ngIf="streetInput.touched && streetInput.invalid"
+                >
+                    <p *ngIf="streetInput.errors.required">Street is required</p>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="shippingDate">Shipping Date</label>
+                <div class="input-group">
+                    <input #shippingDateInput="ngModel" required
+                      ngbDatepicker
+                      name="dp" 
+                      #d="ngbDatepicker"
+                      class="form-control" 
+                      placeholder="yyyy-mm-dd"
+                      [(ngModel)]="model" 
+                      [minDate]="minDate"
+                      [maxDate]="maxDate"
+                      [markDisabled]="isDisabled"
+                      [ngClass] = "{ 'is-invalid': shippingDateInput.touched && 
+                                    shippingDateInput.invalid }" 
+                      firstDayOfWeek="7" 
+                      placement="top" 
+                      outsideDays="collapsed"
+                      navigation="arrows" />
+
+                    <span class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" 
+                          (click)="d.toggle()" type="button"></button>
+                    </span>
+                    
+                    <div class="invalid-feedback" 
+                        *ngIf="shippingDateInput.touched && shippingDateInput.invalid">
+                        <p *ngIf="shippingDateInput.errors.required">Shipping date is required</p>
+                        <p *ngIf="shippingDateInput.errors.ngbDate?.invalid">Date must be a valid date (Ex: yyyy-mm-dd)</p>
+                    </div>
+                </div>
+            </div>
+
+                <!-- <input #shippingDateInput="ngModel" type="date" required
+                    id="shippingDate" name="shippingDate" class="form-control"    
+                    [(ngModel)]="orderDetails.deliveryDate" 
+                    [ngClass] = "{ 'is-invalid': shippingDateInput.touched && 
+                                    shippingDateInput.invalid }"  
+                /> -->
+                <!-- <div class="invalid-feedback" 
+                    *ngIf="shippingDateInput.touched && shippingDateInput.invalid"
+                >
+                    <p *ngIf="shippingDateInput.errors.required">Shipping date is required</p>
+                </div> -->
+
+            <h5>Payment</h5>
+
+            <div class="form-group">
+                <label for="creditCard">Credit Card</label>
+                <input #creaditCardInput="ngModel" type="text" required
+                    id="creditCard" name="creditCard" class="form-control"
+                    placeholder="Enter Credit Card Number"   
+                    [(ngModel)]="creditCard" 
+                    [ngClass] = "{ 'is-invalid': creaditCardInput.touched && 
+                                    creaditCardInput.invalid }"   
+                />
+                <div class="invalid-feedback" 
+                    *ngIf="creaditCardInput.touched && creaditCardInput.invalid"
+                >
+                    <p *ngIf="creaditCardInput.errors.required">Credit Card is required</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                
               </div>
 
-            <input type="button" [disabled]="checkoutForm.form.invalid" 
-                value="Purchase" (click)="onPurchase()" data-toggle="modal" data-target="#purchaseModal"/>
+            <button type="submit" [disabled]="checkoutForm.form.invalid" class="btn-full-main" 
+                data-toggle="modal" data-target="#purchaseModal">Purchase</button>
         </form>
     </div>
 </div>
 
 <!-- Bootstrap Datepicker custom template -->
-<ng-template #customDay let-date let-selected="selected" let-disabled="disabled" let-focused="focused">
+<!-- <ng-template #customDay let-date let-selected="selected" let-disabled="disabled" let-focused="focused">
     <span class="custom-day" [class.focused]="focused"
         [class.bg-primary]="selected" [class.text-muted]="disabled">
         {{ date.day }}
     </span>
-</ng-template>
+</ng-template> -->
 
+<!-- Successful Order Modal-->
 <div class="container">
     <div class="modal fade" id="purchaseModal" role="dialog">
         <div class="modal-dialog" >
