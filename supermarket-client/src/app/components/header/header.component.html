@@ -2,33 +2,29 @@
     <img class="logo-img" src="../../../assets/Online Supermarket.png" />
     <div class="header-right">
         <p class="user-info">
-            <!-- <Button type="button" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"> -->
-                <i class="fal fa-user"></i> 
-                    <span *ngIf="usersService.loggedInUser.userName ">
-                        Hello, {{ usersService.loggedInUser.userName }} 
-                        <Button (click)="onLogout()">(Logout)</Button>
-                    </span>
-                    <span *ngIf="!usersService.loggedInUser.userName ">
-                        Hello, Stranger
-                    </span>
-                    <!-- </Button> -->
+            <i class="fal fa-user"></i>
+            <span *ngIf="usersService.loggedInUser.userName ">
+                Hello, {{ usersService.loggedInUser.userName }}
+                <Button (click)="onLogout()">(Logout)</Button>
+            </span>
+            <span *ngIf="!usersService.loggedInUser.userName ">
+                Hello, Stranger
+            </span>
         </p>
-        <!-- <p #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-                <Button (click)="onLogout()">Logout</Button>
-        </p> -->
-        <div class="row">
-        <form *ngIf="usersService.loggedInUser.token" #searchForm="ngForm" (submit)="onSearchProducts()">
-            <input type="text" [(ngModel)]="searchTerm" placeholder="Search Item..." name="searchTerm"/>
-            <button type="submit" class="btn btn-outline-secondary"><span class="fa fa-search"></span></button>
-        </form>
 
-        <button *ngIf="usersService.loggedInUser.userType == 'CUSTOMER' && !cartService.isInCheckoutMode" 
-            class="cart-btn" (click)="onCartToggle()">
-            <i class="fal fa-shopping-cart">
-                <span class="cart-badge">{{cartService.cart.products.size}}</span>
-            </i>
-        </button>
-    </div>
+        <div class="row">
+            <form *ngIf="usersService.loggedInUser.token" #searchForm="ngForm" (submit)="onSearchProducts()">
+                <input type="text" [(ngModel)]="searchTerm" placeholder="Search Item..." name="searchTerm" />
+                <button type="submit" class="btn btn-outline-secondary"><span class="fa fa-search"></span></button>
+            </form>
+
+            <button *ngIf="usersService.loggedInUser.userType == 'CUSTOMER' && !cartService.isInCheckoutMode"
+                class="cart-btn" (click)="onCartToggle()">
+                <i class="fal fa-shopping-cart">
+                    <span class="cart-badge">{{cartService.cart.products.size}}</span>
+                </i>
+            </button>
+        </div>
 
         <p class="contact-info">
             Contact us

@@ -27,7 +27,7 @@ export class CustomerComponent implements OnInit {
 
     if(this.cartService.cart.products.has(product.id)) {
       this.isInCart = true;
-      this.selectedProduct.quantity = this.cartService.cart.products.get(product.id).quantity;
+      this.selectedProduct.quantity = this.cartService.cart.products.get(product.id).quantity.valueOf();
     }
     else {
       this.isInCart = false;
@@ -44,6 +44,7 @@ export class CustomerComponent implements OnInit {
     observable.subscribe(response => {
       this.cartService.cart.products.set(this.selectedProduct.id, this.selectedProduct);
       this.cartService.total += this.selectedProduct.price;
+      this.cartService.total = +this.cartService.total.toFixed(2);
       this.displayModal = "none";
 
     }, serverErrorResponse => {
@@ -59,6 +60,7 @@ export class CustomerComponent implements OnInit {
       this.cartService.total -= this.cartService.cart.products.get(this.selectedProduct.id).price;
       this.cartService.cart.products.set(this.selectedProduct.id, this.selectedProduct);
       this.cartService.total += this.selectedProduct.price;
+      this.cartService.total = +this.cartService.total.toFixed(2);
       this.displayModal = "none";
 
     }, serverErrorResponse => {

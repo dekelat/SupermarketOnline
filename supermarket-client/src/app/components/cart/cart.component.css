@@ -50,12 +50,16 @@
     overflow-x: hidden;
     height: 65%;
     padding: .5rem;
+    text-align: center;
     background-color: white;
     border-top: 1px solid var(--medium-green);
     border-bottom: 1px solid var(--medium-green);
 }
 .cart-content img {
     width: 5rem;
+}
+.cart-content table {
+    width: 100%;
 }
 .cart-content td {
     padding: .5rem;

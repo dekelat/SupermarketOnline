@@ -21,6 +21,11 @@
 </div>
 
 <div class="cart-content">
+    
+    <div *ngIf="cartService.cart.products?.size == 0">
+        <p>Your Cart is Currently Empty</p>
+    </div>
+
     <table>
         <tbody>
             <tr *ngFor="let product of cartService.cart.products | keyvalue"
