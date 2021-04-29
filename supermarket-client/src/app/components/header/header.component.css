@@ -1,11 +1,12 @@
 .header-content {
     width: 100vw;
     padding: .3rem 10vw;
+    display: flex;
     position: relative;
     border-bottom: 1px solid var(--light-green);
 }
 
-p {
+.header-right {
     text-align: right;
     color: var(--grey);
     font-size:  var(--font-small);
@@ -13,8 +14,11 @@ p {
     bottom: 0;
     right: 10vw;
 }
+.header-right p {
+    margin-bottom: 5px;
+}
 
-p span {
+p.contact-info {
     color: var(--dark-green);
 }
 

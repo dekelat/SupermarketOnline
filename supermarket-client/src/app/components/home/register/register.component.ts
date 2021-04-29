@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { City } from 'src/app/models/City';
 import { UserDetails } from 'src/app/models/UserDetails';
@@ -24,6 +25,18 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+  }
+
+  private passwordMathValidator(form: FormGroup) {
+    const password = form.controls['password'].value;
+    const confirmPassword = form.controls['confirmPassword'].value;
+
+    if(!password || !confirmPassword) {
+      return null;
+    }
+
+    return (password === confirmPassword) ? null : {mismatch: true};
   }
 
   public next() {

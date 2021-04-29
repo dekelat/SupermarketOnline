@@ -13,15 +13,14 @@ import { ProductsService } from 'src/app/services/products.service';
 export class ProductsComponent implements OnInit {
 
   public categories: Category[];
-  public products: Product[];
 
   @Output() productClickEvent= new EventEmitter<Product>();
 
   constructor(private categoriesService: CategoriesService, 
-    private productsService: ProductsService,
+    public productsService: ProductsService,
     private cartService: CartService) {
       this.categories = [];
-      this.products = [];
+      // this.products = [];
     }
 
   ngOnInit(): void {
@@ -42,7 +41,7 @@ export class ProductsComponent implements OnInit {
     let observable = this.productsService.getProducts(categoryId);
 
     observable.subscribe(products => {
-      this.products = products;
+      this.productsService.products = products;
     }, serverErrorResponse => {
       alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
     });

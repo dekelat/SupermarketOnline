@@ -17,7 +17,7 @@
         font-family: 'Belleza';
     }
 
-label {
+/* label {
     padding: 0 0 0 .3rem;
     margin: 0;
     font-size: .8rem;
@@ -34,35 +34,10 @@ input[type="text"], input[type="email"], input[type="password"] {
     padding: 0 .3rem .3rem;
     font-size: 1.2rem;
     color: #3d7742;
-}
+} */
 
 
-input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #3d77426c;
-    opacity: 1; /* Firefox */
-}
-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: #3d77426c;
-}
-input::-ms-input-placeholder { /* Microsoft Edge */
-    color: #3d77426c;
-}
 
-/* input focus */
-input:focus {
-    border: none;
-    border-bottom: 2px solid #3d7742;
-}
-input:focus::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #3d7742;
-    opacity: 1; 
-}
-input:focus:-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: #3d7742;
-}
-input:focus::-ms-input-placeholder { /* Microsoft Edge */
-    color: #3d7742;
-}
 
 /* remove background from autofill */
 input:-webkit-autofill,
@@ -79,7 +54,7 @@ select:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
 }
   
-.btn {
+/* .btn {
     background-color: rgb(55, 100, 28);
     color: whitesmoke;
     float: right;
@@ -87,5 +62,5 @@ select:-webkit-autofill:focus {
     font-family: 'Belleza';
     font-weight: bolder;
     box-shadow: 3px 3px 3px rgba(41, 75, 21, 0.534);
-}
+} */
 

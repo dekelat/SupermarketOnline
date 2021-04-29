@@ -1,21 +1,39 @@
 <div class="header-content clearfix">
     <img class="logo-img" src="../../../assets/Online Supermarket.png" />
-    <p>
-        <i class="fal fa-user"></i> Hello, Stranger <i class="fas fa-chevron-down"></i><br />
-        
-        <input type="text" placeholder="Search Item..." />
+    <div class="header-right">
+        <p class="user-info">
+            <!-- <Button type="button" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"> -->
+                <i class="fal fa-user"></i> 
+                    <span *ngIf="usersService.loggedInUser.userName ">
+                        Hello, {{ usersService.loggedInUser.userName }} 
+                        <Button (click)="onLogout()">(Logout)</Button>
+                    </span>
+                    <span *ngIf="!usersService.loggedInUser.userName ">
+                        Hello, Stranger
+                    </span>
+                    <!-- </Button> -->
+        </p>
+        <!-- <p #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                <Button (click)="onLogout()">Logout</Button>
+        </p> -->
+        <div class="row">
+        <form *ngIf="usersService.loggedInUser.token" #searchForm="ngForm" (submit)="onSearchProducts()">
+            <input type="text" [(ngModel)]="searchTerm" placeholder="Search Item..." name="searchTerm"/>
+            <button type="submit" class="btn btn-outline-secondary"><span class="fa fa-search"></span></button>
+        </form>
 
-        <button [disabled]="cartService.isInCheckoutMode" 
+        <button *ngIf="usersService.loggedInUser.userType == 'CUSTOMER' && !cartService.isInCheckoutMode" 
             class="cart-btn" (click)="onCartToggle()">
             <i class="fal fa-shopping-cart">
                 <span class="cart-badge">{{cartService.cart.products.size}}</span>
             </i>
-        </button><br />
+        </button>
+    </div>
 
-        <span>
+        <p class="contact-info">
             Contact us
             <i class="fal fa-phone-alt"></i> (+972) 972-972-972 |
             <i class="fal fa-envelope"></i> super@market.com
-        </span>
-    </p>
+        </p>
+    </div>
 </div>

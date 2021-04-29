@@ -49,6 +49,7 @@
                 <div class="input-group">
                     <input #shippingDateInput="ngModel" required
                       ngbDatepicker
+                      id="shippingDate"
                       name="dp" 
                       #d="ngbDatepicker"
                       class="form-control" 
@@ -65,7 +66,7 @@
                       navigation="arrows" />
 
                     <span class="input-group-append">
-                      <button class="btn btn-outline-secondary calendar" 
+                      <button class="btn btn-outline-secondary calendar"
                           (click)="d.toggle()" type="button"></button>
                     </span>
                     

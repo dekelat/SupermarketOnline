@@ -17,7 +17,6 @@ async function getTotalNumberOfOrders() {
 }
 
 async function createNewOrder(order) {
-    console.log("in dao");
     let sql = `INSERT INTO orders 
                     (cart_id, 
                     total_price, 

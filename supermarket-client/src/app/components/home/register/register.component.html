@@ -8,91 +8,154 @@
     </div>
 </div> -->
 
-<form #registerForm="ngForm">
+<form #registerForm="ngForm" (submit)="register()">
+    
+    <!-- First Step -->
     <div *ngIf="registrationStage == 1">
-        <div>
-            <label for="userIdInput">ID</label>
-            <input #userIdInput="ngModel" type="text" placeholder="Enter ID" name="userId" [(ngModel)]="userDetails.id"
-                id="userIdInput" pattern="^[0-9]{9}$" required /><br>
 
-            <span *ngIf="userIdInput.touched && userIdInput.errors?.required">ID is required<br></span>
-            <span *ngIf="userIdInput.errors?.pattern">User ID should be a 9 figure nummber<br></span>
+        <!-- User ID-->
+        <div class="form-group">
+            <label for="userId">ID</label>
+            <input #userIdInput="ngModel" type="text" required pattern="^[0-9]{9}$" 
+                id="userId" name="userId" class="form-control" placeholder="Enter ID" 
+                [(ngModel)]="userDetails.id"
+                [ngClass] = "{ 'is-invalid': userIdInput.touched && userIdInput.invalid }"
+            />
+            <div class="invalid-feedback" 
+                *ngIf="userIdInput.touched && userIdInput.invalid">
+                    <p *ngIf="userIdInput.errors.required">ID is required</p>
+                    <p *ngIf="userIdInput.errors.pattern">User ID should be a 9 figure number</p>
+            </div>
         </div>
 
-        <div>
-            <label for="emailInput">Email</label>
-            <input #emailInput="ngModel" type="email" placeholder="Enter Email" name="email"
-                [(ngModel)]="userDetails.email" id="emailInput" required pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" /><br>
-
-            <span *ngIf="emailInput.touched && emailInput.errors?.required">Email is required<br></span>
-            <span *ngIf="emailInput.errors?.pattern">Email should have this pattern usr@ab.cd<br></span>
+        <!-- Email -->
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input #emailInput="ngModel" type="email"  required 
+                pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                id="email" name="email" class="form-control" placeholder="Enter Email" 
+                [(ngModel)]="userDetails.email" 
+                [ngClass] = "{ 'is-invalid': emailInput.touched && emailInput.invalid }" 
+            />
+            <div class="invalid-feedback" 
+                *ngIf="emailInput.touched && emailInput.invalid">
+                    <p *ngIf="emailInput.errors.required">Email is required</p>
+                    <p *ngIf="emailInput.errors.pattern">Invalid email</p>
+            </div>
         </div>
 
-        <div>
-            <label for="passwordInput">Password</label>
-            <input #passwordInput="ngModel" type="password" placeholder="Enter Password" name="password"
-                [(ngModel)]="userDetails.password" id="passwordInput" required pattern="^[0-9a-zA-Z]{8,20}$" /><br>
-
-            <span *ngIf="passwordInput.touched && passwordInput.errors?.required">Password is required<br></span>
-            <span *ngIf="passwordInput.errors?.pattern">Your password must be 8-20 characters long, contain letters
-                and
-                numbers, and must not contain spaces, special characters, or emoji.<br></span>
+        <!-- Password -->
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input #passwordInput="ngModel" type="password" required 
+                pattern="^[0-9a-zA-Z]{8,20}$"
+                id="password" name="password" class="form-control" 
+                placeholder="Enter Password" 
+                [(ngModel)]="userDetails.password" 
+                [ngClass] = "{ 'is-invalid': passwordInput.touched && passwordInput.invalid }"   
+            />
+            <div class="invalid-feedback" 
+                *ngIf="passwordInput.touched && passwordInput.invalid">
+                    <p *ngIf="passwordInput.errors.required">Password is required</p>
+                    <p *ngIf="passwordInput.errors.pattern">
+                        Your password must be 8-20 characters long, contain letters and
+                        numbers, and must not contain spaces, special characters, or emoji.
+                    </p>
+            </div>
         </div>
 
-        <div>
-            <label for="validatePasswordInput">Confirm Password</label>
-            <input #validatePasswordInput="ngModel" type="password" placeholder="Confirm Password"
-                name="confirmPassword" [(ngModel)]="confirmPassword" id="validatePasswordInput" required /><br>
-
-            <span *ngIf="validatePasswordInput.touched && validatePasswordInput.errors?.required">Confirm your
-                password<br></span>
+        <!-- Confirm Password -->
+        <div class="form-group">
+            <label for="validatePassword">Confirm Password</label>
+            <input #validatePasswordInput="ngModel" type="password" required
+                id="validatePassword" name="confirmPassword" class="form-control"   
+                placeholder="Confirm Password"
+                [(ngModel)]="confirmPassword"
+                [ngClass] = "{ 'is-invalid': validatePasswordInput.touched && validatePasswordInput.invalid }"      
+            />
+            <div class="invalid-feedback" 
+                *ngIf="validatePasswordInput.touched && validatePasswordInput.invalid">
+                    <p *ngIf="validatePasswordInput.errors.required">Confirm your password</p>
+                    <p *ngIf="confirmPassword != '' && confirmPassword != userDetails.password">
+                        Passwords don't match
+                    </p>
+            </div>
             <span
                 *ngIf="validatePasswordInput.touched && confirmPassword != '' && confirmPassword != userDetails.password">Passwords
                 don't match<br></span>
         </div>
 
-        <input type="button" [disabled]="registerForm.form.invalid" class="btn" value="Next" (click)="next()" />
+        <button type="button" [disabled]="registerForm.form.invalid" class="btn" (click)="next()">Next</button>
     </div>
 
+    <!-- Second Step -->
     <div *ngIf="registrationStage == 2">
-        <div>
-            <label for="citySelect">City</label><br>
-            <select #citySelect="ngModel" name="city" required [(ngModel)]="userDetails.city" id="citySelect">
+
+        <!-- City -->
+        <div class="form-group">
+            <label for="city">City</label>
+            <select #citySelect="ngModel" required
+                id="city" name="city" class="form-control"    
+                [(ngModel)]="userDetails.city" 
+                [ngClass] = "{ 'is-invalid': citySelect.touched && citySelect.invalid }"      
+            >
+                <option [ngValue]="undefined" disabled>Select a City</option>
                 <option *ngFor="let city of cities" key="city">{{city}}</option>
-            </select><br>
-
-            <span *ngIf="citySelect.touched && citySelect.errors?.required">City is required<br></span>
+            </select>
+            <div class="invalid-feedback" 
+                *ngIf="citySelect.touched && citySelect.invalid">
+                    <p *ngIf="citySelect.errors.required">City is required</p>
+            </div>
         </div>
 
-        <div>
-            <label for="streetInput">Street</label>
-            <input #streetInput="ngModel" type="text" placeholder="Enter Street" name="street"
-                [(ngModel)]="userDetails.street" id="streetInput" required /><br>
-
-            <span *ngIf="streetInput.touched && streetInput.errors?.required">Street is required<br></span>
+        <!-- Street -->
+        <div class="form-group">
+            <label for="street">Street</label>
+            <input #streetInput="ngModel" type="text" required 
+                id="street" name="street" class="form-control"  placeholder="Enter Street" 
+                [(ngModel)]="userDetails.street"   
+                [ngClass] = "{ 'is-invalid': streetInput.touched && streetInput.invalid }"      
+            />
+            <div class="invalid-feedback" 
+                *ngIf="streetInput.touched && streetInput.invalid">
+                    <p *ngIf="streetInput.errors.required">Street is required</p>
+            </div>
         </div>
 
-        <div>
-            <label for="firstNameInput">First Name</label>
-            <input #firstNameInput="ngModel" type="text" placeholder="Enter First Name" name="firstName"
-                [(ngModel)]="userDetails.firstName" id="firstNameInput" required /><br>
-
-            <span *ngIf="firstNameInput.touched && firstNameInput.errors?.required">First Name is
-                required<br></span>
+        <!-- First Name -->
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input #firstNameInput="ngModel" type="text" required 
+                id="firstName" name="firstName" class="form-control" 
+                placeholder="Enter First Name" 
+                [(ngModel)]="userDetails.firstName"  
+                [ngClass] = "{ 'is-invalid': firstNameInput.touched && firstNameInput.invalid }"       
+            />
+            <div class="invalid-feedback" 
+                *ngIf="firstNameInput.touched && firstNameInput.invalid">
+                    <p *ngIf="firstNameInput.errors.required">First Name is required</p>
+            </div>
         </div>
 
-        <div>
-            <label for="lastNameInput">Last Name</label>
-            <input #lastNameInput="ngModel" type="text" placeholder="Enter Last Name" name="lastName"
-                [(ngModel)]="userDetails.lastName" id="lastNameInput" required /><br>
-
-            <span *ngIf="lastNameInput.touched && lastNameInput.errors?.required">Last Name is required<br></span>
+        <!-- Last Name -->
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input  #lastNameInput="ngModel" type="text" required 
+                id="lastName" name="lastName" class="form-control" 
+                placeholder="Enter Last Name"
+                [(ngModel)]="userDetails.lastName" 
+                [ngClass] = "{ 'is-invalid': lastNameInput.touched && lastNameInput.invalid }"         
+            />
+            <div class="invalid-feedback" 
+                *ngIf="lastNameInput.touched && lastNameInput.invalid">
+                    <p *ngIf="lastNameInput.errors.required">Last Name is required</p>
+            </div>
         </div>
 
-        <input type="button" [disabled]="registerForm.form.invalid" class="btn" value="Register" (click)="register()" />
-        <input type="button" class="btn" value="Back" (click)="back()" />
+        <button type="submit" [disabled]="registerForm.form.invalid" class="btn">Register</button>
+        <button type="button" class="btn" (click)="back()">Back</button>
     </div>
-</form><br><br>
+</form><br>
 
 <div class="text-center">
     <a routerLink="/home/login">Already Have an Account? <span>sign in</span></a>

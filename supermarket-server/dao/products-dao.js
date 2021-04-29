@@ -106,11 +106,36 @@ async function deleteProduct(productId) {
     }
 }
 
+async function getProductsByName(name) {
+    let sql = `SELECT 
+                    id,
+                    name,
+                    category_id AS categoryId,
+                    unit_price AS unitPrice,
+                    image_url AS imageUrl
+                FROM
+                    products
+                WHERE
+                    LOWER(name) LIKE LOWER(?)`;
+    let parameters = ["%" + name + "%"];
+    let products;
+
+    try {
+        products = await connection.executeWithParameters(sql, parameters);
+    }
+    catch (error) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, name, error);
+    }
+
+    return products;
+}
+
 module.exports = {
     getAllProducts,
     getProductsByCategory,
     getNumberOfProducts,
     addProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getProductsByName
 };

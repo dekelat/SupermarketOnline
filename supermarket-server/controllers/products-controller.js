@@ -91,4 +91,18 @@ router.delete("/:id", async (request, response, next) => {
     }
 });
 
+// Get products by name
+// GET http://localhost:3001/products/search/:name
+router.get("/search/:name", async (request, response, next) => {
+    let name = request.params.name;
+    
+    try {
+        let products = await productsLogic.getProductsByName(name);
+        response.json(products);
+    }
+    catch (error) {
+        return next(error); 
+    }
+});
+
 module.exports = router;

@@ -9,7 +9,11 @@ import { Product } from '../models/Product';
 })
 export class ProductsService {
 
-  constructor(private http: HttpClient) { }
+  public products: Product[];
+
+  constructor(private http: HttpClient) { 
+    this.products = [];
+  }
 
   public getNumberOfAvailableProducts(): Observable<Count> {
     return this.http.get<Count>("http://localhost:3001/products/count");
@@ -17,5 +21,9 @@ export class ProductsService {
 
   public getProducts(categoryId: number): Observable<Product[]> {
     return this.http.get<Product[]>("http://localhost:3001/products/" + categoryId);
+  }
+
+  public searchProducts(productName: string): Observable<Product[]> {
+    return this.http.get<Product[]>("http://localhost:3001/products/search/" + productName);
   }
 }

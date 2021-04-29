@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { City } from 'src/app/models/City';
 import { Order } from 'src/app/models/Order';
 import { CartService } from 'src/app/services/cart.service';
@@ -26,7 +26,8 @@ export class CheckoutComponent implements OnInit {
 
   constructor(private router: Router, private sanitizer: DomSanitizer,
     private calendar: NgbCalendar, private usersService: UsersService, 
-    private cartService: CartService, private ordersService: OrdersService) {
+    private cartService: CartService, private ordersService: OrdersService) 
+  {
       this.creditCard = "";
       this.invoiceUrl = null;
       this.orderDetails = new Order();
@@ -81,6 +82,7 @@ export class CheckoutComponent implements OnInit {
     
     let observable = this.ordersService.saveOrder(this.orderDetails);
     observable.subscribe( orderId => {
+      sessionStorage.removeItem("cartId");
       this.orderDetails.id = orderId;
       this.createInvoice();
     }, serverErrorResponse => {

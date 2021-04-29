@@ -10,7 +10,11 @@ import { UserLoginDetails } from '../models/UserLoginDetails';
 })
 export class UsersService {
 
-  constructor(private http: HttpClient) { }
+  public loggedInUser: SuccessfulLoginServerResponse;
+
+  constructor(private http: HttpClient) { 
+    this.loggedInUser = new SuccessfulLoginServerResponse();
+  }
 
   public login(userLoginDetails: UserLoginDetails): Observable<SuccessfulLoginServerResponse> {
     return this.http.post<SuccessfulLoginServerResponse>

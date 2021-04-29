@@ -60,11 +60,17 @@ async function deleteProduct(productId, userType) {
     // Broadcast changes to logged in users
 }
 
+async function getProductsByName(name) {
+    let products = await productsDao.getProductsByName(name);
+    return products;
+}
+
 module.exports = {
     getAllProducts,
     getProductsByCategory,
     getNumberOfProducts,
     addProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getProductsByName
 };

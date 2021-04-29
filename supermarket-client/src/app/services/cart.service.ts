@@ -16,6 +16,7 @@ export class CartService {
 
   constructor(private http: HttpClient) { 
     this.cart = new Cart();
+    this.cart.products = new Map();
     this.total = 0;
     this.isCartOpen = true;
     this.isInCheckoutMode = false;

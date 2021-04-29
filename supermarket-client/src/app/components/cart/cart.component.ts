@@ -10,7 +10,11 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class CartComponent implements OnInit {
 
-  constructor(public cartService: CartService) { }
+  public searchInput: string;
+
+  constructor(public cartService: CartService) { 
+    this.searchInput = "";
+  }
 
   ngOnInit(): void {
     if (this.cartService.cart.id === undefined) {

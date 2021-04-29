@@ -1,23 +1,30 @@
 <div class="cart-header">
     <button *ngIf="!cartService.isInCheckoutMode" class="close-cart-btn"
         (click)="onCloseCart()">
-        X</button>
+        <i class="fas fa-times"></i></button>
 
-    <button *ngIf="cartService.isInCheckoutMode" 
+    <button *ngIf="cartService.isInCheckoutMode" class="close-cart-btn"
         (click)="onBackToShop()">
-        Back To Shop</button>
+        <i class="fas fa-arrow-left"></i> Back</button>
 
     <h2>My Cart</h2>
 
     <button *ngIf="!cartService.isInCheckoutMode" class="empty-cart-btn"
         (click)="onDeleteAllItems()">
         Empty Cart</button>
+
+    <span *ngIf="cartService.isInCheckoutMode" class="search-box">
+        <input class="search-input" [(ngModel)]="searchInput" 
+            placeholder=" Search Item in Cart"/>
+        <i class="fas fa-search"></i>
+    </span>
 </div>
 
 <div class="cart-content">
     <table>
         <tbody>
-            <tr *ngFor="let product of cartService.cart.products | keyvalue">
+            <tr *ngFor="let product of cartService.cart.products | keyvalue"
+            [ngClass]="{ highlighted: product.value.name | isHighlighted:searchInput }">
                 <td><img src="{{product.value.imageUrl}}"/></td>
                 <td>{{product.value.name}}</td>
                 <td>{{product.value.quantity}}x</td>
