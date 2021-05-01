@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from '../components/home/login/login.component';
 import { RegisterComponent } from '../components/home/register/register.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AboutComponent } from '../components/home/about/about.component';
 import { ShopTransitionComponent } from '../components/home/shop-transition/shop-transition.component';
 import { HomeComponent } from '../components/home/home.component';
@@ -28,7 +28,7 @@ const routes: Routes = [
     AboutComponent
   ],
   imports: [
-    FormsModule,
+    FormsModule, ReactiveFormsModule,
     CommonModule,
     RouterModule.forChild(routes) // Importing the above routes
   ]

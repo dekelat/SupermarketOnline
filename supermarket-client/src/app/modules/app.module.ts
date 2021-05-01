@@ -37,10 +37,10 @@ import { CartComponent } from '../components/cart/cart.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule, ReactiveFormsModule,
     HttpClientModule,
     HomeRoutingModule,
     RouterModule, RoutingModule,
-    FormsModule, ReactiveFormsModule,
     NgbModule
   ],
   providers: [

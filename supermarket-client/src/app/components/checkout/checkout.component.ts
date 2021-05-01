@@ -41,10 +41,15 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void { 
     let observable = this.ordersService.getUnavailableDeliveryDates();
     observable.subscribe(dates => {
-        dates.forEach(date => 
+        console.log(dates);
+        dates.forEach(date => {
+          date = new Date(date);
+          console.log(date);
           this.unavailableDeliveryDates.push(
-            new NgbDate(date.getUTCDay(), date.getUTCMonth() + 1, date.getUTCFullYear()))
-        );
+            new NgbDate(date.getDate(), date.getMonth() + 1, date.getFullYear()))
+        });
+        console.log(this.unavailableDeliveryDates);
+
     }, serverErrorResponse => {
       alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
     })

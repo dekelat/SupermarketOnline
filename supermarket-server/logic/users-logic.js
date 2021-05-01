@@ -44,9 +44,9 @@ async function addUser(user) {
         throw new ServerError(ErrorType.ID_ALREADY_EXIST);
     }
 
-    if (!isEmailValid(user.email)) {
-        throw new ServerError(ErrorType.INVALID_EMAIL);
-    }
+    // if (!isEmailValid(user.email)) {
+    //     throw new ServerError(ErrorType.INVALID_EMAIL);
+    // }
 
     // Validate email doesn't exist
     if (await usersDao.isUserExistByEmail(user.email)) {
@@ -60,7 +60,7 @@ async function addUser(user) {
 }
 
 function isEmailValid(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    return /^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$/.test(email)
 }
 
 function createUserSession(userData){

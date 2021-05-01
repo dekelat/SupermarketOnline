@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { City } from 'src/app/models/City';
 import { UserDetails } from 'src/app/models/UserDetails';
@@ -13,22 +13,38 @@ import { UsersService } from 'src/app/services/users.service';
 export class RegisterComponent implements OnInit {
 
   public userDetails: UserDetails;
-  public confirmPassword: string;
   public cities: Array<string>;
   public registrationStage: number;
 
+  public registerPartOneForm: FormGroup;
+  public id: FormControl;
+  public email: FormControl;
+  public password: FormControl;
+  public confirmPassword: FormControl;
+
   constructor(private usersService: UsersService, private router: Router) { 
     this.userDetails = new UserDetails();
-    this.confirmPassword = "";
     this.cities = Object.values(City);
     this.registrationStage = 1;
   }
 
   ngOnInit(): void {
-    
+    // Initializing form controls with validators
+    this.id = new FormControl("", [Validators.required, Validators.pattern("^[0-9]{9}$")]);
+    this.email = new FormControl("", [Validators.required, Validators.email]);
+    this.password = new FormControl("", [Validators.required, Validators.pattern("^[0-9a-zA-Z]{8,20}$")]);
+    this.confirmPassword = new FormControl("", [Validators.required]);
+
+    // Initializing the from group
+    this.registerPartOneForm = new FormGroup({
+      id: this.id,
+      email: this.email,
+      password: this.password,
+      confirmPassword: this.confirmPassword
+    }, { validators: this.passwordMatchValidator.bind(this)});
   }
 
-  private passwordMathValidator(form: FormGroup) {
+  public passwordMatchValidator(form: FormGroup) {
     const password = form.controls['password'].value;
     const confirmPassword = form.controls['confirmPassword'].value;
 
@@ -40,6 +56,9 @@ export class RegisterComponent implements OnInit {
   }
 
   public next() {
+    this.userDetails.id = this.id.value;
+    this.userDetails.email = this.email.value;
+    this.userDetails.password = this.password.value;
     this.registrationStage++;
   }
 
