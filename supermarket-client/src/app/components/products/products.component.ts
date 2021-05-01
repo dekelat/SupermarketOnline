@@ -17,10 +17,8 @@ export class ProductsComponent implements OnInit {
   @Output() productClickEvent= new EventEmitter<Product>();
 
   constructor(private categoriesService: CategoriesService, 
-    public productsService: ProductsService,
-    private cartService: CartService) {
+    public productsService: ProductsService) {
       this.categories = [];
-      // this.products = [];
     }
 
   ngOnInit(): void {
@@ -30,6 +28,7 @@ export class ProductsComponent implements OnInit {
       this.categories = categories;
 
       // Init products with the first category
+      this.categoriesService.currentCategoryId = this.categories[0].id;
       this.getProducts(this.categories[0].id);
 
     }, serverErrorResponse => {
@@ -38,6 +37,7 @@ export class ProductsComponent implements OnInit {
   }
 
   public getProducts(categoryId) {
+    this.categoriesService.currentCategoryId = categoryId;
     let observable = this.productsService.getProducts(categoryId);
 
     observable.subscribe(products => {

@@ -7,6 +7,7 @@
   align-items: center;
 }
 
+/******* Header *******/
 .checkout-header {
   width: 100%;
   text-align: center;
@@ -17,6 +18,7 @@
   font-weight: 600;
 }
 
+/******** Content ********/
 .checkout-content {
   width: 60%;
   height: 90%;

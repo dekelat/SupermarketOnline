@@ -27,7 +27,8 @@ export class CustomerComponent implements OnInit {
 
     if(this.cartService.cart.products.has(product.id)) {
       this.isInCart = true;
-      this.selectedProduct.quantity = this.cartService.cart.products.get(product.id).quantity.valueOf();
+      let temp = this.cartService.cart.products.get(product.id).quantity;
+      this.selectedProduct.quantity = temp;
     }
     else {
       this.isInCart = false;

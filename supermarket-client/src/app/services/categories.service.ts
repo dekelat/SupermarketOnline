@@ -8,6 +8,8 @@ import { Category } from '../models/Category';
 })
 export class CategoriesService {
 
+  public currentCategoryId: number;
+  
   constructor(private http: HttpClient) { }
 
   public getCategories(): Observable<Category[]> {

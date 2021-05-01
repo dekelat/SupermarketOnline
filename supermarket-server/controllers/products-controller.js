@@ -51,8 +51,8 @@ router.post("/", async (request, response, next) => {
     let userType = cache.extractUserDataFromCache(request).userType;
 
     try {
-        await productsLogic.addProduct(product, userType);
-        response.json();
+        let newProductId = await productsLogic.addProduct(product, userType);
+        response.json(newProductId);
     }
     catch (error) {
         return next(error); 
@@ -68,22 +68,6 @@ router.put("/", async (request, response, next) => {
 
     try {
         await productsLogic.updateProduct(product, userType);
-        response.json();
-    }
-    catch (error) {
-        return next(error); 
-    }
-});
-
-// Delete product
-// DELETE http://localhost:3001/products/:id
-router.delete("/:id", async (request, response, next) => {
-
-    let productId = request.params.id;
-    let userType = cache.extractUserDataFromCache(request).userType;
-
-    try {
-        await productsLogic.deleteProduct(productId, userType);
         response.json();
     }
     catch (error) {

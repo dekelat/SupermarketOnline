@@ -13,12 +13,12 @@ import { HomeRoutingModule } from './home-routing.module';
 import { CustomerComponent } from '../components/customer/customer.component';
 import { ProductsComponent } from '../components/products/products.component';
 import { ProductComponent } from '../components/product/product.component';
-import { CartComponent } from '../components/cart/cart.component';
 import { FooterComponent } from '../components/footer/footer.component';
 import { CheckoutComponent } from '../components/checkout/checkout.component';
 import { AdminComponent } from '../components/admin/admin.component';
 import { ManageProductsComponent } from '../components/admin/manage-products/manage-products.component';
 import { IsHighlightedPipe } from '../pipes/is-highlighted.pipe';
+import { CartComponent } from '../components/cart/cart.component';
 
 
 @NgModule({

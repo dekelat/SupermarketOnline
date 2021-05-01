@@ -28,9 +28,8 @@ async function addProduct(product, userType) {
         throw new ServerError(ErrorType.MISSING_REQUIRED_FIELDS);
     }
 
-    await productsDao.addProduct(product);
-
-    // Broadcast changes to logged in users
+    let newProductId = await productsDao.addProduct(product);
+    return newProductId;
 }
 
 async function updateProduct(product, userType) {
@@ -49,17 +48,6 @@ async function updateProduct(product, userType) {
     // Broadcast changes to logged in users
 }
 
-async function deleteProduct(productId, userType) {
-
-    if (userType != "ADMIN"){
-        throw new ServerError(ErrorType.UNAUTHORIZED_ACTION);
-    }
-
-    await productsDao.deleteProduct(productId);
-
-    // Broadcast changes to logged in users
-}
-
 async function getProductsByName(name) {
     let products = await productsDao.getProductsByName(name);
     return products;
@@ -71,6 +59,5 @@ module.exports = {
     getNumberOfProducts,
     addProduct,
     updateProduct,
-    deleteProduct,
     getProductsByName
 };

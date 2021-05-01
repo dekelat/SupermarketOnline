@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { Cart } from 'src/app/models/Cart';
 import { City } from 'src/app/models/City';
 import { Order } from 'src/app/models/Order';
 import { CartService } from 'src/app/services/cart.service';
@@ -74,15 +75,23 @@ export class CheckoutComponent implements OnInit {
   }
 
   public onPurchase(): void {
-    this.orderDetails.deliveryDate = new Date(this.model.year, this.model.month - 1, this.model.day);
     this.orderDetails.orderDate = new Date();
     this.orderDetails.cartId = this.cartService.cart.id;
     this.orderDetails.totalPrice = this.cartService.total;
     this.orderDetails.paymentMethod = this.creditCard.substr(-4);
+    this.orderDetails.deliveryDate = new Date(this.model.year, this.model.month - 1, this.model.day);
     
     let observable = this.ordersService.saveOrder(this.orderDetails);
     observable.subscribe( orderId => {
+
+      // Init cart details
       sessionStorage.removeItem("cartId");
+      this.cartService.cart = new Cart();
+      this.cartService.cart.products = new Map();
+      this.cartService.total = 0;
+      this.cartService.isCartOpen = true;
+
+      // Create invoice
       this.orderDetails.id = orderId;
       this.createInvoice();
     }, serverErrorResponse => {

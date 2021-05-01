@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SuccessfulLoginServerResponse } from 'src/app/models/SuccessfulLoginServerResponse';
 import { CartService } from 'src/app/services/cart.service';
+import { CategoriesService } from 'src/app/services/categories.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -18,7 +19,8 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router,
     public cartService: CartService, 
     public usersService: UsersService,
-    public productsService: ProductsService) {
+    public productsService: ProductsService,
+    public categoriesService: CategoriesService) {
       this.isCollapsed = true;
       this.searchTerm = "";
   }
@@ -41,6 +43,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public onSearchProducts() {
+    this.categoriesService.currentCategoryId = undefined;
     let observable = this.productsService.searchProducts(this.searchTerm);
     this.searchTerm = "";
 

@@ -7,6 +7,7 @@
         <form #checkoutForm="ngForm" (submit)="onPurchase()">
             <h5>Shipping</h5>
 
+            <!-- City -->
             <div class="form-group">
                 <label for="city">City</label>
                 <select #citySelect="ngModel" required
@@ -27,6 +28,7 @@
                 </div>
             </div>
 
+            <!-- Street -->
             <div class="form-group">
                 <label for="street">Street</label>
                 <input #streetInput="ngModel" type="text" required
@@ -44,13 +46,14 @@
                 </div>
             </div>
 
+            <!-- Delivery Date-->
             <div class="form-group">
-                <label for="shippingDate">Shipping Date</label>
+                <label for="deliveryDate">Delivery Date</label>
                 <div class="input-group">
-                    <input #shippingDateInput="ngModel" required
+                    <input #deliveryDateInput="ngModel" required
                       ngbDatepicker
-                      id="shippingDate"
-                      name="dp" 
+                      id="deliveryDate"
+                      name="deliveryDate" 
                       #d="ngbDatepicker"
                       class="form-control" 
                       placeholder="yyyy-mm-dd"
@@ -58,8 +61,8 @@
                       [minDate]="minDate"
                       [maxDate]="maxDate"
                       [markDisabled]="isDisabled"
-                      [ngClass] = "{ 'is-invalid': shippingDateInput.touched && 
-                                    shippingDateInput.invalid }" 
+                      [ngClass] = "{ 'is-invalid': deliveryDateInput.touched && 
+                                        deliveryDateInput.invalid }" 
                       firstDayOfWeek="7" 
                       placement="top" 
                       outsideDays="collapsed"
@@ -71,9 +74,9 @@
                     </span>
                     
                     <div class="invalid-feedback" 
-                        *ngIf="shippingDateInput.touched && shippingDateInput.invalid">
-                        <p *ngIf="shippingDateInput.errors.required">Shipping date is required</p>
-                        <p *ngIf="shippingDateInput.errors.ngbDate?.invalid">Date must be a valid date (Ex: yyyy-mm-dd)</p>
+                        *ngIf="deliveryDateInput.touched && deliveryDateInput.invalid">
+                        <p *ngIf="deliveryDateInput.errors.required">Delivery date is required</p>
+                        <p *ngIf="deliveryDateInput.errors.ngbDate?.invalid">Date must be a valid date (Ex: yyyy-mm-dd)</p>
                     </div>
                 </div>
             </div>
@@ -92,10 +95,12 @@
 
             <h5>Payment</h5>
 
+            <!-- Credit Card -->
             <div class="form-group">
                 <label for="creditCard">Credit Card</label>
                 <input #creaditCardInput="ngModel" type="text" required
                     id="creditCard" name="creditCard" class="form-control"
+                    autocomplete="off"
                     placeholder="Enter Credit Card Number"   
                     [(ngModel)]="creditCard" 
                     [ngClass] = "{ 'is-invalid': creaditCardInput.touched && 
@@ -107,10 +112,6 @@
                     <p *ngIf="creaditCardInput.errors.required">Credit Card is required</p>
                 </div>
             </div>
-
-            <div class="form-group">
-                
-              </div>
 
             <button type="submit" [disabled]="checkoutForm.form.invalid" class="btn-full-main" 
                 data-toggle="modal" data-target="#purchaseModal">Purchase</button>

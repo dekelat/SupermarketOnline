@@ -10,9 +10,11 @@ import { Product } from '../models/Product';
 export class ProductsService {
 
   public products: Product[];
+  public selectedProduct: Product;
 
   constructor(private http: HttpClient) { 
     this.products = [];
+    this.selectedProduct = new Product();
   }
 
   public getNumberOfAvailableProducts(): Observable<Count> {
@@ -25,5 +27,13 @@ export class ProductsService {
 
   public searchProducts(productName: string): Observable<Product[]> {
     return this.http.get<Product[]>("http://localhost:3001/products/search/" + productName);
+  }
+
+  public addProduct(): Observable<number> {
+    return this.http.post<number>("http://localhost:3001/products/", this.selectedProduct);
+  }
+
+  public updateProduct(): Observable<void> {
+    return this.http.put<void>("http://localhost:3001/products/", this.selectedProduct);
   }
 }

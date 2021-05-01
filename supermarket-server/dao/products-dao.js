@@ -62,16 +62,20 @@ async function getNumberOfProducts() {
 }
 
 async function addProduct(product) {
-    let sql = `INSERT INTO products (name, category_id, unit_price, image_url) 
-                VALUES (?,?,?,?)`;
+    let sql = `INSERT INTO 
+                    products (name, category_id, unit_price, image_url) 
+                VALUES 
+                    (?,?,?,?)`;
     let parameters = [product.name, product.categoryId, product.unitPrice, product.imageUrl];
-
+    
     try {
-        await connection.executeWithParameters(sql, parameters);
+        let response = await connection.executeWithParameters(sql, parameters);
+        return response.inserId;
     }
     catch (error) {
         throw new ServerError(ErrorType.GENERAL_ERROR, JSON.stringify(product), error);
     }
+
 }
 
 async function updateProduct(product) {
@@ -91,18 +95,6 @@ async function updateProduct(product) {
     }
     catch (error) {
         throw new ServerError(ErrorType.GENERAL_ERROR, JSON.stringify(product), error);
-    }
-}
-
-async function deleteProduct(productId) {
-    let sql = `DELETE FROM products WHERE id = ?`;
-    let parameters = [productId];
-
-    try {
-        await connection.executeWithParameters(sql, parameters);
-    }
-    catch(error) {
-        throw new ServerError(ErrorType.GENERAL_ERROR, productId, error);
     }
 }
 
@@ -136,6 +128,5 @@ module.exports = {
     getNumberOfProducts,
     addProduct,
     updateProduct,
-    deleteProduct,
     getProductsByName
 };
