@@ -66,8 +66,9 @@
                       firstDayOfWeek="7" 
                       placement="top" 
                       outsideDays="collapsed"
-                      navigation="arrows" />
-
+                      navigation="arrows" 
+                      (click)="d.toggle()"
+                    />
                     <span class="input-group-append">
                       <button class="btn btn-outline-secondary calendar"
                           (click)="d.toggle()" type="button"></button>
@@ -76,6 +77,9 @@
                     <div class="invalid-feedback" 
                         *ngIf="deliveryDateInput.touched && deliveryDateInput.invalid">
                         <p *ngIf="deliveryDateInput.errors.required">Delivery date is required</p>
+                        <p *ngIf="deliveryDateInput.errors.ngbDate?.maxDate">Delivery up to two months in advance</p>
+                        <p *ngIf="deliveryDateInput.errors.ngbDate?.minDate">This date has past</p>
+                        <p *ngIf="deliveryDateInput.errors.ngbDate?.disabled">Unavailable for delivery</p>
                         <p *ngIf="deliveryDateInput.errors.ngbDate?.invalid">Date must be a valid date (Ex: yyyy-mm-dd)</p>
                     </div>
                 </div>

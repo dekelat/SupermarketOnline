@@ -23,7 +23,7 @@ export class CustomerComponent implements OnInit {
   }
 
   public onProductClick(product: Product) {
-    this.selectedProduct = product;
+    this.selectedProduct = Object.assign(new Product, product);
 
     if(this.cartService.cart.products.has(product.id)) {
       this.isInCart = true;

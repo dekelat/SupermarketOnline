@@ -19,8 +19,8 @@ export class OrdersService {
     return this.http.get<Order>("http://localhost:3001/orders/");
   }
 
-  public getUnavailableDeliveryDates(): Observable<Date[]> {
-    return this.http.get<Date[]>("http://localhost:3001/orders/dates");
+  public getUnavailableDeliveryDates(): Observable<any> {
+    return this.http.get<any>("http://localhost:3001/orders/dates");
   }
 
   public saveOrder(order: Order): Observable<number> {
