@@ -17,17 +17,24 @@ header {
 main {
     grid-row: span 11;
     grid-column: span 12;
-    padding: 2vh 10vw;
-    /* display: flex; */
+    position: relative;
+    padding: 1rem 10rem 2rem 10rem;
 }
 
-/* footer {
-    grid-row: span 1;
-    grid-column: span 12;
-    padding: 0;
-    margin: 0;
-    position: absolute;
-    bottom: 0;
-    background-color: rgba(255, 255, 255, 0.562);
-    border-top: solid 1px rgb(133, 133, 133);
-} */
+@media only screen and (max-width: 450px) {
+    main {
+        padding: 1rem !important;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    main {
+        padding: 1rem 2rem !important;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    main {
+        padding: 1rem 5rem;
+    }
+}

@@ -13,12 +13,11 @@ import { HomeRoutingModule } from './home-routing.module';
 import { CustomerComponent } from '../components/customer/customer.component';
 import { ProductsComponent } from '../components/products/products.component';
 import { ProductComponent } from '../components/product/product.component';
-import { FooterComponent } from '../components/footer/footer.component';
-import { CheckoutComponent } from '../components/checkout/checkout.component';
 import { AdminComponent } from '../components/admin/admin.component';
 import { ManageProductsComponent } from '../components/admin/manage-products/manage-products.component';
 import { IsHighlightedPipe } from '../pipes/is-highlighted.pipe';
-import { CartComponent } from '../components/cart/cart.component';
+import { CartComponent } from '../components/customer/cart/cart.component';
+import { CheckoutComponent } from '../components/customer/checkout/checkout.component';
 
 
 @NgModule({
@@ -29,7 +28,6 @@ import { CartComponent } from '../components/cart/cart.component';
     ProductsComponent,
     ProductComponent,
     CartComponent,
-    FooterComponent,
     CheckoutComponent,
     AdminComponent,
     ManageProductsComponent,

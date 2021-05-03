@@ -1,13 +1,12 @@
 .customer-container {
-    display: flex;
     width: 100%;
-    height: 100%;
+    height: 80vh;
+    display: flex;
     overflow-x: hidden;
-    /* flex-direction: row; */
-    /* height: 100%;
-    width: 100%; */
+    position: relative;
 }
 
+/********** Products Container **********/
 .products-section {
     width: 70%;
     overflow-x: hidden;
@@ -21,14 +20,30 @@
 .products-section.hide {
     animation: slide-out-animation 1s linear forwards;
 }
+/********** Products Animation ********/
+@keyframes expand-products-conatiner-animation {
+    from { width: 70%; }
+    to { width: 100%; }
+}
+@keyframes reduce-products-conatiner-animation {
+    from { width: 100%; }
+    to { width: 70%; }
+}
+@keyframes slide-out-animation {
+    to {
+        width: 0%;
+        visibility: hidden;
+    }
+}
 
+/********** Cart Container **********/
 .cart-section {
     width: 30%; 
-    position: relative;
+    display: flex;
+    flex-basis: content;
+    /* position: relative; */
     overflow-x: hidden;
-    border: solid 1px var(--medium-green)
-    /* overflow-y: auto; */
-    /* z-index: 1; */
+    border: solid 1px var(--medium-green);
 }
 .cart-section.closed {
     animation: close-cart-animation 1s linear forwards;
@@ -42,31 +57,12 @@
     from { width: 30%; }
     to { width: 0; }
 }
-
 @keyframes open-cart-animation {
     from { width: 0; }
     to { width: 30%; }
 }
 
-/********** Products Animation ********/
-@keyframes expand-products-conatiner-animation {
-    from { width: 70%; }
-    to { width: 100%; }
-}
-
-@keyframes reduce-products-conatiner-animation {
-    from { width: 100%; }
-    to { width: 70%; }
-}
-
-@keyframes slide-out-animation {
-    to {
-        width: 0%;
-        visibility: hidden;
-    }
-}
-
-/********* Checkout ********/
+/********* Checkout Container ********/
 .checkout-section {
     width: 70%;
     overflow-x: hidden;
@@ -83,7 +79,32 @@
     to {width: 70%; }
 }
 
+/******* Modal ********/
 .product-modal-img {
     width: 10rem;
     height: 10rem;
+}
+
+/* @media only screen and (max-width: 450px) {
+    main {
+        padding: 1rem !important;
+    }
+} */
+
+@media only screen and (max-width: 900px) {
+    .products-section {
+        width: 55% !important;
+    }
+    .cart-section {
+        width: 45% !important;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .products-section {
+        width: 60% !important;
+    }
+    .cart-section {
+        width: 40% !important;
+    }
 }

@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/services/cart.service';
 
@@ -20,6 +21,7 @@ export class CustomerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.cartService.isInShoppingMode = true;
   }
 
   public onProductClick(product: Product) {
@@ -42,7 +44,7 @@ export class CustomerComponent implements OnInit {
     this.selectedProduct.price = +(this.selectedProduct.unitPrice * this.selectedProduct.quantity).toFixed(2);
     let observable = this.cartService.addItemToCart(this.selectedProduct);
 
-    observable.subscribe(response => {
+    observable.subscribe(() => {
       this.cartService.cart.products.set(this.selectedProduct.id, this.selectedProduct);
       this.cartService.total += this.selectedProduct.price;
       this.cartService.total = +this.cartService.total.toFixed(2);
@@ -57,7 +59,7 @@ export class CustomerComponent implements OnInit {
     this.selectedProduct.price = +(this.selectedProduct.unitPrice * this.selectedProduct.quantity).toFixed(2);
     let observable = this.cartService.updateCartItem(this.selectedProduct);
 
-    observable.subscribe(response => {
+    observable.subscribe(() => {
       this.cartService.total -= this.cartService.cart.products.get(this.selectedProduct.id).price;
       this.cartService.cart.products.set(this.selectedProduct.id, this.selectedProduct);
       this.cartService.total += this.selectedProduct.price;

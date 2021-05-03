@@ -1,9 +1,7 @@
-/* .login-container {
-    padding: 1.5rem;
-} */
-
-
-.header {
+.login-container {
+    padding: .5rem;
+}
+.title {
     font-weight: 900;
     padding-bottom: 0;
     letter-spacing: -1.5px;
@@ -11,56 +9,12 @@
     font-size: var(--font-xlarge);
     font-family: var(--font-primary);
     }
-    .header span{
-        color: var(--medium-orange);
+    .title span{
+        color: var(--medium-green);
         font-size: var(--font-medium);
         font-family: 'Belleza';
     }
 
-/* label {
-    padding: 0 0 0 .3rem;
-    margin: 0;
-    font-size: .8rem;
-    font-weight: bolder;
-    color: #3d7742;
+@media only screen and (max-width: 450px) {
+
 }
-
-input[type="text"], input[type="email"], input[type="password"] {
-    display: block;
-    outline: none;
-    border: none;
-    border-bottom: 2px solid #3d77426c;
-    width: 100%;
-    padding: 0 .3rem .3rem;
-    font-size: 1.2rem;
-    color: #3d7742;
-} */
-
-
-
-
-/* remove background from autofill */
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0) inset;
-  box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0) inset;
-  transition: background-color 5000s ease-in-out 0s;
-}
-  
-/* .btn {
-    background-color: rgb(55, 100, 28);
-    color: whitesmoke;
-    float: right;
-    width: 30%;
-    font-family: 'Belleza';
-    font-weight: bolder;
-    box-shadow: 3px 3px 3px rgba(41, 75, 21, 0.534);
-} */
-

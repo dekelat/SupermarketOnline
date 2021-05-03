@@ -12,14 +12,14 @@ export class CartService {
   public cart: Cart;
   public total: number;
   public isCartOpen: boolean;
-  public isInCheckoutMode: boolean;
+  public isInShoppingMode: boolean;
 
   constructor(private http: HttpClient) { 
     this.cart = new Cart();
     this.cart.products = new Map();
     this.total = 0;
     this.isCartOpen = true;
-    this.isInCheckoutMode = false;
+    this.isInShoppingMode = true;
   }
 
   public getOpenCart(): Observable<Cart> {

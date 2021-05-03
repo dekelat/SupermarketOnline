@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Cart } from 'src/app/models/Cart';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/services/cart.service';
 
@@ -66,11 +65,11 @@ export class CartComponent implements OnInit {
   }
 
   public onCheckout() {
-    this.cartService.isInCheckoutMode = true;
+    this.cartService.isInShoppingMode = false;
   }
 
   public onBackToShop() {
-    this.cartService.isInCheckoutMode = false;
+    this.cartService.isInShoppingMode = true;
   }
 
   public onCloseCart() {

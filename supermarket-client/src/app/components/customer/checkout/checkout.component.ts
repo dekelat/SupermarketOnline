@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
-import { Cart } from 'src/app/models/Cart';
 import { City } from 'src/app/models/City';
 import { Order } from 'src/app/models/Order';
 import { CartService } from 'src/app/services/cart.service';
@@ -17,19 +17,25 @@ import { UsersService } from 'src/app/services/users.service';
 export class CheckoutComponent implements OnInit {
 
   public cities: string[];
-  public creditCard: string;
+  // public creditCard: string;
   public invoiceUrl: SafeUrl;
   public orderDetails: Order;
   public minDate: NgbDate;
   public maxDate: NgbDate;
-  public model: NgbDate;
+  // public model: NgbDate;
   public unavailableDeliveryDates: NgbDate[];
+
+  public checkoutForm: FormGroup;
+  public city: FormControl;
+  public street: FormControl;
+  public deliveryDate: FormControl;
+  public creditCard: FormControl;
 
   constructor(private router: Router, private sanitizer: DomSanitizer,
     private calendar: NgbCalendar, private usersService: UsersService, 
     private cartService: CartService, private ordersService: OrdersService) 
   {
-      this.creditCard = "";
+      // this.creditCard = "";
       this.invoiceUrl = null;
       this.orderDetails = new Order();
       this.cities = Object.values(City);
@@ -39,6 +45,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void { 
+    // Get unavailable delivery dates
     let observable = this.ordersService.getUnavailableDeliveryDates();
     observable.subscribe(dates => {
       
@@ -50,14 +57,45 @@ export class CheckoutComponent implements OnInit {
 
     }, serverErrorResponse => {
       alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
-    })
+    });
+
+    // Initializing form controls with validators
+    this.city = new FormControl("", Validators.required);
+    this.street = new FormControl("", Validators.required);
+    this.deliveryDate = new FormControl("", [Validators.required, 
+        this.unavailableDeliveryDatesValidator(), this.weekendsValidator()]);
+    this.creditCard = new FormControl("", [Validators.required, 
+      Validators.pattern("^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$")]);
+
+    // Initializing the from group
+    this.checkoutForm = new FormGroup({
+      city: this.city,
+      street: this.street,
+      deliveryDate: this.deliveryDate,
+      creditCard: this.creditCard
+    });
+  }
+
+  public unavailableDeliveryDatesValidator(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const unavailable = this.unavailableDeliveryDates.find(date => 
+        date.equals(control.value));
+      return unavailable ? { unavailableDate: true} : null;
+    };
+  }
+
+  public weekendsValidator(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const weekend = this.calendar.getWeekday(control.value) == 6;
+      return weekend ? { weekend: true} : null;
+    };
   }
 
   public onDblStreet(): void {
     let observable = this.usersService.getStreet();
 
     observable.subscribe(data => {
-      this.orderDetails.street = data;
+      this.street.setValue(data);
 
     }, serverErrorResponse => {
       alert("Error! Status: " + serverErrorResponse.status + ", Message: " +
@@ -69,7 +107,7 @@ export class CheckoutComponent implements OnInit {
     let observable = this.usersService.getCity();
 
     observable.subscribe(data => {
-      this.orderDetails.city = data;
+      this.city.setValue(data);
 
     }, serverErrorResponse => {
       alert("Error! Status: " + serverErrorResponse.status + ", Message: " +
@@ -78,28 +116,32 @@ export class CheckoutComponent implements OnInit {
   }
 
   public onPurchase(): void {
-    this.orderDetails.orderDate = new Date();
-    this.orderDetails.cartId = this.cartService.cart.id;
-    this.orderDetails.totalPrice = this.cartService.total;
-    this.orderDetails.paymentMethod = this.creditCard.substr(-4);
-    this.orderDetails.deliveryDate = new Date(this.model.year, this.model.month - 1, this.model.day);
-    
-    let observable = this.ordersService.saveOrder(this.orderDetails);
-    observable.subscribe( orderId => {
+    this.orderDetails = new Order(null, 
+      this.cartService.cart.id,
+      this.cartService.total, 
+      this.city.value, this.street.value, 
+      new Date(),
+      new Date(this.deliveryDate.value.year, this.deliveryDate.value.month - 1, 
+        this.deliveryDate.value.day),
+      this.creditCard.value.substr(-4)
+    );
+    console.log(this.orderDetails);
+    // let observable = this.ordersService.saveOrder(this.orderDetails);
+    // observable.subscribe( orderId => {
 
       // Init cart details
-      sessionStorage.removeItem("cartId");
-      this.cartService.cart = new Cart();
-      this.cartService.cart.products = new Map();
-      this.cartService.total = 0;
-      this.cartService.isCartOpen = true;
+      // sessionStorage.removeItem("cartId");
+      // this.cartService.cart = new Cart();
+      // this.cartService.cart.products = new Map();
+      // this.cartService.total = 0;
+      // this.cartService.isCartOpen = true;
 
       // Create invoice
-      this.orderDetails.id = orderId;
-      this.createInvoice();
-    }, serverErrorResponse => {
-      alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
-    });
+    //   this.orderDetails.id = orderId;
+    //   this.createInvoice();
+    // }, serverErrorResponse => {
+    //   alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
+    // });
   }
 
   public createInvoice(): void {
@@ -129,7 +171,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   public onCloseModal(): void {
-    this.cartService.isInCheckoutMode = false;
+    this.cartService.isInShoppingMode = false;
     this.router.navigate(["/home/shop"]);
   }
 

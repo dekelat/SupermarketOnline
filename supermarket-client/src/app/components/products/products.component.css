@@ -1,6 +1,7 @@
 .products {
     display: flex;
     flex-wrap: wrap;
+    flex-basis: content;
     justify-content: center;
     /* align-items: center; */
     width: 100%;
@@ -10,8 +11,10 @@
 }
 
 .category-menu {
+    top: 0;
     width: 100%;
     display: flex;
+    position: sticky;
     overflow-x: auto;
     align-items: center;
     justify-content: space-evenly;

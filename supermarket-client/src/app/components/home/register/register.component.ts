@@ -70,7 +70,7 @@ export class RegisterComponent implements OnInit {
     this.userDetails.userType = "CUSTOMER";
     let observable = this.usersService.register(this.userDetails);
 
-    observable.subscribe(response => {
+    observable.subscribe(() => {
       alert("Account created successfully! you can log in");
       this.router.navigate(["/home/login"]);
 

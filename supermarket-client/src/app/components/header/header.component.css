@@ -3,53 +3,123 @@
     padding: .3rem 10vw;
     display: flex;
     position: relative;
+    justify-content: space-between;
     border-bottom: 1px solid var(--light-green);
 }
-
-.header-right {
+.header-content .right {
     text-align: right;
+    align-self: flex-end;
+}
+.header-content p {
+    margin-bottom: 2px;
     color: var(--grey);
     font-size:  var(--font-small);
-    position: absolute;
-    bottom: 0;
-    right: 10vw;
 }
-.header-right p {
-    margin-bottom: 5px;
-}
-
-p.contact-info {
+.header-content .contact-info p{
     color: var(--dark-green);
 }
 
-.logo-img {
-    float: left;
-    padding: 0;
-    width: 120px; 
+/******* Functionality Section ********/
+.functionality {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
 }
 
+/******* Cart Button *******/
 .cart-btn {
-    display: inline-block;
-    font-weight: 400;
-    text-align: center;
-    vertical-align: middle;
-    padding: .375rem .75rem;
     font-size: 1rem;
+    font-weight: 400;
     line-height: 1.5;
+    text-align: center;
+    padding: .375rem .75rem 0rem;
 }
-
 .cart-btn i {
     position: relative;
     color: var(--dark-green);
     font-size: var(--font-medium);
 }
-
 .cart-badge {
     font-size: var(--font-xsmall);
     background-color: var(--light-green);
+    font-family: 'Courier New', Courier, monospace;
     border-radius: 50%;
     padding: 3px 6px;
     position: absolute;
     left: 15px;
     top: -10px;
 }
+
+/******* Search Box ********/
+.search-box {
+    position: relative;
+}
+.search-input {
+    padding-left: .5rem;
+    border: 1px solid var(--grey);
+    width: 13rem;
+    outline: none;
+}
+.search-input:focus {
+    outline: 2px solid var(--medium-green);
+}
+.search-box-btn {
+    position: absolute;
+    top: 2px;
+    right: .5rem;
+    color: grey;
+    position: absolute;
+}
+
+/********* Logo ********/
+.logo-img {
+    padding: 0;
+    width: 8rem;
+}
+
+@media only screen and (max-width: 450px) {
+    .header-content {
+        padding: .3rem .5rem !important;
+    }
+    .logo-img {
+        width: 5rem;  
+    }
+    .functionality {
+        align-items: flex-start;
+    }
+    .search-input {
+        width: 5rem;
+        font-size: var(--font-small);
+        padding-left: 3px;
+    }
+    .search-box-btn {
+        top: 30%;
+        right: 3px;
+        font-size: var(--font-small);
+    }
+    .cart-btn {
+        padding: 5px;
+        font-size: var(--font-small);
+    }
+    .cart-badge {
+        font-weight: 900;
+        padding: 3px 5px;
+        left: 60%;
+        top: -40%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .header-content {
+        padding: .3rem 1rem !important;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .header-content {
+        padding: .3rem 3rem;
+    }
+}
+
+

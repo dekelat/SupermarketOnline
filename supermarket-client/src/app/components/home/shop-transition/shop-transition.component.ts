@@ -21,7 +21,8 @@ export class ShopTransitionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getOpenCart()
+    this.getOpenCart();
+    this.cartService.isInShoppingMode = false;
   }
 
   public getOpenCart() {
