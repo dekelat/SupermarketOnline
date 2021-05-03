@@ -1,9 +1,7 @@
-<div>
-    <h2 class="title">Welcome <span>{{ usersService.loggedInUser.userName }}</span></h2>
+<h2 class="title">Welcome <span>{{ usersService.loggedInUser.userName }}</span></h2>
 
-    <h5>{{ this.message }}</h5>
+<h5>{{ this.message }}</h5>
 
-    <button type="button" (click)="startShopping()" class="btn">
-        {{ buttonValue }}
-    </button>
-</div>
+<button type="button" (click)="startShopping()" class="btn">
+    {{ buttonValue }}
+</button>

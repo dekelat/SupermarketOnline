@@ -1,8 +1,9 @@
 .login-container {
     padding: .5rem;
-    display: flex;
+    /* display: flex; */
     position: relative;
-    flex-direction: column;
+    /* flex-direction: column; */
+    align-self: center;
 }
 
 /********* Alert **********/
