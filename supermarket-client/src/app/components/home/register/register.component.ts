@@ -79,6 +79,7 @@ export class RegisterComponent implements OnInit {
       
     }, serverErrorResponse => {
       this.handelServerErrors(serverErrorResponse);
+      console.error(serverErrorResponse);
     });
   }
 

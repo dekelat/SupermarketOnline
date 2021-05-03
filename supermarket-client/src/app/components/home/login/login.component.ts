@@ -11,8 +11,12 @@ import { UsersService } from 'src/app/services/users.service';
 export class LoginComponent implements OnInit {
 
   public userLoginDetails: UserLoginDetails;
+  public errorMessage: string;
+  public showAlert: boolean;
   
   constructor(private usersService: UsersService, private router: Router) { 
+    this.errorMessage = "";
+    this.showAlert = false;
     this.userLoginDetails = new UserLoginDetails();
   }
 
@@ -38,7 +42,9 @@ export class LoginComponent implements OnInit {
       }
 
     }, serverErrorResponse => {
-      alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
+      this.errorMessage = serverErrorResponse.error.error;
+      this.showAlert = true;
+      console.error(serverErrorResponse);
     });
   }
 

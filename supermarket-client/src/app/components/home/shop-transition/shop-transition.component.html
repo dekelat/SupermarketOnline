@@ -1,5 +1,9 @@
 <div>
-    <h2>Welcome </h2>
-    <p>{{ this.message }}</p>
-    <input type="button" value="{{ buttonValue }}" (click)="startShopping()"/>
+    <h2 class="title">Welcome <span>{{ usersService.loggedInUser.userName }}</span></h2>
+
+    <h5>{{ this.message }}</h5>
+
+    <button type="button" (click)="startShopping()" class="btn">
+        {{ buttonValue }}
+    </button>
 </div>

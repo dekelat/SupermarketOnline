@@ -5,20 +5,6 @@
     padding: .5rem;
 }
 
-.title {
-    font-weight: 900;
-    padding-bottom: 0;
-    letter-spacing: -1.5px;
-    color: var(--dark-green);
-    font-size: var(--font-xlarge);
-    font-family: var(--font-primary);
-    }
-    .title span{
-        color: var(--medium-green);
-        font-size: var(--font-medium);
-        font-family: 'Belleza';
-    }
-
 .form-buttons {
     display: flex;
     align-content: space-between;

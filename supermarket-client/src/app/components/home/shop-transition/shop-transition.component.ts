@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Cart } from 'src/app/models/Cart';
 import { CartService } from 'src/app/services/cart.service';
 import { OrdersService } from 'src/app/services/orders.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-shop-transition',
@@ -14,7 +15,9 @@ export class ShopTransitionComponent implements OnInit {
   public buttonValue: string;
   public message: string;
 
-  constructor(private cartService: CartService, private ordersService: OrdersService, 
+  constructor(private cartService: CartService, 
+    private ordersService: OrdersService, 
+    public usersService: UsersService,
     private router: Router) {
     this.buttonValue = "";
     this.message = "";
@@ -49,7 +52,7 @@ export class ShopTransitionComponent implements OnInit {
     observable.subscribe(order => {
       if(order){
         this.message = "Your last order was on " + order.orderDate + 
-          " with total price of " + order.totalPrice;
+          "\nwith total price of ₪" + order.totalPrice;
       }
       else {
         this.message = "Welcome to your first order";

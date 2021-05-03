@@ -1,20 +1,31 @@
 .login-container {
     padding: .5rem;
+    display: flex;
+    position: relative;
+    flex-direction: column;
 }
-.title {
-    font-weight: 900;
-    padding-bottom: 0;
-    letter-spacing: -1.5px;
-    color: var(--dark-green);
-    font-size: var(--font-xlarge);
-    font-family: var(--font-primary);
-    }
-    .title span{
-        color: var(--medium-green);
-        font-size: var(--font-medium);
-        font-family: 'Belleza';
-    }
 
-@media only screen and (max-width: 450px) {
-
+/********* Alert **********/
+.login-container .alert {
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    animation: show_slide 1s linear forwards;
+}
+@keyframes show_slide {
+    0% {
+        transform: translateY(-100%);
+    }
+    40%{
+        transform: translateY(15%);
+    }
+    80%{
+        transform: translateY(0%);
+    }
+    100%{
+        transform: translateY(0%);
+    }
 }
