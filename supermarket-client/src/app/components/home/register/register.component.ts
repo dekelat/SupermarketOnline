@@ -12,8 +12,8 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class RegisterComponent implements OnInit {
 
-  public userDetails: UserDetails;
   public cities: Array<string>;
+  public userDetails: UserDetails;
   public registrationStage: number;
 
   public registerPartOneForm: FormGroup;
@@ -22,10 +22,13 @@ export class RegisterComponent implements OnInit {
   public password: FormControl;
   public confirmPassword: FormControl;
 
+  public alertType: string;
+  public alertMessage: string;
+  public showAlert: boolean;
+
   constructor(private usersService: UsersService, private router: Router) { 
-    this.userDetails = new UserDetails();
     this.cities = Object.values(City);
-    this.registrationStage = 1;
+    this.init();
   }
 
   ngOnInit(): void {
@@ -55,29 +58,56 @@ export class RegisterComponent implements OnInit {
     return (password === confirmPassword) ? null : {mismatch: true};
   }
 
-  public next() {
+  public next(): void {
     this.userDetails.id = this.id.value;
     this.userDetails.email = this.email.value;
     this.userDetails.password = this.password.value;
     this.registrationStage++;
   }
 
-  public back() {
+  public back(): void {
     this.registrationStage--;
   }
 
-  public register() {
+  public register(): void {
     this.userDetails.userType = "CUSTOMER";
     let observable = this.usersService.register(this.userDetails);
 
     observable.subscribe(() => {
-      alert("Account created successfully! you can log in");
-      this.router.navigate(["/home/login"]);
-
+      this.init();
+      this.showAlert = true;
+      
     }, serverErrorResponse => {
-      alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
-      // Add handel error function that will take user to the stage where the error accured
+      this.handelServerErrors(serverErrorResponse);
     });
   }
 
+  public onCloseAlert(): void {
+    this.showAlert = false;
+  }
+
+  public handelServerErrors(serverErrorResponse): void {
+    this.alertType ="danger";
+    this.alertMessage = serverErrorResponse.error.error;
+
+    if (serverErrorResponse.status === 602) {
+      this.registrationStage = 1;
+      this.id.setValue("");
+    }
+    else if (serverErrorResponse.status === 601) {
+      this.registrationStage = 1;
+      this.email.setValue("");
+    }
+
+    this.showAlert = true;
+  }
+
+  public init(): void {
+    this.registerPartOneForm?.reset();
+    this.userDetails = new UserDetails();
+    this.registrationStage = 1;
+    this.showAlert = false;
+    this.alertType ="success";
+    this.alertMessage = "Account successfully created!";
+  }
 }

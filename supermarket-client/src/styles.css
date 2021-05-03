@@ -36,26 +36,51 @@ html, body {
     font-family: var(--font-primary);
 }
 
-button {
-    outline: none;
-    border: none;
-    background: none;
-}
-
 a {
-    color:rgb(10, 19, 6)
+    margin: 10px;
+    align-self: center;
+    color:rgb(10, 19, 6);
     }
     a>span {
         font-weight: bolder; 
     }
 
-.btn-full-main {
+button {
+    outline: none;
+    border: none;
+    background: none;
+    margin: .2rem 0;
+}
+.btn {
     width: 100%;
     padding: .2rem;
     color: white;
+    border-radius: 0;
     text-transform: uppercase;
     background-color: var(--dark-green);
 }
+.btn-half {
+    width: 45% !important;
+}
+.btn-secondary {
+    border: none;
+    background-color: var(--medium-green);
+}
+.btn:not(:disabled):hover {
+    background-color: var(--light-green);
+}
+
+.form-group {
+    margin-bottom: 10px;
+    }
+    .form-group label {
+        margin-bottom: 5px;
+    }
+    .form-group p {
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
 
 /********* Scrollbar *******/
 ::-webkit-scrollbar {

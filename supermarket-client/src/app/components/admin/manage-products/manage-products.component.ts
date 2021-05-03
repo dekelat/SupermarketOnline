@@ -43,6 +43,7 @@ export class ManageProductsComponent implements OnInit {
       // Update UI
       this.productsService.products.forEach((currentProduct, index) => {
         if(currentProduct.id === product.id) {
+          
           // If category wasn't changed replace the product. 
           // If it was, remove it.
           if(currentProduct.categoryId === product.categoryId) {

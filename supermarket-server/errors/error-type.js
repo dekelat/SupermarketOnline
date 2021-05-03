@@ -10,7 +10,7 @@ let ErrorType = {
     EMAIL_ALREADY_EXIST: { 
         id: 2, 
         httpCode: 601, 
-        message: "An account associated with email already exists", 
+        message: "An account with this email already exists", 
         isShowStackTrace: false 
     },
 
