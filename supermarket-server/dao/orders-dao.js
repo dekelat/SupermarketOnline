@@ -94,9 +94,36 @@ async function getUnavailableDeliveryDates() {
     return dates;
 }
 
+async function isUnavailableDeliveryDate(date) {
+    let sql = `SELECT 
+                    COUNT(*) AS count
+                FROM 
+                    orders 
+                WHERE 
+                    delivery_date =?
+                GROUP BY  
+                    delivery_date`;
+    let parameters = [date.split('T')[0]];
+    let response;
+
+    try {
+        response = await connection.executeWithParameters(sql, parameters);
+
+    } catch (error) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, id, error);
+    }
+
+    if (response.length > 0 && response[0].count >= 3) {
+        return true;
+    }
+
+    return false;
+}
+
 module.exports = {
     getTotalNumberOfOrders,
     createNewOrder,
     getLatestOrder,
-    getUnavailableDeliveryDates
+    getUnavailableDeliveryDates,
+    isUnavailableDeliveryDate
 };

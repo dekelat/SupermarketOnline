@@ -34,10 +34,8 @@ router.post("/", async (request, response, next) => {
 // Get the user's street
 // GET http://localhost:3001/users/street
 router.get("/street", async (request, response, next) => {
-    let id = cache.extractUserDataFromCache(request).id;
-
     try {
-        let street = await usersLogic.getUsersStreet(id);
+        let street =  cache.extractUserDataFromCache(request).street;
         response.json(street);
     }
     catch (error) {
@@ -48,10 +46,8 @@ router.get("/street", async (request, response, next) => {
 // Get the user's city
 // GET http://localhost:3001/users/city
 router.get("/city", async (request, response, next) => {
-    let id = cache.extractUserDataFromCache(request).id;
-
     try {
-        let city = await usersLogic.getUsersCity(id);
+        let city = cache.extractUserDataFromCache(request).city;
         response.json(city);
     }
     catch (error) {

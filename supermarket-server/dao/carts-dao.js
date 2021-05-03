@@ -117,6 +117,25 @@ async function updateCartItem(product, cartId) {
     }
 }
 
+async function isCartExistById(id) {
+    let sql = "SELECT * FROM carts WHERE id =?";
+    let parameters = [id];
+    let response;
+
+    try {
+        response = await connection.executeWithParameters(sql, parameters);
+
+    } catch (error) {
+        throw new ServerError(ErrorType.GENERAL_ERROR, id, error);
+    }
+
+    if (response == null || response.length == 0) {
+        return false;
+    }
+
+    return true;
+}
+
 module.exports = {
     getOpenCart,
     createNewCart,
@@ -124,5 +143,6 @@ module.exports = {
     addItemToCart,
     deleteItemFromCart,
     emptyCart,
-    updateCartItem
+    updateCartItem,
+    isCartExistById
 };

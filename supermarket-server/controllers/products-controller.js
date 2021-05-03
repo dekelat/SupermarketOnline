@@ -16,19 +16,6 @@ router.get("/count", async (request, response, next) => {
     }
 });
 
-// Get all products
-// GET http://localhost:3001/products
-router.get("/", async (request, response, next) => { 
-    
-    try {
-        let products = await productsLogic.getAllProducts();
-        response.json(products);
-    }
-    catch (error) {
-        return next(error); 
-    }
-});
-
 // Get products by category
 // GET http://localhost:3001/products/:id
 router.get("/:id", async (request, response, next) => {
@@ -43,8 +30,22 @@ router.get("/:id", async (request, response, next) => {
     }
 });
 
+// Get products by name
+// GET http://localhost:3001/products/search/:name
+router.get("/search/:name", async (request, response, next) => {
+    let name = request.params.name;
+    
+    try {
+        let products = await productsLogic.getProductsByName(name);
+        response.json(products);
+    }
+    catch (error) {
+        return next(error); 
+    }
+});
+
 // Add new product
-// POST http://localhost:3001/products
+// POST http://localhost:3001/products/
 router.post("/", async (request, response, next) => {
 
     let product = request.body;
@@ -60,7 +61,7 @@ router.post("/", async (request, response, next) => {
 });
 
 // Update product
-// PUT http://localhost:3001/products
+// PUT http://localhost:3001/products/
 router.put("/", async (request, response, next) => {
 
     let product = request.body;
@@ -69,20 +70,6 @@ router.put("/", async (request, response, next) => {
     try {
         await productsLogic.updateProduct(product, userType);
         response.json();
-    }
-    catch (error) {
-        return next(error); 
-    }
-});
-
-// Get products by name
-// GET http://localhost:3001/products/search/:name
-router.get("/search/:name", async (request, response, next) => {
-    let name = request.params.name;
-    
-    try {
-        let products = await productsLogic.getProductsByName(name);
-        response.json(products);
     }
     catch (error) {
         return next(error); 

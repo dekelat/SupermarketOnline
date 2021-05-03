@@ -2,11 +2,6 @@ const ErrorType = require("../errors/error-type");
 const ServerError = require("../errors/server-error");
 let productsDao = require("../dao/products-dao");
 
-async function getAllProducts() {
-    let products = productsDao.getAllProducts();
-    return products;
-}
-
 async function getProductsByCategory(categoryId) {
     let products = await productsDao.getProductsByCategory(categoryId);
     return products;
@@ -44,8 +39,6 @@ async function updateProduct(product, userType) {
     }
 
     await productsDao.updateProduct(product);
-
-    // Broadcast changes to logged in users
 }
 
 async function getProductsByName(name) {
@@ -54,7 +47,6 @@ async function getProductsByName(name) {
 }
 
 module.exports = {
-    getAllProducts,
     getProductsByCategory,
     getNumberOfProducts,
     addProduct,

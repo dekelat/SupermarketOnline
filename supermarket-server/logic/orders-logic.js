@@ -7,7 +7,21 @@ async function getTotalNumberOfOrders() {
     return numberOfOrders;
 }
 
-async function createNewOrder(order) {
+async function createNewOrder(order, userType) {
+    if(userType != "CUSTOMER") {
+        throw new ServerError(ErrorType.UNAUTHORIZED_ACTION);
+    }
+
+    if(!order.cartId || !order.totalPrice || !order.city || !order.street ||
+        !order.deliveryDate || !order.paymentMethod) {
+            throw new ServerError(ErrorType.MISSING_REQUIRED_FIELDS);
+    }
+
+    // Check that the chosen delivery isn't full
+    if(await ordersDao.isUnavailableDeliveryDate(order.deliveryDate)) {
+        throw new ServerError(ErrorType.UNAVAILABLE_DELIVERY_DATE);
+    }
+    
     let orderId = await ordersDao.createNewOrder(order);
     return orderId;
 }

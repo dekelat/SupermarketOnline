@@ -19,10 +19,11 @@ router.get("/count", async (request, response, next) => {
 // Create new order
 // POST http://localhost:3001/orders/
 router.post("/", async (request, response, next) => {
+    let userType = cache.extractUserDataFromCache(request).userType;
     let order = request.body;
     
     try {
-        let orderId = await ordersLogic.createNewOrder(order);
+        let orderId = await ordersLogic.createNewOrder(order,userType);
         response.json(orderId);
     }
     catch (error) {
@@ -47,7 +48,6 @@ router.get("/", async (request, response, next) => {
 // Get unavailable delivery dates
 // GET http://localhost:3001/orders/dates
 router.get("/dates", async (request, response, next) => {
-
     try {
         let dates = await ordersLogic.getUnavailableDeliveryDates();
         response.json(dates);

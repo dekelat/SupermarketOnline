@@ -22,9 +22,10 @@ router.get("/", async (request, response, next) => {
 // POST http://localhost:3001/carts/
 router.post("/", async (request, response, next) => {
     let userId = cache.extractUserDataFromCache(request).id;
+    let userType = cache.extractUserDataFromCache(request).userType;
 
     try {
-        let cartId = await cartsLogic.createNewCart(userId);
+        let cartId = await cartsLogic.createNewCart(userId, userType);
         response.json(cartId);
     }
     catch (error) {
@@ -32,7 +33,7 @@ router.post("/", async (request, response, next) => {
     }
 });
 
-// Get open cart's items
+// Get cart's items
 // GET http://localhost:3001/carts/:id
 router.get("/:id", async (request, response, next) => {
     let cartId = request.params.id;

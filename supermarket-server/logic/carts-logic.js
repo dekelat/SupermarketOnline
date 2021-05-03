@@ -7,7 +7,11 @@ async function getOpenCart(userId) {
     return cart;
 }
 
-async function createNewCart(userId) {
+async function createNewCart(userId, userType) {
+    if (userType != "CUSTOMER") {
+        throw new ServerError(ErrorType.UNAUTHORIZED_ACTION);
+    }
+    
     let cartId = await cartsDao.createNewCart(userId);
     return cartId;
 }
@@ -19,8 +23,17 @@ async function getCartItems(cartId) {
 
 async function addItemToCart(userType, cartId, product) {
 
-    if(userType == "ADMIN") {
+    if(userType != "CUSTOMER") {
         throw new ServerError(ErrorType.UNAUTHORIZED_ACTION);
+    }
+
+    if(!cartId || !product.id || !product.quantity || !product.price) {
+        throw new ServerError(ErrorType.MISSING_REQUIRED_FIELDS);
+    }
+
+    // Validate cart id exists
+    if (await usersDao.isCartExistById(cartId)) {
+        throw new ServerError(ErrorType.CART_DOSENT_EXIST);
     }
 
     await cartsDao.addItemToCart(cartId, product);
@@ -28,7 +41,7 @@ async function addItemToCart(userType, cartId, product) {
 
 async function deleteItemFromCart(userType, cartId, productId) {
 
-    if(userType == "ADMIN") {
+    if(userType != "CUSTOMER") {
         throw new ServerError(ErrorType.UNAUTHORIZED_ACTION);
     }
 
@@ -37,16 +50,21 @@ async function deleteItemFromCart(userType, cartId, productId) {
 
 async function emptyCart(userType, cartId) {
 
-    if(userType == "ADMIN") {
+    if(userType != "CUSTOMER") {
         throw new ServerError(ErrorType.UNAUTHORIZED_ACTION);
+    }
+
+    // Validate cart id exists
+    if (await usersDao.isCartExistById(cartId)) {
+        throw new ServerError(ErrorType.CART_DOSENT_EXIST);
     }
 
     await cartsDao.emptyCart(cartId);
 }
 
 async function updateCartItem(userType, product, cartId) {
-
-    if(userType == "ADMIN") {
+    
+    if(userType != "CUSTOMER") {
         throw new ServerError(ErrorType.UNAUTHORIZED_ACTION);
     }
 

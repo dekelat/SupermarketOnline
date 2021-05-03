@@ -10,7 +10,6 @@ async function getAllCategories() {
         categories = await connection.execute(sql);
     }
     catch (error) {
-        // TECHNICAL ERROR HAD OCCURED
         throw new ServerError(ErrorType.GENERAL_ERROR, sql, error);
     }
 

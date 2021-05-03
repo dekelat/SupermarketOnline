@@ -2,27 +2,6 @@ const ErrorType = require("../errors/error-type");
 const ServerError = require("../errors/server-error");
 let connection = require("./connection-wrapper");
 
-async function getAllProducts() {
-    let sql = `SELECT 
-                    id,
-                    name,
-                    category_id AS categoryId,
-                    unit_price AS unitPrice,
-                    image_url AS imageUrl
-                FROM
-                    products`;
-    let products;
-
-    try {
-        products = await connection.execute(sql);
-    }
-    catch (error) {
-        throw new ServerError(ErrorType.GENERAL_ERROR, sql, error);
-    }
-
-    return products;
-}
-
 async function getProductsByCategory(categoryId) {
     let sql = `SELECT 
                     id,
@@ -67,15 +46,16 @@ async function addProduct(product) {
                 VALUES 
                     (?,?,?,?)`;
     let parameters = [product.name, product.categoryId, product.unitPrice, product.imageUrl];
-    
+    let response;
+
     try {
-        let response = await connection.executeWithParameters(sql, parameters);
-        return response.inserId;
+        response = await connection.executeWithParameters(sql, parameters);
     }
     catch (error) {
         throw new ServerError(ErrorType.GENERAL_ERROR, JSON.stringify(product), error);
     }
 
+    return response.insertId;
 }
 
 async function updateProduct(product) {
@@ -123,7 +103,6 @@ async function getProductsByName(name) {
 }
 
 module.exports = {
-    getAllProducts,
     getProductsByCategory,
     getNumberOfProducts,
     addProduct,

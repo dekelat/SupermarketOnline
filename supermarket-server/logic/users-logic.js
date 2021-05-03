@@ -35,7 +35,8 @@ async function login(loginDetails) {
 async function addUser(user) {
 
     if (user.id == null || user.email == null || user.password == null || 
-        user.userType == null || user.firstName == null || user.lastName == null) {
+        user.userType == null || user.firstName == null || user.lastName == null ||
+        user.city == null || user.street == null) {
         throw new ServerError(ErrorType.MISSING_REQUIRED_FIELDS);
     }
 
@@ -43,10 +44,6 @@ async function addUser(user) {
     if (await usersDao.isUserExistById(user.id)) {
         throw new ServerError(ErrorType.ID_ALREADY_EXIST);
     }
-
-    // if (!isEmailValid(user.email)) {
-    //     throw new ServerError(ErrorType.INVALID_EMAIL);
-    // }
 
     // Validate email doesn't exist
     if (await usersDao.isUserExistByEmail(user.email)) {
@@ -59,36 +56,7 @@ async function addUser(user) {
     await usersDao.addUser(user);
 }
 
-function isEmailValid(email) {
-    return /^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$/.test(email)
-}
-
-function createUserSession(userData){
-    let saltedEmail = LEFT_SALT + userData.email + RIGHT_SALT;
-    const token = jwt.sign({ sub: saltedEmail }, config.secret);
-
-    cache.put(token, userData);
-
-    let response = { token: "Bearer " + token, userType: userData.userType, email: userData.email, 
-        firstName: userData.firstName, lastName: userData.lastName, city: userData.city, 
-        street: userData.street };
-
-    return response;
-}
-
-async function getUsersStreet(id) {
-    let street = await usersDao.getUsersStreet(id);
-    return street;
-}
-
-async function getUsersCity(id) {
-    let city = await usersDao.getUsersCity(id);
-    return city;
-}
-
 module.exports = {
     login,
-    addUser,
-    getUsersCity,
-    getUsersStreet
+    addUser
 };

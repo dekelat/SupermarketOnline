@@ -54,6 +54,20 @@ let ErrorType = {
         httpCode: 606, 
         message: "You are unauthorized to execute this action", 
         isShowStackTrace: false 
+    },
+
+    CART_DOSENT_EXIST: { 
+        id: 9, 
+        httpCode: 607, 
+        message: "Cart doesn't exist", 
+        isShowStackTrace: false 
+    },
+
+    UNAVAILABLE_DELIVERY_DATE: { 
+        id: 10, 
+        httpCode: 608, 
+        message: "This date is unavailable for delivery", 
+        isShowStackTrace: false 
     }
 }
 
