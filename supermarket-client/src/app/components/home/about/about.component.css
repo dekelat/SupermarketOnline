@@ -42,5 +42,5 @@ span {
 }
 
 .main-image {
-    width: 15vw;
+    width: clamp(200px, 15vw, 300px);
 }

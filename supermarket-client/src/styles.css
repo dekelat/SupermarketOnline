@@ -38,6 +38,7 @@ html, body {
 
 a {
     margin: 10px;
+    text-align: center;
     align-self: center;
     color:rgb(10, 19, 6);
     }
