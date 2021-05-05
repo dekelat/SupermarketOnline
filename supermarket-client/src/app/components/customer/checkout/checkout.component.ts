@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { Cart } from 'src/app/models/Cart';
 import { City } from 'src/app/models/City';
 import { Order } from 'src/app/models/Order';
 import { CartService } from 'src/app/services/cart.service';
@@ -24,6 +25,7 @@ export class CheckoutComponent implements OnInit {
   public maxDate: NgbDate;
   // public model: NgbDate;
   public unavailableDeliveryDates: NgbDate[];
+  public displayModal: string;
 
   public checkoutForm: FormGroup;
   public city: FormControl;
@@ -36,6 +38,7 @@ export class CheckoutComponent implements OnInit {
     private cartService: CartService, private ordersService: OrdersService) 
   {
       // this.creditCard = "";
+      this.displayModal="none";
       this.invoiceUrl = null;
       this.orderDetails = new Order();
       this.cities = Object.values(City);
@@ -51,6 +54,7 @@ export class CheckoutComponent implements OnInit {
       
         dates.forEach(a => {
           let date = new Date(a.deliveryDate);
+          // console.log(date, date.getDate());
           this.unavailableDeliveryDates.push(
             new NgbDate(date.getFullYear(), date.getMonth() + 1, date.getDate()))
         });
@@ -116,32 +120,34 @@ export class CheckoutComponent implements OnInit {
   }
 
   public onPurchase(): void {
+    //format delivery date
+    let date = new Date(this.deliveryDate.value.year, this.deliveryDate.value.month - 1, 
+      this.deliveryDate.value.day);
+    let dateWithoutOffset = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+
     this.orderDetails = new Order(null, 
       this.cartService.cart.id,
       this.cartService.total, 
       this.city.value, this.street.value, 
       new Date(),
-      new Date(this.deliveryDate.value.year, this.deliveryDate.value.month - 1, 
-        this.deliveryDate.value.day),
+      dateWithoutOffset,
       this.creditCard.value.substr(-4)
     );
-    console.log(this.orderDetails);
-    // let observable = this.ordersService.saveOrder(this.orderDetails);
-    // observable.subscribe( orderId => {
 
-      // Init cart details
-      // sessionStorage.removeItem("cartId");
-      // this.cartService.cart = new Cart();
-      // this.cartService.cart.products = new Map();
-      // this.cartService.total = 0;
-      // this.cartService.isCartOpen = true;
+    let observable = this.ordersService.saveOrder(this.orderDetails);
+    observable.subscribe( orderId => {
 
       // Create invoice
-    //   this.orderDetails.id = orderId;
-    //   this.createInvoice();
-    // }, serverErrorResponse => {
-    //   alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
-    // });
+      this.orderDetails.id = orderId;
+      this.createInvoice();
+      this.displayModal = "block";
+
+      // Init cart details
+      this.initizlizeCart();
+
+    }, serverErrorResponse => {
+      alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
+    });
   }
 
   public createInvoice(): void {
@@ -172,6 +178,7 @@ export class CheckoutComponent implements OnInit {
 
   public onCloseModal(): void {
     this.cartService.isInShoppingMode = false;
+    this.displayModal="none";
     this.router.navigate(["/home/shop"]);
   }
 
@@ -180,6 +187,14 @@ export class CheckoutComponent implements OnInit {
       return true;
     } 
      return this.unavailableDeliveryDates.find(x => x.equals(date));
+  }
+
+  public initizlizeCart() {
+    this.cartService.cart = new Cart();
+    this.cartService.cart.products = new Map();
+    this.cartService.total = 0;
+    this.cartService.isCartOpen = true;
+    sessionStorage.removeItem("cartId");
   }
   
 }

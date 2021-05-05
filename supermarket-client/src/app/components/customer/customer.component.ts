@@ -1,5 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit} from '@angular/core';
 import { Product } from 'src/app/models/Product';
 import { CartService } from 'src/app/services/cart.service';
 
@@ -73,6 +72,16 @@ export class CustomerComponent implements OnInit {
 
   public onCloseModal() {
     this.displayModal = "none";
+  }
+
+  public addQuantity() {
+    this.selectedProduct.quantity++;
+  }
+
+  public subQuantity() {
+    if (this.selectedProduct.quantity > 1) {
+      this.selectedProduct.quantity--;
+    }
   }
 
 }

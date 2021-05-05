@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/Category';
 import { Product } from 'src/app/models/Product';
 import { CategoriesService } from 'src/app/services/categories.service';
@@ -13,9 +12,12 @@ import { ProductsService } from 'src/app/services/products.service';
 export class ManageProductsComponent implements OnInit {
 
   public categories: Category[];
+  public isFormOpened: boolean;
 
   constructor(private categoriesService: CategoriesService,
-    public productsService: ProductsService) { }
+    public productsService: ProductsService) {
+      this.isFormOpened = false;
+  }
 
   ngOnInit(): void {
     let observable = this.categoriesService.getCategories();
@@ -28,16 +30,16 @@ export class ManageProductsComponent implements OnInit {
     });
   }
 
-  public onSaveProduct(form: NgForm) {
+  public onSaveProduct() {
     if(this.productsService.selectedProduct.id) {
-      this.updateProduct(this.productsService.selectedProduct, form);
+      this.updateProduct(this.productsService.selectedProduct);
     }
     else {
-      this.addProduct(this.productsService.selectedProduct, form);
+      this.addProduct(this.productsService.selectedProduct,);
     }
   }
 
-  private updateProduct(product: Product, form: NgForm) {
+  private updateProduct(product: Product) {
     let observable = this.productsService.updateProduct();
     observable.subscribe(() => {
       // Update UI
@@ -56,16 +58,15 @@ export class ManageProductsComponent implements OnInit {
         }
       });
 
-      // Init form
-      this.initForm(form);
+      alert("Saved Successfuly");
+      this.init();
 
     }, serverErrorResponse => {
-      alert("Error! Status: " + serverErrorResponse.status + ", Message: " +
-        serverErrorResponse.error.error);
+      alert(serverErrorResponse.error.error);
     });
   }
 
-  private addProduct(product: Product, form: NgForm) {
+  private addProduct(product: Product) {
     let observable = this.productsService.addProduct();
     observable.subscribe(newProductId => {
       // Update UI
@@ -74,17 +75,23 @@ export class ManageProductsComponent implements OnInit {
         this.productsService.products.push(product);
       }
 
-      // Init form
-      this.initForm(form);
+      alert("Saved Successfuly");
+      this.init();
 
     }, serverErrorResponse => {
-      alert("Error! Status: " + serverErrorResponse.status + ", Message: " +
+      alert(serverErrorResponse.error.error);
+      console.error("Error! Status: " + serverErrorResponse.status + ", Message: " +
         serverErrorResponse.error.error);
     });
   }
 
-  private initForm(form: NgForm) {
+  private init() {
     this.productsService.selectedProduct = new Product();
-    form.resetForm();
+    this.isFormOpened = false;
+  }
+
+  public onAddNewProduct() {
+    this.productsService.selectedProduct = new Product();
+    this.isFormOpened = true;
   }
 }

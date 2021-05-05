@@ -3,12 +3,13 @@
         <app-checkout></app-checkout>
     </div>
 
-    <div 
-        [ngClass]="{ 'products-section': true, full: !cartService.isCartOpen, hide: !cartService.isInShoppingMode}">
+    <div class="products-section"
+        [ngClass]="{ full: !cartService.isCartOpen, hidden: !cartService.isInShoppingMode}">
         <app-products (productClickEvent)="onProductClick($event)"></app-products>
     </div>
 
-    <div [ngClass]="{ 'cart-section': true, closed: !this.cartService.isCartOpen }">
+    <div class="cart-section"
+        [ngClass]="{ hidden: !this.cartService.isCartOpen }">
         <app-cart></app-cart>
     </div>
 </div>
@@ -18,19 +19,25 @@
     <div class="modal" id="myModal" tabindex="-1" role="dialog" [ngStyle]="{'display': displayModal}">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+
                 <div class="modal-body">
-                    <button type="button" class="close" (click)="onCloseModal()">&times;</button><br />
+                    <button type="button" class="close" (click)="onCloseModal()">&times;</button>
                     <img src="{{selectedProduct.imageUrl}}" class="product-modal-img" />
-                    <h4 class="modal-title">{{selectedProduct.name}}</h4>
-                    <h5>{{selectedProduct.unitPrice}}</h5>
-                    <!-- <input *ngIf="selectedProduct.categoryId == 1" type="number" value="0.5" step="0.5"/> -->
-                    <input type="number" [(ngModel)]="selectedProduct.quantity" min="1"/>
+                    <h4 class="modal-title"><strong>{{selectedProduct.name}}</strong></h4>
+                    <h5>₪{{selectedProduct.unitPrice}}</h5>
+
+                    <div>
+                        <button (click)="subQuantity()"><i class="fas fa-minus"></i></button>
+                        <input type="number" [(ngModel)]="selectedProduct.quantity" min="1"/>
+                        <button (click)="addQuantity()"><i class="fas fa-plus"></i></button>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
-                    <input *ngIf="!isInCart" type="button" value="Add to Cart" class="btn btn-primary" (click)="addToCart()" />
-                    <input *ngIf="isInCart" type="button" value="Update Cart" class="btn btn-primary" (click)="updateCart()" />
+                    <button *ngIf="!isInCart" class="btn" (click)="addToCart()">Add to Cart</button>
+                    <button *ngIf="isInCart" class="btn" (click)="updateCart()">Update Cart</button>
                 </div>
+                
             </div>
         </div>
     </div>

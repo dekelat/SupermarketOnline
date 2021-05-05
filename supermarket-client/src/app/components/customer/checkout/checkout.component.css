@@ -52,31 +52,6 @@ h5:after {
   margin-top: 1rem;
 }
 
-/********* Disabled Days **********/
-.custom-day {
-    text-align: center;
-    padding: 0.185rem 0.25rem;
-    border-radius: 0.25rem;
-    display: inline-block;
-    width: 2rem;
-  }
-  .custom-day:hover, .custom-day.focused {
-    background-color: #e6e6e6;
-  }
-  .text-muted {
-    background-color: #f04e4e;
-    border-radius: 1rem;
-    color: white;
-  }
-  .weekend {
-    background-color: #f0ad4e;
-    border-radius: 1rem;
-    color: white;
-  }
-  .hidden {
-    display: none;
-  }
-
 /********** DatePicker Button *******/
 button.calendar, button.calendar:active{
   width: 2.75rem;
@@ -85,6 +60,14 @@ button.calendar, button.calendar:active{
   background-size: 23px;
   background-position: center;
  }
+.btn-outline-secondary {
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: .375rem .75rem !important;
+  margin: 0 !important;
+}
 .btn-outline-secondary:hover {
   background-color: var(--light-green);
 }

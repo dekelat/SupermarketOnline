@@ -67,6 +67,9 @@ button {
     background-color: var(--medium-green);
 }
 .btn:not(:disabled):hover {
+    background-color: var(--medium-green);
+}
+.btn.btn-secondary:not(:disabled):hover {
     background-color: var(--light-green);
 }
 
@@ -95,6 +98,11 @@ button {
         font-family: 'Belleza';
     }
 
+/********* Modals **********/
+.modal-header, .modal-body {
+    text-align: center;
+}
+
 /********* Scrollbar *******/
 ::-webkit-scrollbar {
     width: 4px;
@@ -119,6 +127,16 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0) inset;
   box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0) inset;
   transition: background-color 5000s ease-in-out 0s;
+}
+
+/* hide arrows from number input*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button { /* Chrome, Safari, Edge, Opera */
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {   /* Firefox */
+  -moz-appearance: textfield;
 }
 
 @media only screen and (max-width: 800px) {

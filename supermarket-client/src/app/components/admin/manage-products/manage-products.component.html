@@ -1,15 +1,25 @@
 <div class="product-management">
     <div class="header">
-        <h2>Products Managements</h2>
+        <h3>Products Management</h3>
     </div>
 
     <div class="content">
-        <form #productForm="ngForm" (submit)="onSaveProduct(productForm)">
+
+        <button class="btn" *ngIf="!isFormOpened || productsService.selectedProduct.id" 
+            (click)="onAddNewProduct()">
+            <i class="fas fa-plus"></i> Add Product
+        </button>
+
+        <h6 *ngIf="!productsService.selectedProduct.id && !isFormOpened"><br/><br/>Click On Any Product To Edit It</h6>
+        
+        <form *ngIf="isFormOpened || productsService.selectedProduct.id"
+            #productForm="ngForm" (submit)="onSaveProduct()">
+
             <!-- Product Name -->
             <div class="form-group">
                 <label for="name">Product Name</label>
                 <input #name="ngModel" type="text" required [maxLength]="90"
-                    id="name" name="name" class="form-control" 
+                    id="name" name="name" class="form-control" autocomplete="off"
                     placeholder="Enter Product Name"
                     [(ngModel)]="productsService.selectedProduct.name"
                     [ngClass] = "{ 'is-invalid': name.touched && name.invalid }"
@@ -23,13 +33,14 @@
             <div class="form-group">
                 <label for="unitPrice">Unit Price</label>
                 <input #unitPrice="ngModel" type="number" required min="0.5"
-                    id="unitPrice" name="unitPrice" class="form-control"
+                    id="unitPrice" name="unitPrice" class="form-control" autocomplete="off"
                     placeholder="Enter Price"
                     [(ngModel)]="productsService.selectedProduct.unitPrice"
-                    [ngClass] = "{ 'is-invalid': unitPrice.touched && unitPrice.invalid }"
+                    [ngClass] = "{ 'is-invalid': unitPrice.touched && (unitPrice.invalid || unitPrice.value < 0.5) }"
                 />
-                <div class="invalid-feedback" *ngIf="unitPrice.touched && unitPrice.invalid">
-                    <p *ngIf="unitPrice.errors.required">Unit price is required</p>
+                <div class="invalid-feedback" *ngIf="unitPrice.touched && (unitPrice.invalid || unitPrice.value < 0.5)">
+                    <p *ngIf="unitPrice.errors?.required">Unit price is required</p>
+                    <p *ngIf="unitPrice.value < 0.5">Unit price has to be over 0.5</p>
                 </div>
             </div>
 
@@ -41,7 +52,7 @@
                         ({{imageUrlInput.value.length}}/255)
                     </span>
                 </label>
-                <input #imageUrl="ngModel" type="text" required #imageUrlInput
+                <input #imageUrl="ngModel" type="text" required #imageUrlInput 
                     id="imageUrl" name="imageUrl" class="form-control"
                     placeholder="Enter Image URL"
                     [(ngModel)]="productsService.selectedProduct.imageUrl"
@@ -71,10 +82,13 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn-full-main" 
-                [disabled]="productForm.invalid || imageUrlInput.value.length > 255">
+            <button [disabled]="productForm.invalid || imageUrlInput.value.length > 255 || unitPrice.value < 0.5"
+                type="submit" class="btn">
                     save
             </button>
+            <button type="button" class="btn btn-cancel" (click)="init()">Cancel</button>
         </form>
     </div>
+
+
 </div>

@@ -32,7 +32,7 @@ async function addItemToCart(userType, cartId, product) {
     }
 
     // Validate cart id exists
-    if (await usersDao.isCartExistById(cartId)) {
+    if (!await cartsDao.isCartExistById(cartId)) {
         throw new ServerError(ErrorType.CART_DOSENT_EXIST);
     }
 
@@ -55,7 +55,7 @@ async function emptyCart(userType, cartId) {
     }
 
     // Validate cart id exists
-    if (await usersDao.isCartExistById(cartId)) {
+    if (!await cartsDao.isCartExistById(cartId)) {
         throw new ServerError(ErrorType.CART_DOSENT_EXIST);
     }
 

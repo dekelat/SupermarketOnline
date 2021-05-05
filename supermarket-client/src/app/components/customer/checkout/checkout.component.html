@@ -57,7 +57,7 @@
                         deliveryDate.invalid }" 
                     />
                     <span class="input-group-append">
-                      <button class="btn btn-outline-secondary calendar"
+                      <button class="btn-outline-secondary calendar"
                           (click)="d.toggle()" type="button"></button>
                     </span>
                     
@@ -91,23 +91,15 @@
                 </div>
             </div>
 
-            <button type="submit" [disabled]="checkoutForm.invalid" class="btn-full-main" 
-                data-toggle="modal" data-target="#purchaseModal">Purchase</button>
+            <button type="submit" [disabled]="checkoutForm.invalid" class="btn" 
+                >Purchase</button>
         </form>
     </div>
 </div>
 
-<!-- Bootstrap Datepicker custom template -->
-<!-- <ng-template #customDay let-date let-selected="selected" let-disabled="disabled" let-focused="focused">
-    <span class="custom-day" [class.focused]="focused"
-        [class.bg-primary]="selected" [class.text-muted]="disabled">
-        {{ date.day }}
-    </span>
-</ng-template> -->
-
 <!-- Successful Order Modal-->
 <div class="container">
-    <div class="modal fade" id="purchaseModal" role="dialog">
+    <div class="modal" tabindex="-1" id="purchaseModal" role="dialog" [ngStyle]="{'display': displayModal}">
         <div class="modal-dialog" >
             <div class="modal-content">
 
@@ -118,10 +110,10 @@
                 </div>
 
                 <div class="modal-body">
-                    <h5>Download invoice 
+                    <h6>Download invoice 
                         <a download="invoice - {{this.orderDetails.id}}.txt" 
                             [href]="invoiceUrl">HERE</a>
-                    </h5>
+                    </h6>
                 </div>
 
                 <div class="modal-footer">

@@ -67,7 +67,6 @@ export class ShopTransitionComponent implements OnInit {
   }
 
   public startShopping() {
-
     if(!this.cartService.cart.id) {
       let observable = this.cartService.createNewCart();
 

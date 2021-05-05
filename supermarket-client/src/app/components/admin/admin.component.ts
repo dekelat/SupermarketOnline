@@ -16,6 +16,5 @@ export class AdminComponent implements OnInit {
 
   public onProductClick(product: Product) {
     this.productsService.selectedProduct = Object.assign(new Product, product);
-    console.log(this.productsService.selectedProduct );
   }
 }

@@ -1,15 +1,21 @@
 .customer-container {
-    width: 100%;
-    height: 80vh;
     display: flex;
-    overflow-x: hidden;
-    position: relative;
+    height: clamp(500px, 100%, 100vh);
+}
+
+input[type=number]{
+    margin: .5rem;
+    padding: .2rem;
+    width: 3rem;
+    text-align: center;
+    border: solid 1px var(--grey);
 }
 
 /********** Products Container **********/
 .products-section {
-    width: 70%;
+    /* width: 70%; */
     overflow-x: hidden;
+    animation: slideInAnimation 1s forwards;
 }
 .products-section.full {
     animation: expand-products-conatiner-animation 1s forwards;
@@ -17,9 +23,10 @@
 .products-section:not(.full) {
     animation: reduce-products-conatiner-animation 1s forwards;
 }
-.products-section.hide {
-    animation: slide-out-animation 1s linear forwards;
+.products-section.hidden {
+    animation: slide-out-animation 1.2s linear forwards;
 }
+
 /********** Products Animation ********/
 @keyframes expand-products-conatiner-animation {
     from { width: 70%; }
@@ -30,26 +37,22 @@
     to { width: 70%; }
 }
 @keyframes slide-out-animation {
-    to {
-        width: 0%;
-        visibility: hidden;
-    }
+    from { width: 70%; }
+    to {width: 0%; }
 }
 
 /********** Cart Container **********/
 .cart-section {
-    width: 30%; 
-    display: flex;
-    flex-basis: content;
-    /* position: relative; */
-    overflow-x: hidden;
-    border: solid 1px var(--medium-green);
+    width: 30%;
+    position: relative;
+    overflow: hidden;
+    /* border: solid 3px var(--medium-green); */
 }
-.cart-section.closed {
-    animation: close-cart-animation 1s linear forwards;
+.cart-section.hidden {
+    animation: close-cart-animation 1.5s forwards;
 }
-.cart-section:not(.closed){
-    animation: open-cart-animation 1s forwards;
+.cart-section:not(.hidden){
+    animation: open-cart-animation 1s  forwards;
 }
 
 /********** Cart Animation *********/
@@ -66,15 +69,12 @@
 .checkout-section {
     width: 70%;
     overflow-x: hidden;
-    /* border: solid 1px var(--dark-green); */
-    /* transform: translateX(0); */
-    animation: slideInAnimation 1s linear;
+    border: solid 1px var(--dark-green);
+    animation: slide-in-animation 1s linear;
 }
 
 /********** Checkout Animation **********/
-@keyframes slideInAnimation {
-    /* 0% { transform: translateX(100%); }
-    100% { transform: translateX(0); } */
+@keyframes slide-in-animation {
     from { width: 0%; }
     to {width: 70%; }
 }
@@ -91,7 +91,7 @@
     }
 } */
 
-@media only screen and (max-width: 900px) {
+/* @media only screen and (max-width: 900px) {
     .products-section {
         width: 55% !important;
     }
@@ -107,4 +107,4 @@
     .cart-section {
         width: 40% !important;
     }
-}
+} */

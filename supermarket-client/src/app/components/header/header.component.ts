@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Cart } from 'src/app/models/Cart';
+import { Product } from 'src/app/models/Product';
 import { SuccessfulLoginServerResponse } from 'src/app/models/SuccessfulLoginServerResponse';
 import { CartService } from 'src/app/services/cart.service';
 import { CategoriesService } from 'src/app/services/categories.service';
@@ -37,8 +39,18 @@ export class HeaderComponent implements OnInit {
   }
 
   public onLogout() {
+    // Init system state
     this.usersService.loggedInUser = new SuccessfulLoginServerResponse();
+    this.cartService.cart = new Cart();
+    this.cartService.cart.products = new Map();
+    this.cartService.total = 0;
+    this.cartService.isCartOpen = true;
+    this.cartService.isInShoppingMode = true;
+    this.productsService.selectedProduct = new Product();
+    this.productsService.products = [];
+
     sessionStorage.clear();
+    
     this.router.navigate(["/home"]);
   }
 
