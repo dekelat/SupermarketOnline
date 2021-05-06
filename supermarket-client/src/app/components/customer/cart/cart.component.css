@@ -1,8 +1,7 @@
 /********* Cart Header *********/
 .cart-header {
-    /* height: 15%; */
-    /* position: relative; */
     top: 0;
+    height: clamp(95px,13%,160px);
     position: sticky;
     overflow-x: hidden;
     text-align: center;
@@ -17,11 +16,11 @@
     border-bottom: 2px solid var(--medium-green);
 }
 .close-cart-btn {
-    font-weight: 900;
-    text-transform: uppercase;
-    position: absolute;
     top: .5rem;
     left: .5rem;
+    font-weight: 900;
+    position: absolute;
+    text-transform: uppercase;
 }
 .empty-cart-btn {
     width: 100%;
@@ -50,9 +49,9 @@
 /********* Cart Content *********/
 .cart-content {
     height: 70%;
+    padding: .3rem;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: .3rem;
     text-align: center;
     background-color: white;
     border: 1px solid var(--medium-green);
@@ -71,24 +70,19 @@
     vertical-align: top;
 }
 .cart-content td button {
-    color: var(--dark-green);
-    font-weight: 600;
-    text-transform: uppercase;
     padding: 0px 2px;
+    font-weight: 600;
+    color: var(--dark-green);
+    text-transform: uppercase;
 }
 
 /********** Cart Footer *********/
 .cart-footer {
+    bottom: 0;
     width: 100%;
     height: 17%;
     padding: .5rem;
-    /* position: absolute;
-    bottom: 0; */
-    /* position: relative;  */
-    /* align-self: flex-end; */
-    /* border: 3px solid black; */
     position: absolute;
-    bottom: 0;
     border: 1px solid var(--medium-green);
     background-color: var(--light-green);
 }
@@ -96,15 +90,15 @@
     position: relative;
 }
 .cart-footer h3 span {
-    position: absolute;
-    right: 0;
     top: 4px;
+    right: 0;
+    position: absolute;
     font-size: var(--font-medium);
 }
 
 /*********************/
 .highlighted {
-    background-color: #b4b4b362;
-    color: var(--dark-green);
     font-weight: 600;
+    color: var(--dark-green);
+    background-color: #b4b4b362;
 }

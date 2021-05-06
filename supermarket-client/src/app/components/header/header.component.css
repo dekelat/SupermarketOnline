@@ -1,8 +1,8 @@
 .header-content {
     width: 100vw;
-    padding: .3rem 10vw;
     display: flex;
     position: relative;
+    padding: .3rem 10vw;
     justify-content: space-between;
     border-bottom: 1px solid var(--light-green);
 }
@@ -22,9 +22,9 @@
 /******* Functionality Section ********/
 .functionality {
     display: flex;
+    align-items: center;
     flex-direction: row;
     justify-content: flex-end;
-    align-items: center;
 }
 
 /******* Cart Button *******/
@@ -41,14 +41,14 @@
     font-size: var(--font-medium);
 }
 .cart-badge {
+    left: 15px;
+    top: -10px;
+    padding: 3px 6px;
+    border-radius: 50%;
+    position: absolute;
     font-size: var(--font-xsmall);
     background-color: var(--light-green);
     font-family: 'Courier New', Courier, monospace;
-    border-radius: 50%;
-    padding: 3px 6px;
-    position: absolute;
-    left: 15px;
-    top: -10px;
 }
 
 /******* Search Box ********/
@@ -56,16 +56,15 @@
     position: relative;
 }
 .search-input {
-    padding-left: .5rem;
-    border: 1px solid var(--grey);
     width: 13rem;
     outline: none;
+    padding-left: .5rem;
+    border: 1px solid var(--grey);
 }
 .search-input:focus {
     outline: 2px solid var(--medium-green);
 }
 .search-box-btn {
-    position: absolute;
     top: 0;
     right: .5rem;
     color: grey;

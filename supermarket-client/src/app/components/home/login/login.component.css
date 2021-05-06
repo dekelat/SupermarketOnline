@@ -1,8 +1,6 @@
 .login-container {
     padding: .5rem;
-    /* display: flex; */
     position: relative;
-    /* flex-direction: column; */
     align-self: center;
 }
 

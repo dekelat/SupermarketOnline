@@ -20,28 +20,28 @@
 
 /******** Content ********/
 .checkout-content {
-  width: 60%;
+  width: clamp(300px, 60%, 450px);
   height: 90%;
-  padding: 1rem 2rem;
   display: flex;
+  padding: 1rem 2rem;
   flex-direction: column;
   background-color: white;
 }
 
 h5 {
-  color: var(--medium-green);
-  font-family: var(--font-secondary);
-  display: flex;
   width: 100%;
-  justify-content: center;
+  display: flex;
   align-items: center;
   text-align: center;
+  justify-content: center;
+  color: var(--medium-green);
+  font-family: var(--font-secondary);
 }
 h5:before, h5:after {
     content: '';
-    border-top: 2px solid;
-    margin: 0 20px 0 0;
     flex: 1 0 20px;
+    margin: 0 20px 0 0;
+    border-top: 2px solid;
     color: var(--medium-green)
 }
 h5:after {

@@ -13,9 +13,8 @@ input[type=number]{
 
 /********** Products Container **********/
 .products-section {
-    /* width: 70%; */
     overflow-x: hidden;
-    animation: slideInAnimation 1s forwards;
+    animation: slide-in-animation 1s forwards;
 }
 .products-section.full {
     animation: expand-products-conatiner-animation 1s forwards;
@@ -44,9 +43,8 @@ input[type=number]{
 /********** Cart Container **********/
 .cart-section {
     width: 30%;
-    position: relative;
     overflow: hidden;
-    /* border: solid 3px var(--medium-green); */
+    position: relative;
 }
 .cart-section.hidden {
     animation: close-cart-animation 1.5s forwards;
@@ -151,26 +149,40 @@ input[type=number]{
     }
 }
 
-/* @media only screen and (max-width: 450px) {
-    main {
-        padding: 1rem !important;
+@media only screen and (max-width: 550px) {
+    .customer-container {
+        display: flex;
+        flex-direction: column;
     }
-} */
-
-/* @media only screen and (max-width: 900px) {
     .products-section {
-        width: 55% !important;
+        display: none;
+        animation: none;
+        overflow-x: hidden;
+    }
+    .products-section.full {
+        display: block;
+        animation: none;
+    }
+    .products-section:not(.full) {
+        animation: none;
+    }
+    .products-section.hidden {
+        animation: none;
     }
     .cart-section {
-        width: 45% !important;
+        width: 100%;
+        height: clamp(500px, 100%, 100vh);
+    }
+    .cart-section.hidden {
+        animation: none;
+        display: none;
+    }
+    .cart-section:not(.hidden){
+        display: block;
+        animation: none;
+    }
+    .checkout-section {
+        animation: none;
+        height: clamp(500px, 100%, 100vh);
     }
 }
-
-@media only screen and (max-width: 1300px) {
-    .products-section {
-        width: 60% !important;
-    }
-    .cart-section {
-        width: 40% !important;
-    }
-} */

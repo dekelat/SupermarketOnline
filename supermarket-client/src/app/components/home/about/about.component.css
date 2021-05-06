@@ -10,8 +10,8 @@
 
 h1 {
     color: white;
-    font-weight: bolder;
     margin-bottom: 0;
+    font-weight: bolder;
     font-size: var(--font-xxlarge);
 }
 
@@ -30,14 +30,14 @@ h5 {
 .market-stats p {
     margin: 0;
     padding: 0;
-    color: var(--dark-green);
     font-weight: 900;
+    color: var(--dark-green);
     font-size: var(--font-medium);
 }
 
 span {
-    color: var(--dark-green);
     font-style: italic;
+    color: var(--dark-green);
     font-size: var(--font-xsmall);
 }
 

@@ -1,8 +1,8 @@
 .register-container {
     display: flex;
-    flex-direction: column;
-    position: relative;
     padding: .5rem;
+    position: relative;
+    flex-direction: column;
 }
 
 .form-buttons {
@@ -40,8 +40,8 @@
     left: 0;
     width: 100%;
     display: flex;
-    justify-content: space-between;
     position: absolute;
+    justify-content: space-between;
     animation: show_slide 1s linear forwards;
 }
 @keyframes show_slide {
