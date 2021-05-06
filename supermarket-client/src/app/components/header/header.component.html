@@ -40,7 +40,7 @@
             <button *ngIf="usersService.loggedInUser.userType == 'CUSTOMER'"
                 class="cart-btn" (click)="onCartToggle()">
                 <i class="fal fa-shopping-cart">
-                    <span class="cart-badge">{{cartService.cart.products.size}}</span>
+                    <span class="cart-badge">{{cartService.cart.products?.size}}</span>
                 </i>
             </button>
         </div>

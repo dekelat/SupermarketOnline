@@ -39,7 +39,10 @@ export class HeaderComponent implements OnInit {
   }
 
   public onLogout() {
-    // Init system state
+    let observable = this.usersService.logout();
+
+    observable.subscribe(() => {
+      // Init system state
     this.usersService.loggedInUser = new SuccessfulLoginServerResponse();
     this.cartService.cart = new Cart();
     this.cartService.cart.products = new Map();
@@ -50,8 +53,10 @@ export class HeaderComponent implements OnInit {
     this.productsService.products = [];
 
     sessionStorage.clear();
-    
     this.router.navigate(["/home"]);
+    }, serverErrorResponse => {
+      alert(serverErrorResponse.error.error);
+    });
   }
 
   public onSearchProducts() {
@@ -62,7 +67,7 @@ export class HeaderComponent implements OnInit {
     observable.subscribe(products => {
       this.productsService.products = products;
     }, serverErrorResponse => {
-      alert("Error! Status: " + serverErrorResponse.status + ", Message: " + serverErrorResponse.error.error);
+      alert(serverErrorResponse.error.error);
     });
   }
 }

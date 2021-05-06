@@ -9,7 +9,7 @@ function get(key) {
 }
 
 function remove(key) {
-    cache.remove(key);
+    cache.delete(key);
 }
 
 function extractUserDataFromCache(request) {

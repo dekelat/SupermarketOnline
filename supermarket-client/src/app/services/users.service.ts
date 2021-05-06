@@ -33,5 +33,9 @@ export class UsersService {
   public getCity(): Observable<string> {
     return this.http.get<string>("http://localhost:3001/users/city");
   }
+
+  public logout(): Observable<void> {
+    return this.http.get<void>("http://localhost:3001/users/logout");
+  }
 }
 

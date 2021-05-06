@@ -55,4 +55,19 @@ router.get("/city", async (request, response, next) => {
     }
 });
 
+// logout
+// GET http://localhost:3001/users/logout
+router.get("/logout", async (request, response, next) => {
+    let authorizationString = request.headers["authorization"];
+    let token = authorizationString.substring("Bearer ".length);
+    
+    try {
+        cache.remove(token);
+        response.json();
+
+    } catch (err) {
+        return next(err);
+    }
+});
+
 module.exports = router;
